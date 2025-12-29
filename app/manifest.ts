@@ -7,7 +7,7 @@
  * - Custom icons and splash screens
  * - Theme and background colors
  *
- * The manifest is automatically served at /manifest.json by Next.js.
+ * The manifest is automatically served at /manifest.webmanifest by Next.js.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/Manifest
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/metadata/manifest

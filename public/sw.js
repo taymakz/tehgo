@@ -26,7 +26,7 @@ const STATIC_ASSETS = [
   '/fa',
   '/en',
   '/offline',
-  '/manifest.json',
+  '/manifest.webmanifest',
   '/web-app-manifest-192x192.png',
   '/web-app-manifest-512x512.png',
   '/apple-touch-icon.png',

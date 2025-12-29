@@ -83,7 +83,9 @@ export function proxy(request: NextRequest) {
     '/fonts/', // Font files
     '/icons/', // Icon assets
     '/images/', // Image assets
-    '/opengraph-image/', // OG image generation
+    '/opengraph-image', // OG image generation
+    '/sw.js', // Service worker
+    '/manifest', // PWA manifest (catches both .json and .webmanifest)
   ];
 
   // Skip locale routing for files with these extensions
@@ -99,6 +101,10 @@ export function proxy(request: NextRequest) {
     '.jpeg',
     '.webp',
     '.webmanifest',
+    '.woff',
+    '.woff2',
+    '.ttf',
+    '.eot',
   ];
 
   // Check if the request should skip locale prefix
@@ -109,7 +115,10 @@ export function proxy(request: NextRequest) {
     pathname.endsWith(ext)
   );
 
-  if (shouldSkipByPrefix || shouldSkipByExtension) return;
+  // CRITICAL FIX: Return NextResponse.next() instead of undefined
+  if (shouldSkipByPrefix || shouldSkipByExtension) {
+    return NextResponse.next();
+  }
 
   // Check if pathname already has a locale prefix
   const pathnameHasLocale = SUPPORTED_LOCALES.some(
@@ -123,7 +132,9 @@ export function proxy(request: NextRequest) {
   }
 
   // If pathname already has locale, don't modify it
-  if (pathnameHasLocale) return;
+  if (pathnameHasLocale) {
+    return NextResponse.next();
+  }
 
   // Detect user's preferred locale and redirect to default page
   const locale = getLocale(request);
@@ -143,11 +154,17 @@ export function proxy(request: NextRequest) {
  * Matcher configuration for the proxy middleware
  *
  * Specifies which routes should be processed by the proxy function.
- * Excludes Next.js internal routes (_next) for performance.
+ * Uses negative lookahead to exclude static assets and internal routes.
  */
 export const config = {
   matcher: [
-    // Process all routes except Next.js internal paths
-    '/((?!_next).*)',
+    /*
+     * Match all request paths except:
+     * - _next (Next.js internals)
+     * - Static files (images, fonts, etc.)
+     * - API routes
+     * - Favicon and manifest files
+     */
+    '/((?!_next/static|_next/image|_next/data|api|favicon.ico|.*\\.(?:jpg|jpeg|png|gif|svg|ico|webp|woff|woff2|ttf|eot|json|xml|txt|webmanifest|js)).*)',
   ],
 };
