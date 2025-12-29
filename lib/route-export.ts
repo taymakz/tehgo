@@ -282,25 +282,16 @@ export const exportRouteImage = async ({
           const isMobile = isMobileDevice();
 
           if (isMobile) {
-            // On mobile, use download attribute with proper MIME type
-            const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
-            const filename = `tehran-metro-route-${Date.now()}.jpg`;
-            const link = document.createElement('a');
-            link.href = dataUrl;
-            link.download = filename;
-            link.style.display = 'none';
-            document.body.appendChild(link);
+            // On mobile, open the image in a new tab using blob URL
+            const blobUrl = URL.createObjectURL(blob);
+            window.open(blobUrl, '_blank');
 
-            // Trigger download
-            link.click();
-
-            // Cleanup
+            // Cleanup blob URL after a delay
             setTimeout(() => {
-              document.body.removeChild(link);
-              URL.revokeObjectURL(link.href);
-            }, 100);
+              URL.revokeObjectURL(blobUrl);
+            }, 10000); // Keep URL alive for 10 seconds
 
-            toast.success(lang === 'fa' ? 'تصویر دانلود شد' : 'Image downloaded');
+            toast.success(lang === 'fa' ? 'تصویر در تب جدید باز شد' : 'Image opened in new tab');
             resolve();
             return;
           }
