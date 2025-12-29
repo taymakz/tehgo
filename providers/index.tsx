@@ -78,12 +78,7 @@ export default function Providers({ children, lang }: ProvidersProps) {
               - Position and styling configured in component
               - RTL-aware through DirectionProvider
             */}
-            <Toaster
-              position={dir === 'rtl' ? 'top-right' : 'top-right'}
-              expand={false}
-              richColors
-              closeButton
-            />
+      
             {children}
           </DirectionProvider>
         </TanstackQueryProvider>
