@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "TehGo - Tehran Metro Guide";
+export const alt = "TehGo - Tehran Metro Guide | راهنمای مترو تهران";
 export const size = {
   width: 1200,
   height: 630,
@@ -8,14 +8,11 @@ export const size = {
 
 export const contentType = "image/png";
 
-const title = "Tehran Go";
-const description = "Tehran Metro Route Planner and Guide";
-const headline = "TehGo";
-
 const fillColor = "#D6D6D6";
 const textColor = "#D6D6D6";
 
-export default function Image() {
+// Single bilingual Open Graph image for the entire website
+export default async function Image() {
   return new ImageResponse(
     <div
       style={{
@@ -26,6 +23,7 @@ export default function Image() {
         display: "flex",
       }}
     >
+      {/* Background decorative SVG */}
       <svg
         style={{
           position: "absolute",
@@ -47,6 +45,7 @@ export default function Image() {
         </g>
       </svg>
 
+      {/* Text content - Bilingual */}
       <div
         style={{
           position: "absolute",
@@ -58,50 +57,64 @@ export default function Image() {
           flexDirection: "column",
         }}
       >
-        {headline && (
-          <p
-            style={{
-              marginBottom: "16px",
-              fontSize: "24px",
-              fontWeight: "600",
-              textTransform: "uppercase",
-              color: textColor,
-              fontFamily: "sans",
-            }}
-          >
-            {headline}
-          </p>
-        )}
-        {title && (
-          <h1
-            style={{
-              margin: 0,
-              marginBottom: "16px",
-              display: "flex",
-              width: "600px",
-              alignItems: "center",
-              fontSize: "75px",
-              fontWeight: "600",
-              color: "white",
-              fontFamily: "sans",
-            }}
-          >
-            <span>{title}</span>
-          </h1>
-        )}
-        {description && (
-          <p
-            style={{
-              fontSize: "32px",
-              lineHeight: "1.25",
-              color: "#E4E4E7",
-              fontFamily: "sans",
-            }}
-          >
-            {description}
-          </p>
-        )}
+        {/* Brand name - bilingual */}
+        <p
+          style={{
+            marginBottom: "16px",
+            fontSize: "24px",
+            fontWeight: "600",
+            textTransform: "uppercase",
+            color: textColor,
+            fontFamily: "sans-serif",
+          }}
+        >
+          TehGo • تی‌گو
+        </p>
+
+        {/* Main title - English */}
+        <h1
+          style={{
+            margin: 0,
+            marginBottom: "8px",
+            display: "flex",
+            width: "600px",
+            alignItems: "center",
+            fontSize: "70px",
+            fontWeight: "600",
+            color: "white",
+            fontFamily: "sans-serif",
+          }}
+        >
+          <span>Tehran Metro</span>
+        </h1>
+
+        {/* Persian title */}
+        <p
+          style={{
+            fontSize: "36px",
+            lineHeight: "1.3",
+            color: "#E4E4E7",
+            fontFamily: "Tahoma, Arial, sans-serif",
+            marginBottom: "8px",
+          }}
+        >
+          راهنمای مترو تهران
+        </p>
+
+        {/* Subtitle */}
+        <p
+          style={{
+            fontSize: "26px",
+            lineHeight: "1.4",
+            color: "#A1A1AA",
+            fontFamily: "sans-serif",
+          }}
+        >
+          Route Planner & Guide
+        </p>
       </div>
+
+      {/* Logo SVG */}
       <svg
         style={{
           position: "absolute",
@@ -148,16 +161,31 @@ export default function Image() {
           strokeOpacity="0.2"
           strokeWidth="2.125"
         />
-        <svg style={{
-          color: "white",
-          width: "100px",
-          height: "100px",
-          transform: "translate(118px, 120px)",
-        }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="3"></circle><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path><circle cx="18" cy="5" r="3"></circle></svg>
+        <svg
+          style={{
+            color: "white",
+            width: "100px",
+            height: "100px",
+            transform: "translate(118px, 120px)",
+          }}
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="6" cy="19" r="3"></circle>
+          <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path>
+          <circle cx="18" cy="5" r="3"></circle>
+        </svg>
       </svg>
     </div>,
     {
       ...size,
-    },
+    }
   );
 }

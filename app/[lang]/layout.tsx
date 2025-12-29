@@ -96,6 +96,14 @@ export async function generateMetadata({
       description,
       locale: lang === 'fa' ? 'fa_IR' : 'en_US',
       alternateLocale: lang === 'fa' ? 'en_US' : 'fa_IR',
+      images: [
+        {
+          url: '/opengraph-image',
+          width: 1200,
+          height: 630,
+          alt: 'TehGo - Tehran Metro Guide | راهنمای مترو تهران',
+        },
+      ],
     },
 
     // Twitter card metadata
@@ -105,6 +113,7 @@ export async function generateMetadata({
       description,
       site: '@tehgo',
       creator: '@taymakz',
+      images: ['/opengraph-image'],
     },
 
     // Robots configuration
@@ -209,19 +218,8 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="theme-color" content="#09090b" />
-
-        {/* Preconnect to important origins */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className={`${fontVariables} antialiased`}>
-        {/*
-          Providers wrapper includes:
-          - ThemeProvider (next-themes)
-          - TanstackQueryProvider (react-query)
-          - DirectionProvider (radix-ui)
-          - Toaster (sonner)
-        */}
         <Providers lang={lang}>
           {children}
         </Providers>
