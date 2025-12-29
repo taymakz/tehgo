@@ -1,5 +1,9 @@
+'use client';
+
+import Link from 'next/link';
 import { ThemeToggle } from './theme-toggle';
 import { LocaleSwitcher } from './locale-switcher';
+import { LucideRoute } from 'lucide-react';
 
 interface Dict {
   theme: {
@@ -24,9 +28,9 @@ export function AppHeader({ dict }: { dict: Dict }) {
     <header className="max-w-screen-sm border-b  mx-auto bg-card ">
       <div className="flex justify-between items-center container gap-4 p-2">
         {/* Logo */}
-        <div>
-          <i className="icon-[streamline-flex--high-speed-train-front] size-8 text-primary"></i>
-        </div>
+        <Link href="/">
+          <LucideRoute className='size-6'/>
+        </Link>
 
         {/* Theme, Locale Switcher */}
         <div className="flex items-center gap-2">
