@@ -49,13 +49,13 @@ export async function generateMetadata({
   const siteName = 'TehGo'
   const appUrl = 'https://tehgo.ir'
   const title = lang === 'fa'
-    ? 'تی‌گو - راهنمای مترو تهران'
+    ? 'تهگو - راهنمای مترو تهران'
     : 'TehGo - Tehran Metro Guide'
   const description = lang === 'fa'
     ? 'بهترین مسیریاب مترو تهران. مسیریابی آسان، اطلاعات ایستگاه‌ها و خطوط مترو.'
     : 'The best Tehran Metro route planner. Easy routing, station info, and metro lines.'
   const keywords = lang === 'fa'
-    ? ['تهران', 'مترو', 'مسیریاب', 'حمل و نقل', 'ایران', 'تی‌گو']
+    ? ['تهران', 'مترو', 'مسیریاب', 'حمل و نقل', 'ایران', 'تهگو']
     : ['Tehran', 'Metro', 'Route Planner', 'Transportation', 'Iran', 'TehGo']
 
   return {
