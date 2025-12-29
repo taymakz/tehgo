@@ -22,7 +22,7 @@ import { AppHeader } from '@/components/app/header';
 import { AppNavigation } from '@/components/app/navigation';
 import { getDictionary, type Locale } from '../dictionaries';
 import { Toaster } from '@/components/ui/sonner';
-import { InstallToast } from '@/components/pwa/install-toast';
+import { InstallBanner } from '@/components/pwa/install-banner';
 
 /**
  * Layout Props Interface
@@ -51,15 +51,16 @@ export default async function MainLayout({
       <Suspense fallback={<div className="h-14 border-b bg-card" />}>
         <AppHeader dict={dict} />
       </Suspense>
-
       {/* Main content area - centered with max width for mobile-first design */}
-      <main className="relative grow max-w-[640px] mx-auto">{children}</main>
+      <main className="relative grow max-w-[640px] mx-auto">
+        {/* PWA install */}
+        <InstallBanner dict={dict.pwa} />
+
+        {children}
+      </main>
 
       {/* Toast notifications (Sonner library) */}
       <Toaster />
-
-      {/* PWA Install Toast - Shows install prompt from top */}
-      <InstallToast dict={dict.pwa} isRTL={lang === 'fa'} />
 
       {/* Bottom navigation for mobile */}
       <AppNavigation />
