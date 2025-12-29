@@ -8,4 +8,3 @@
  */
 
 export { InstallPrompt } from './install-prompt';
-export { InstallToast } from './install-toast';
