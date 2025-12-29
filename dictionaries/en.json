@@ -1,0 +1,75 @@
+{
+  "common": {
+    "home": "Home",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "close": "Close",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save"
+  },
+  "metro": {
+    "title": "Metro",
+    "stations": "Stations",
+    "lines": "Lines",
+    "route": "Route Planning",
+    "map": "Map",
+    "download_map": "Download Map"
+  },
+  "theme": {
+    "title": "Display Mode",
+    "description": "Select app display mode",
+    "system": "System",
+    "light": "Light Mode",
+    "dark": "Dark Mode",
+    "select": "Select"
+  },
+  "locale": {
+    "title": "Language",
+    "description": "Select app language",
+    "english": "English",
+    "persian": "Persian",
+    "select": "Select"
+  },
+  "page_route": {
+    "routing_title": "Route Planning",
+    "select_origin": "Select Origin",
+    "select_destination": "Select Destination",
+    "find_route": "Find Route",
+    "swap": "Swap",
+    "recent_routes": "Recent Routes",
+    "no_recent_routes": "No recent routes yet.",
+    "route_found": "Route Found",
+    "total_stations": "Total Stations",
+    "total_transfers": "Total Transfers",
+    "lines_used": "Lines Used",
+    "view_route": "View Route",
+    "delete": "Delete",
+    "transfer": "Transfer",
+    "search_origin_description": "Search and select your origin station",
+    "search_destination_description": "Search and select your destination station",
+    "no_stations_found": "No stations found.",
+    "route_details": "Route Details",
+    "detailed_route_steps": "Detailed route steps",
+    "recommended": "Recommended",
+    "select_route": "Select a route",
+    "missed_stop": "I missed my stop",
+    "share": "Share",
+    "recalculate_from": "Recalculate from current station",
+    "select_current_station": "Select your current station",
+    "new_route_to_destination": "New route to destination",
+    "used_count": "Used {count} time(s)"
+  },
+  "pwa": {
+    "install": "Install App",
+    "install_title": "Install TehGo",
+    "install_description": "Install for quick access and offline use",
+    "install_button": "Install",
+    "add_home_screen": "Add to Home Screen",
+    "ios_instruction": "To install this app on your iOS device, tap the share button and then \"Add to Home Screen\"."
+  }
+}

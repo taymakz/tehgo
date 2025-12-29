@@ -1,0 +1,2221 @@
+{
+  "abdol_abad": [
+    {
+      "from": "abdol_abad",
+      "to": "shahrak_e_shariaty",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "abdol_abad",
+      "to": "nemat_abad",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "aghdasiyeh": [
+    {
+      "from": "aghdasiyeh",
+      "to": "shahid_mahallati",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "aghdasiyeh",
+      "to": "nobonyad",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "ahang": [
+    {
+      "from": "ahang",
+      "to": "basij",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "ahang",
+      "to": "chehel_tan_e_doulab",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "aliabad": [
+    {
+      "from": "aliabad",
+      "to": "shahid_bokharaei",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "aliabad",
+      "to": "javanmard_e_ghassab",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "allameh_jafari": [
+    {
+      "from": "allameh_jafari",
+      "to": "eram_e_sabz",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "amirkabir": [
+    {
+      "from": "amirkabir",
+      "to": "shohada_ye_hefdah_e_shahrivar",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "amirkabir",
+      "to": "meydan_e_shohada",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "atmosphere": [
+    {
+      "from": "atmosphere",
+      "to": "garmdareh",
+      "line": "line_5",
+      "weight": 1
+    },
+    {
+      "from": "atmosphere",
+      "to": "karaj",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "ayatollah_kashani": [
+    {
+      "from": "ayatollah_kashani",
+      "to": "shahid_sattari",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "ayatollah_kashani",
+      "to": "shahr_e_ziba",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "ayatollah_taleghani": [
+    {
+      "from": "ayatollah_taleghani",
+      "to": "shohada_ye_haftom_e_tir",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "ayatollah_taleghani",
+      "to": "darvazeh_dolat",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "azadegan": [
+    {
+      "from": "azadegan",
+      "to": "nemat_abad",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "bahar_shiraz_khanevadeh_hospital": [
+    {
+      "from": "bahar_shiraz_khanevadeh_hospital",
+      "to": "sarbaz",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "bahar_shiraz_khanevadeh_hospital",
+      "to": "shohada_ye_haftom_e_tir",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "baharistan": [
+    {
+      "from": "baharistan",
+      "to": "darvazeh_shemiran",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "baharistan",
+      "to": "mellat",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "basij": [
+    {
+      "from": "basij",
+      "to": "varzeshgah_e_takhti",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "basij",
+      "to": "ahang",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "be_sat": [
+    {
+      "from": "be_sat",
+      "to": "kiyan_shahr",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "be_sat",
+      "to": "shahid_rezaei",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "beryanak": [
+    {
+      "from": "beryanak",
+      "to": "helal_ahmar",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "beryanak",
+      "to": "komeyl",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "bimeh": [
+    {
+      "from": "bimeh",
+      "to": "meydan_e_azadi",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "bimeh",
+      "to": "shahrak_e_ekbatan",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "bimeh",
+      "to": "mehrabad_airport_terminal_1_2",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "boostan_e_goftegou": [
+    {
+      "from": "boostan_e_goftegou",
+      "to": "daneshgah_e_tarbiat_modarres",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "boostan_e_goftegou",
+      "to": "milad_tower",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "bustan_e_laleh": [
+    {
+      "from": "bustan_e_laleh",
+      "to": "meydan_e_hazrat_vali_asr",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "bustan_e_laleh",
+      "to": "karagar",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "chaharbagh": [],
+  "chehel_tan_e_doulab": [
+    {
+      "from": "chehel_tan_e_doulab",
+      "to": "ahang",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "chehel_tan_e_doulab",
+      "to": "shohada_ye_hefdah_e_shahrivar",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "cheshmeh_ali": [
+    {
+      "from": "cheshmeh_ali",
+      "to": "ebn_e_babviyeh",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "cheshmeh_ali",
+      "to": "shohada_ye_dowlat_abad",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "chitgar": [
+    {
+      "from": "chitgar",
+      "to": "varzeshgah_e_azadi",
+      "line": "line_5",
+      "weight": 1
+    },
+    {
+      "from": "chitgar",
+      "to": "iran_khodro",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "daneshgah_e_elm_o_san_at": [
+    {
+      "from": "daneshgah_e_elm_o_san_at",
+      "to": "shahid_bagheri",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "daneshgah_e_elm_o_san_at",
+      "to": "sarsabz",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "daneshgah_e_imam_ali": [
+    {
+      "from": "daneshgah_e_imam_ali",
+      "to": "hasan_abad",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "daneshgah_e_imam_ali",
+      "to": "meydan_e_horr",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "daneshgah_e_sharif": [
+    {
+      "from": "daneshgah_e_sharif",
+      "to": "shademan",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "daneshgah_e_sharif",
+      "to": "tarasht",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "daneshgah_e_tarbiat_modarres": [
+    {
+      "from": "daneshgah_e_tarbiat_modarres",
+      "to": "karagar",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "daneshgah_e_tarbiat_modarres",
+      "to": "shahrak_e_azmayesh",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "daneshgah_e_tarbiat_modarres",
+      "to": "boostan_e_goftegou",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "daneshgah_e_tarbiat_modarres",
+      "to": "modafean_e_salamat",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "darvazeh_dolat": [
+    {
+      "from": "darvazeh_dolat",
+      "to": "ayatollah_taleghani",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "darvazeh_dolat",
+      "to": "sa_adi",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "darvazeh_dolat",
+      "to": "ferdowsi",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "darvazeh_dolat",
+      "to": "darvazeh_shemiran",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "darvazeh_shemiran": [
+    {
+      "from": "darvazeh_shemiran",
+      "to": "imam_hossein",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "darvazeh_shemiran",
+      "to": "baharistan",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "darvazeh_shemiran",
+      "to": "meydan_e_shohada",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "darvazeh_shemiran",
+      "to": "darvazeh_dolat",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "doctor_habibollah": [
+    {
+      "from": "doctor_habibollah",
+      "to": "shademan",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "doctor_habibollah",
+      "to": "ostad_mo_in",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "doctor_shariati": [
+    {
+      "from": "doctor_shariati",
+      "to": "qolhak",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "doctor_shariati",
+      "to": "mirdamad",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "ebn_e_babviyeh": [
+    {
+      "from": "ebn_e_babviyeh",
+      "to": "meydan_e_hazrat_e_abdol_azim",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "ebn_e_babviyeh",
+      "to": "cheshmeh_ali",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "ebn_e_sina": [
+    {
+      "from": "ebn_e_sina",
+      "to": "piroozi",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "ebn_e_sina",
+      "to": "meydan_e_shohada",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "emam_khomeini_airport": [
+    {
+      "from": "emam_khomeini_airport",
+      "to": "vavan",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "emam_khomeini_airport",
+      "to": "shahr_e_parand",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "eram_e_sabz": [
+    {
+      "from": "eram_e_sabz",
+      "to": "allameh_jafari",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "eram_e_sabz",
+      "to": "shahrak_e_ekbatan",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "eram_e_sabz",
+      "to": "tehran_sadeghiyeh",
+      "line": "line_5",
+      "weight": 1
+    },
+    {
+      "from": "eram_e_sabz",
+      "to": "varzeshgah_e_azadi",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "fadak": [
+    {
+      "from": "fadak",
+      "to": "janbazan",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "fadak",
+      "to": "sabalan",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "farhangsara": [
+    {
+      "from": "farhangsara",
+      "to": "tehranpars",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "ferdowsi": [
+    {
+      "from": "ferdowsi",
+      "to": "darvazeh_dolat",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "ferdowsi",
+      "to": "teatr_e_shahr",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "garmdareh": [
+    {
+      "from": "garmdareh",
+      "to": "vardavard",
+      "line": "line_5",
+      "weight": 1
+    },
+    {
+      "from": "garmdareh",
+      "to": "atmosphere",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "gheytariyeh": [
+    {
+      "from": "gheytariyeh",
+      "to": "tajrish",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "gheytariyeh",
+      "to": "shahid_sadr",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "golshahr": [
+    {
+      "from": "golshahr",
+      "to": "mohammadshahr",
+      "line": "line_5",
+      "weight": 1
+    },
+    {
+      "from": "golshahr",
+      "to": "shahid_sepahbod_qasem_soleimani",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "haram_e_hazrat_e_abdol_azim": [
+    {
+      "from": "haram_e_hazrat_e_abdol_azim",
+      "to": "meydan_e_hazrat_e_abdol_azim",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "hasan_abad": [
+    {
+      "from": "hasan_abad",
+      "to": "imam_khomeini",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "hasan_abad",
+      "to": "daneshgah_e_imam_ali",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "helal_ahmar": [
+    {
+      "from": "helal_ahmar",
+      "to": "mahdiyeh",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "helal_ahmar",
+      "to": "beryanak",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "holy_shrine_of_imam_khomeini": [
+    {
+      "from": "holy_shrine_of_imam_khomeini",
+      "to": "shahed_baghershahr",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "holy_shrine_of_imam_khomeini",
+      "to": "kahrizak",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "hossein_abad": [
+    {
+      "from": "hossein_abad",
+      "to": "nobonyad",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "hossein_abad",
+      "to": "meydan_e_heravi",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "imam_hossein": [
+    {
+      "from": "imam_hossein",
+      "to": "shahid_madani",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "imam_hossein",
+      "to": "darvazeh_shemiran",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "imam_hossein",
+      "to": "sarbaz",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "imam_hossein",
+      "to": "meydan_e_shohada",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "imam_khomeini": [
+    {
+      "from": "imam_khomeini",
+      "to": "sa_adi",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "imam_khomeini",
+      "to": "panzdah_e_khordad",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "imam_khomeini",
+      "to": "hasan_abad",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "imam_khomeini",
+      "to": "mellat",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "iran_khodro": [
+    {
+      "from": "iran_khodro",
+      "to": "chitgar",
+      "line": "line_5",
+      "weight": 1
+    },
+    {
+      "from": "iran_khodro",
+      "to": "vardavard",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "janbazan": [
+    {
+      "from": "janbazan",
+      "to": "sarsabz",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "janbazan",
+      "to": "fadak",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "javadiyeh": [
+    {
+      "from": "javadiyeh",
+      "to": "rahahan",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "javadiyeh",
+      "to": "zamzam",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "javanmard_e_ghassab": [
+    {
+      "from": "javanmard_e_ghassab",
+      "to": "aliabad",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "javanmard_e_ghassab",
+      "to": "shahr_e_rey",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "kahrizak": [
+    {
+      "from": "kahrizak",
+      "to": "holy_shrine_of_imam_khomeini",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "karagar": [
+    {
+      "from": "karagar",
+      "to": "bustan_e_laleh",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "karagar",
+      "to": "daneshgah_e_tarbiat_modarres",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "karaj": [
+    {
+      "from": "karaj",
+      "to": "atmosphere",
+      "line": "line_5",
+      "weight": 1
+    },
+    {
+      "from": "karaj",
+      "to": "mohammadshahr",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "khajeh_abdollah_e_ansari": [
+    {
+      "from": "khajeh_abdollah_e_ansari",
+      "to": "shahid_zeynoddin",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "khajeh_abdollah_e_ansari",
+      "to": "shahid_sayyad_shirazi",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "khayyam": [
+    {
+      "from": "khayyam",
+      "to": "panzdah_e_khordad",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "khayyam",
+      "to": "meydan_e_mohammadiyeh",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "kiyan_shahr": [
+    {
+      "from": "kiyan_shahr",
+      "to": "shohada_ye_dowlat_abad",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "kiyan_shahr",
+      "to": "be_sat",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "komeyl": [
+    {
+      "from": "komeyl",
+      "to": "beryanak",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "komeyl",
+      "to": "roudaki",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "kouhsar": [
+    {
+      "from": "kouhsar",
+      "to": "shohada_ye_kan",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "mahdiyeh": [
+    {
+      "from": "mahdiyeh",
+      "to": "moniriyeh",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "mahdiyeh",
+      "to": "rahahan",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "mahdiyeh",
+      "to": "meydan_e_mohammadiyeh",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "mahdiyeh",
+      "to": "helal_ahmar",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "maryam_e_moghaddas": [
+    {
+      "from": "maryam_e_moghaddas",
+      "to": "shohada_ye_haftom_e_tir",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "maryam_e_moghaddas",
+      "to": "meydan_e_hazrat_vali_asr",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "marzdaran": [
+    {
+      "from": "marzdaran",
+      "to": "shahrak_e_azmayesh",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "marzdaran",
+      "to": "yadegar_e_imam",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "mehrabad_airport_terminal_1_2": [
+    {
+      "from": "mehrabad_airport_terminal_1_2",
+      "to": "bimeh",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "mehrabad_airport_terminal_1_2",
+      "to": "mehrabad_airport_terminal_4_6",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "mehrabad_airport_terminal_4_6": [
+    {
+      "from": "mehrabad_airport_terminal_4_6",
+      "to": "mehrabad_airport_terminal_1_2",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "mellat": [
+    {
+      "from": "mellat",
+      "to": "baharistan",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "mellat",
+      "to": "imam_khomeini",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "meydan_e_azadi": [
+    {
+      "from": "meydan_e_azadi",
+      "to": "ostad_mo_in",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_azadi",
+      "to": "bimeh",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "meydan_e_enghelab_e_eslami": [
+    {
+      "from": "meydan_e_enghelab_e_eslami",
+      "to": "teatr_e_shahr",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_enghelab_e_eslami",
+      "to": "towhid",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "meydan_e_giyam": [
+    {
+      "from": "meydan_e_giyam",
+      "to": "shohada_ye_hefdah_e_shahrivar",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_giyam",
+      "to": "mowlavi",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "meydan_e_hazrat_e_abdol_azim": [
+    {
+      "from": "meydan_e_hazrat_e_abdol_azim",
+      "to": "haram_e_hazrat_e_abdol_azim",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_hazrat_e_abdol_azim",
+      "to": "ebn_e_babviyeh",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "meydan_e_hazrat_vali_asr": [
+    {
+      "from": "meydan_e_hazrat_vali_asr",
+      "to": "meydan_e_jahad",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_hazrat_vali_asr",
+      "to": "teatr_e_shahr",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_hazrat_vali_asr",
+      "to": "maryam_e_moghaddas",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_hazrat_vali_asr",
+      "to": "bustan_e_laleh",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "meydan_e_heravi": [
+    {
+      "from": "meydan_e_heravi",
+      "to": "hossein_abad",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_heravi",
+      "to": "shahid_zeynoddin",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "meydan_e_horr": [
+    {
+      "from": "meydan_e_horr",
+      "to": "daneshgah_e_imam_ali",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_horr",
+      "to": "shahid_navab_e_safavi",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "meydan_e_jahad": [
+    {
+      "from": "meydan_e_jahad",
+      "to": "mirza_ye_shirazi",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_jahad",
+      "to": "meydan_e_hazrat_vali_asr",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "meydan_e_ketab": [
+    {
+      "from": "meydan_e_ketab",
+      "to": "shahid_dadman",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "meydan_e_khorasan": [
+    {
+      "from": "meydan_e_khorasan",
+      "to": "shahid_rezaei",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_khorasan",
+      "to": "shohada_ye_hefdah_e_shahrivar",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "meydan_e_mohammadiyeh": [
+    {
+      "from": "meydan_e_mohammadiyeh",
+      "to": "khayyam",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_mohammadiyeh",
+      "to": "shoush",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_mohammadiyeh",
+      "to": "mahdiyeh",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_mohammadiyeh",
+      "to": "mowlavi",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "meydan_e_san_at": [
+    {
+      "from": "meydan_e_san_at",
+      "to": "milad_tower",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_san_at",
+      "to": "shahid_dadman",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "meydan_e_shohada": [
+    {
+      "from": "meydan_e_shohada",
+      "to": "ebn_e_sina",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_shohada",
+      "to": "darvazeh_shemiran",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_shohada",
+      "to": "amirkabir",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "meydan_e_shohada",
+      "to": "imam_hossein",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "milad_tower": [
+    {
+      "from": "milad_tower",
+      "to": "boostan_e_goftegou",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "milad_tower",
+      "to": "meydan_e_san_at",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "mirdamad": [
+    {
+      "from": "mirdamad",
+      "to": "doctor_shariati",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "mirdamad",
+      "to": "shahid_haghani",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "mirza_ye_shirazi": [
+    {
+      "from": "mirza_ye_shirazi",
+      "to": "shahid_beheshti",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "mirza_ye_shirazi",
+      "to": "meydan_e_jahad",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "modafean_e_salamat": [
+    {
+      "from": "modafean_e_salamat",
+      "to": "towhid",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "modafean_e_salamat",
+      "to": "daneshgah_e_tarbiat_modarres",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "mohammadshahr": [
+    {
+      "from": "mohammadshahr",
+      "to": "karaj",
+      "line": "line_5",
+      "weight": 1
+    },
+    {
+      "from": "mohammadshahr",
+      "to": "golshahr",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "moniriyeh": [
+    {
+      "from": "moniriyeh",
+      "to": "teatr_e_shahr",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "moniriyeh",
+      "to": "mahdiyeh",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "mosalla_ye_imam_khomeini": [
+    {
+      "from": "mosalla_ye_imam_khomeini",
+      "to": "shahid_hemmat",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "mosalla_ye_imam_khomeini",
+      "to": "shahid_beheshti",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "mowlavi": [
+    {
+      "from": "mowlavi",
+      "to": "meydan_e_giyam",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "mowlavi",
+      "to": "meydan_e_mohammadiyeh",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "nabard": [
+    {
+      "from": "nabard",
+      "to": "nirou_havaei",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "nabard",
+      "to": "piroozi",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "namayeshgah_e_shahr_e_aftab": [
+    {
+      "from": "namayeshgah_e_shahr_e_aftab",
+      "to": "shahed_baghershahr",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "namayeshgah_e_shahr_e_aftab",
+      "to": "vavan",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "nemat_abad": [
+    {
+      "from": "nemat_abad",
+      "to": "abdol_abad",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "nemat_abad",
+      "to": "azadegan",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "nirou_havaei": [
+    {
+      "from": "nirou_havaei",
+      "to": "shahid_kolahdooz",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "nirou_havaei",
+      "to": "nabard",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "nobonyad": [
+    {
+      "from": "nobonyad",
+      "to": "aghdasiyeh",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "nobonyad",
+      "to": "hossein_abad",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "ostad_mo_in": [
+    {
+      "from": "ostad_mo_in",
+      "to": "doctor_habibollah",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "ostad_mo_in",
+      "to": "meydan_e_azadi",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "palayeshgah": [
+    {
+      "from": "palayeshgah",
+      "to": "shahr_e_rey",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "palayeshgah",
+      "to": "shahed_baghershahr",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "panzdah_e_khordad": [
+    {
+      "from": "panzdah_e_khordad",
+      "to": "imam_khomeini",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "panzdah_e_khordad",
+      "to": "khayyam",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "payaneh_jonoub_jonoub_terminal": [
+    {
+      "from": "payaneh_jonoub_jonoub_terminal",
+      "to": "shoush",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "payaneh_jonoub_jonoub_terminal",
+      "to": "shahid_bokharaei",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "piroozi": [
+    {
+      "from": "piroozi",
+      "to": "nabard",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "piroozi",
+      "to": "ebn_e_sina",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "qa_em": [
+    {
+      "from": "qa_em",
+      "to": "shahid_mahallati",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "qolhak": [
+    {
+      "from": "qolhak",
+      "to": "shahid_sadr",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "qolhak",
+      "to": "doctor_shariati",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "rahahan": [
+    {
+      "from": "rahahan",
+      "to": "mahdiyeh",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "rahahan",
+      "to": "javadiyeh",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "roudaki": [
+    {
+      "from": "roudaki",
+      "to": "komeyl",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "roudaki",
+      "to": "shahid_navab_e_safavi",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "sa_adi": [
+    {
+      "from": "sa_adi",
+      "to": "darvazeh_dolat",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "sa_adi",
+      "to": "imam_khomeini",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "sabalan": [
+    {
+      "from": "sabalan",
+      "to": "fadak",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "sabalan",
+      "to": "shahid_madani",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "sarbaz": [
+    {
+      "from": "sarbaz",
+      "to": "imam_hossein",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "sarbaz",
+      "to": "bahar_shiraz_khanevadeh_hospital",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "sarsabz": [
+    {
+      "from": "sarsabz",
+      "to": "daneshgah_e_elm_o_san_at",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "sarsabz",
+      "to": "janbazan",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "shademan": [
+    {
+      "from": "shademan",
+      "to": "shahid_navab_e_safavi",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "shademan",
+      "to": "daneshgah_e_sharif",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "shademan",
+      "to": "towhid",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "shademan",
+      "to": "doctor_habibollah",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "shahed_baghershahr": [
+    {
+      "from": "shahed_baghershahr",
+      "to": "palayeshgah",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shahed_baghershahr",
+      "to": "namayeshgah_e_shahr_e_aftab",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shahed_baghershahr",
+      "to": "holy_shrine_of_imam_khomeini",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "shahid_ashrafi_esfahani": [
+    {
+      "from": "shahid_ashrafi_esfahani",
+      "to": "yadegar_e_imam",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "shahid_ashrafi_esfahani",
+      "to": "shahid_sattari",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "shahid_bagheri": [
+    {
+      "from": "shahid_bagheri",
+      "to": "tehranpars",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "shahid_bagheri",
+      "to": "daneshgah_e_elm_o_san_at",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "shahid_beheshti": [
+    {
+      "from": "shahid_beheshti",
+      "to": "mosalla_ye_imam_khomeini",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shahid_beheshti",
+      "to": "shahid_mofattah",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shahid_beheshti",
+      "to": "sohrevardi",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "shahid_beheshti",
+      "to": "mirza_ye_shirazi",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "shahid_bokharaei": [
+    {
+      "from": "shahid_bokharaei",
+      "to": "payaneh_jonoub_jonoub_terminal",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shahid_bokharaei",
+      "to": "aliabad",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "shahid_dadman": [
+    {
+      "from": "shahid_dadman",
+      "to": "meydan_e_san_at",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "shahid_dadman",
+      "to": "meydan_e_ketab",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "shahid_ghodousi": [
+    {
+      "from": "shahid_ghodousi",
+      "to": "shahid_sayyad_shirazi",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "shahid_ghodousi",
+      "to": "sohrevardi",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "shahid_haghani": [
+    {
+      "from": "shahid_haghani",
+      "to": "mirdamad",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shahid_haghani",
+      "to": "shahid_hemmat",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "shahid_hemmat": [
+    {
+      "from": "shahid_hemmat",
+      "to": "shahid_haghani",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shahid_hemmat",
+      "to": "mosalla_ye_imam_khomeini",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "shahid_kolahdooz": [
+    {
+      "from": "shahid_kolahdooz",
+      "to": "nirou_havaei",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "shahid_madani": [
+    {
+      "from": "shahid_madani",
+      "to": "sabalan",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "shahid_madani",
+      "to": "imam_hossein",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "shahid_mahallati": [
+    {
+      "from": "shahid_mahallati",
+      "to": "qa_em",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "shahid_mahallati",
+      "to": "aghdasiyeh",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "shahid_mofattah": [
+    {
+      "from": "shahid_mofattah",
+      "to": "shahid_beheshti",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shahid_mofattah",
+      "to": "shohada_ye_haftom_e_tir",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "shahid_navab_e_safavi": [
+    {
+      "from": "shahid_navab_e_safavi",
+      "to": "meydan_e_horr",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "shahid_navab_e_safavi",
+      "to": "shademan",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "shahid_navab_e_safavi",
+      "to": "towhid",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "shahid_navab_e_safavi",
+      "to": "roudaki",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "shahid_rezaei": [
+    {
+      "from": "shahid_rezaei",
+      "to": "be_sat",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "shahid_rezaei",
+      "to": "meydan_e_khorasan",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "shahid_sadr": [
+    {
+      "from": "shahid_sadr",
+      "to": "gheytariyeh",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shahid_sadr",
+      "to": "shahid_sadr",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "shahid_sattari": [
+    {
+      "from": "shahid_sattari",
+      "to": "shahid_ashrafi_esfahani",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "shahid_sattari",
+      "to": "ayatollah_kashani",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "shahid_sayyad_shirazi": [
+    {
+      "from": "shahid_sayyad_shirazi",
+      "to": "khajeh_abdollah_e_ansari",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "shahid_sayyad_shirazi",
+      "to": "shahid_ghodousi",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "shahid_sepahbod_qasem_soleimani": [
+    {
+      "from": "shahid_sepahbod_qasem_soleimani",
+      "to": "golshahr",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "shahid_zeynoddin": [
+    {
+      "from": "shahid_zeynoddin",
+      "to": "meydan_e_heravi",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "shahid_zeynoddin",
+      "to": "khajeh_abdollah_e_ansari",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "shahr_e_parand": [
+    {
+      "from": "shahr_e_parand",
+      "to": "emam_khomeini_airport",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "shahr_e_rey": [
+    {
+      "from": "shahr_e_rey",
+      "to": "javanmard_e_ghassab",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shahr_e_rey",
+      "to": "palayeshgah",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "shahr_e_ziba": [
+    {
+      "from": "shahr_e_ziba",
+      "to": "ayatollah_kashani",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "shahr_e_ziba",
+      "to": "shahran",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "shahrak_e_azmayesh": [
+    {
+      "from": "shahrak_e_azmayesh",
+      "to": "daneshgah_e_tarbiat_modarres",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "shahrak_e_azmayesh",
+      "to": "marzdaran",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "shahrak_e_ekbatan": [
+    {
+      "from": "shahrak_e_ekbatan",
+      "to": "bimeh",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "shahrak_e_ekbatan",
+      "to": "eram_e_sabz",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "shahrak_e_shariaty": [
+    {
+      "from": "shahrak_e_shariaty",
+      "to": "zamzam",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "shahrak_e_shariaty",
+      "to": "abdol_abad",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "shahran": [
+    {
+      "from": "shahran",
+      "to": "shahr_e_ziba",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "shahran",
+      "to": "shohada_ye_kan",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "shohada_ye_dowlat_abad": [
+    {
+      "from": "shohada_ye_dowlat_abad",
+      "to": "cheshmeh_ali",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "shohada_ye_dowlat_abad",
+      "to": "kiyan_shahr",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "shohada_ye_haftom_e_tir": [
+    {
+      "from": "shohada_ye_haftom_e_tir",
+      "to": "shahid_mofattah",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shohada_ye_haftom_e_tir",
+      "to": "ayatollah_taleghani",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shohada_ye_haftom_e_tir",
+      "to": "bahar_shiraz_khanevadeh_hospital",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "shohada_ye_haftom_e_tir",
+      "to": "maryam_e_moghaddas",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "shohada_ye_hefdah_e_shahrivar": [
+    {
+      "from": "shohada_ye_hefdah_e_shahrivar",
+      "to": "meydan_e_khorasan",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "shohada_ye_hefdah_e_shahrivar",
+      "to": "amirkabir",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "shohada_ye_hefdah_e_shahrivar",
+      "to": "chehel_tan_e_doulab",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "shohada_ye_hefdah_e_shahrivar",
+      "to": "meydan_e_giyam",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "shohada_ye_kan": [
+    {
+      "from": "shohada_ye_kan",
+      "to": "shahran",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "shohada_ye_kan",
+      "to": "kouhsar",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "shoush": [
+    {
+      "from": "shoush",
+      "to": "meydan_e_mohammadiyeh",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "shoush",
+      "to": "payaneh_jonoub_jonoub_terminal",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "sohrevardi": [
+    {
+      "from": "sohrevardi",
+      "to": "shahid_ghodousi",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "sohrevardi",
+      "to": "shahid_beheshti",
+      "line": "line_3",
+      "weight": 1
+    }
+  ],
+  "tajrish": [
+    {
+      "from": "tajrish",
+      "to": "gheytariyeh",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "tarasht": [
+    {
+      "from": "tarasht",
+      "to": "daneshgah_e_sharif",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "tarasht",
+      "to": "tehran_sadeghiyeh",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "teatr_e_shahr": [
+    {
+      "from": "teatr_e_shahr",
+      "to": "meydan_e_hazrat_vali_asr",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "teatr_e_shahr",
+      "to": "moniriyeh",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "teatr_e_shahr",
+      "to": "ferdowsi",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "teatr_e_shahr",
+      "to": "meydan_e_enghelab_e_eslami",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
+  "tehran_sadeghiyeh": [
+    {
+      "from": "tehran_sadeghiyeh",
+      "to": "tarasht",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "tehran_sadeghiyeh",
+      "to": "eram_e_sabz",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "tehranpars": [
+    {
+      "from": "tehranpars",
+      "to": "farhangsara",
+      "line": "line_2",
+      "weight": 1
+    },
+    {
+      "from": "tehranpars",
+      "to": "shahid_bagheri",
+      "line": "line_2",
+      "weight": 1
+    }
+  ],
+  "towhid": [
+    {
+      "from": "towhid",
+      "to": "meydan_e_enghelab_e_eslami",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "towhid",
+      "to": "shademan",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "towhid",
+      "to": "modafean_e_salamat",
+      "line": "line_7",
+      "weight": 1
+    },
+    {
+      "from": "towhid",
+      "to": "shahid_navab_e_safavi",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "vardavard": [
+    {
+      "from": "vardavard",
+      "to": "iran_khodro",
+      "line": "line_5",
+      "weight": 1
+    },
+    {
+      "from": "vardavard",
+      "to": "garmdareh",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "varzeshgah_e_azadi": [
+    {
+      "from": "varzeshgah_e_azadi",
+      "to": "eram_e_sabz",
+      "line": "line_5",
+      "weight": 1
+    },
+    {
+      "from": "varzeshgah_e_azadi",
+      "to": "chitgar",
+      "line": "line_5",
+      "weight": 1
+    }
+  ],
+  "varzeshgah_e_takhti": [
+    {
+      "from": "varzeshgah_e_takhti",
+      "to": "basij",
+      "line": "line_7",
+      "weight": 1
+    }
+  ],
+  "vavan": [
+    {
+      "from": "vavan",
+      "to": "namayeshgah_e_shahr_e_aftab",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "vavan",
+      "to": "emam_khomeini_airport",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
+  "yadegar_e_imam": [
+    {
+      "from": "yadegar_e_imam",
+      "to": "marzdaran",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "yadegar_e_imam",
+      "to": "shahid_ashrafi_esfahani",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
+  "zamzam": [
+    {
+      "from": "zamzam",
+      "to": "javadiyeh",
+      "line": "line_3",
+      "weight": 1
+    },
+    {
+      "from": "zamzam",
+      "to": "shahrak_e_shariaty",
+      "line": "line_3",
+      "weight": 1
+    }
+  ]
+}

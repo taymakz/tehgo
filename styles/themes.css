@@ -1,0 +1,137 @@
+.theme-studenthub {
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+}
+
+.dark .theme-studenthub {
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+}
+.theme-violet {
+  --primary: var(--color-violet-600);
+  --primary-foreground: var(--color-white);
+}
+
+.dark .theme-violet {
+  --primary: var(--color-violet-400);
+  --primary-foreground: var(--color-black);
+}
+
+.theme-sky {
+  --primary: var(--color-sky-600);
+  --primary-foreground: var(--color-white);
+}
+
+.dark .theme-sky {
+  --primary: var(--color-sky-400);
+  --primary-foreground: var(--color-black);
+}
+
+.theme-emerald {
+  --primary: var(--color-emerald-600);
+  --primary-foreground: var(--color-white);
+}
+
+.dark .theme-emerald {
+  --primary: var(--color-emerald-400);
+  --primary-foreground: var(--color-black);
+}
+
+.theme-orange {
+  --primary: var(--color-orange-600);
+  --primary-foreground: var(--color-white);
+}
+
+.dark .theme-orange {
+  --primary: var(--color-orange-400);
+  --primary-foreground: var(--color-black);
+}
+
+.theme-red {
+  --primary: var(--color-red-600);
+  --primary-foreground: var(--color-white);
+}
+
+.dark .theme-red {
+  --primary: var(--color-red-400);
+  --primary-foreground: var(--color-black);
+}
+
+.theme-yellow {
+  --primary: var(--color-yellow-600);
+  --primary-foreground: var(--color-white);
+}
+
+.dark .theme-yellow {
+  --primary: var(--color-yellow-400);
+  --primary-foreground: var(--color-black);
+}
+
+.theme-fuchsia {
+  --primary: var(--color-fuchsia-600);
+  --primary-foreground: var(--color-white);
+}
+
+.dark .theme-fuchsia {
+  --primary: var(--color-fuchsia-400);
+  --primary-foreground: var(--color-black);
+}
+
+.theme-pink {
+  --primary: var(--color-pink-600);
+  --primary-foreground: var(--color-white);
+}
+
+.dark .theme-pink {
+  --primary: var(--color-pink-400);
+  --primary-foreground: var(--color-black);
+}
+
+.theme-cyan {
+  --primary: var(--color-cyan-600);
+  --primary-foreground: var(--color-white);
+}
+
+.dark .theme-cyan {
+  --primary: var(--color-cyan-400);
+  --primary-foreground: var(--color-black);
+}
+
+.theme-indigo {
+  --primary: oklch(51.1% 0.262 276.966);
+  --primary-foreground: oklch(1 0 0);
+}
+
+.dark .theme-indigo {
+  --primary: oklch(67.3% 0.182 276.935);
+  --primary-foreground: oklch(0.2044 0 0);
+}
+
+.theme-lime {
+  --primary: var(--color-lime-600);
+  --primary-foreground: var(--color-white);
+}
+
+.dark .theme-lime {
+  --primary: var(--color-lime-400);
+  --primary-foreground: var(--color-black);
+}
+
+.theme-amber {
+  --primary: var(--color-amber-600);
+  --primary-foreground: var(--color-white);
+}
+
+.dark .theme-amber {
+  --primary: var(--color-amber-400);
+  --primary-foreground: var(--color-black);
+}
+.theme-emerald-hard {
+  --primary: #064e3b;
+  --primary-foreground: #ffffff;
+}
+
+.dark .theme-emerald-hard {
+  --primary: #064e3b;
+  --primary-foreground: #ffffff;
+}

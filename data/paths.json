@@ -1,0 +1,272 @@
+{
+  "line_1": {
+    "paths": [
+      {
+        "id": "tajrish_to_baghershahr",
+        "from": "tajrish",
+        "to": "shahed_baghershahr",
+        "stations": [
+          "tajrish",
+          "gheytariyeh",
+          "shahid_sadr",
+          "qolhak",
+          "doctor_shariati",
+          "mirdamad",
+          "shahid_haghani",
+          "shahid_hemmat",
+          "mosalla_ye_imam_khomeini",
+          "shahid_beheshti",
+          "shahid_mofattah",
+          "shohada_ye_haftom_e_tir",
+          "ayatollah_taleghani",
+          "darvazeh_dolat",
+          "sa_adi",
+          "imam_khomeini",
+          "panzdah_e_khordad",
+          "khayyam",
+          "meydan_e_mohammadiyeh",
+          "shoush",
+          "payaneh_jonoub_jonoub_terminal",
+          "shahid_bokharaei",
+          "aliabad",
+          "javanmard_e_ghassab",
+          "shahr_e_rey",
+          "palayeshgah",
+          "shahed_baghershahr"
+        ]
+      },
+      {
+        "id": "baghershahr_to_kahrizak",
+        "from": "shahed_baghershahr",
+        "to": "kahrizak",
+        "stations": [
+          "shahed_baghershahr",
+          "haram_e_motahar_e_emam_khomeini",
+          "kahrizak"
+        ]
+      },
+      {
+        "id": "baghershahr_to_parand",
+        "from": "shahed_baghershahr",
+        "to": "shahr_e_parand",
+        "stations": [
+          "shahed_baghershahr",
+          "namayeshgah_e_shahr_e_aftab",
+          "vavan",
+          "emam_khomeini_airport",
+          "shahr_e_parand"
+        ]
+      }
+    ]
+  },
+  "line_2": {
+    "paths": [
+      {
+        "id": "tehran_sadeghiyeh_to_farhangsara",
+        "from": "tehran_sadeghiyeh",
+        "to": "farhangsara",
+        "stations": [
+          "tehran_sadeghiyeh",
+          "tarasht",
+          "daneshgah_e_sharif",
+          "shademan",
+          "shahid_navab_e_safavi",
+          "meydan_e_horr",
+          "hasan_abad",
+          "imam_khomeini",
+          "mellat",
+          "daneshgah_e_imam_ali",
+          "darvazeh_shemiran",
+          "imam_hossein",
+          "shahid_madani",
+          "sabalan",
+          "fadak",
+          "janbazan",
+          "sarsabz",
+          "daneshgah_e_elm_o_san_at",
+          "shahid_bagheri",
+          "tehranpars",
+          "farhangsara"
+        ]
+      }
+    ]
+  },
+  "line_3": {
+    "paths": [
+      {
+        "id": "azadegan_to_ghaem",
+        "from": "azadegan",
+        "to": "qa_em",
+        "stations": [
+          "azadegan",
+          "nemat_abad",
+          "abdol_abad",
+          "shahrak_e_shariaty",
+          "zamzam",
+          "javadiyeh",
+          "rahahan",
+          "mahdiyeh",
+          "moniriyeh",
+          "teatr_e_shahr",
+          "meydan_e_hazrat_vali_asr",
+          "meydan_e_jahad",
+          "mirza_ye_shirazi",
+          "shahid_beheshti",
+          "sohrevardi",
+          "shahid_ghodousi",
+          "shahid_sayyad_shirazi",
+          "khajeh_abdollah_e_ansari",
+          "shahid_zeynoddin",
+          "meydan_e_heravi",
+          "hossein_abad",
+          "nobonyad",
+          "aghdasiyeh",
+          "shahid_mahallati",
+          "qa_em"
+        ]
+      }
+    ]
+  },
+  "line_4": {
+    "paths": [
+      {
+        "id": "chaharbagh_to_shahid_kolahdooz",
+        "from": "chaharbagh",
+        "to": "shahid_kolahdooz",
+        "stations": [
+          "chaharbagh",
+          "allameh_jafari",
+          "ayatollah_kashani",
+          "eram_e_sabz",
+          "shahrak_e_ekbatan",
+          "bimeh",
+          "meydan_e_azadi",
+          "ostad_mo_in",
+          "doctor_habibollah",
+          "shademan",
+          "towhid",
+          "meydan_e_enghelab_e_eslami",
+          "teatr_e_shahr",
+          "ferdowsi",
+          "darvazeh_dolat",
+          "darvazeh_shemiran",
+          "ebn_e_sina",
+          "meydan_e_shohada",
+          "pirooz i",
+          "nabard",
+          "nirou_havaei",
+          "shahid_kolahdooz"
+        ]
+      },
+      {
+        "id": "bimeh_to_mehrabad_airport",
+        "from": "bimeh",
+        "to": "mehrabad_airport_terminal_4_6",
+        "stations": [
+          "bimeh",
+          "mehrabad_airport_terminal_1_2",
+          "mehrabad_airport_terminal_4_6"
+        ],
+        "isBranch": true
+      }
+    ]
+  },
+  "line_5": {
+    "paths": [
+      {
+        "id": "tehran_sadeghiyeh_to_shahid_sepahbod_qasem_soleimani",
+        "from": "tehran_sadeghiyeh",
+        "to": "shahid_sepahbod_qasem_soleimani",
+        "stations": [
+          "tehran_sadeghiyeh",
+          "eram_e_sabz",
+          "varzeshgah_e_azadi",
+          "chitgar",
+          "iran_khodro",
+          "vardavard",
+          "garmdareh",
+          "atmosphere",
+          "karaj",
+          "mohammadshahr",
+          "golshahr",
+          "shahid_sepahbod_qasem_soleimani"
+        ]
+      }
+    ]
+  },
+  "line_6": {
+    "paths": [
+      {
+        "id": "kouhsar_to_haram_e_hazrat_e_abdol_azim",
+        "from": "kouhsar",
+        "to": "haram_e_hazrat_e_abdol_azim",
+        "stations": [
+          "kouhsar",
+          "shohada_ye_kan",
+          "shahran",
+          "shahr_e_ziba",
+          "ayatollah_kashani",
+          "shahid_sattari",
+          "shahid_ashrafi_esfahani",
+          "yadegar_e_imam",
+          "marzdaran",
+          "shahrak_e_azmayesh",
+          "daneshgah_e_tarbiat_modarres",
+          "karagar",
+          "bustan_e_laleh",
+          "meydan_e_hazrat_vali_asr",
+          "shahid_nejatollahi",
+          "shohada_ye_haftom_e_tir",
+          "bahar_shiraz_khanevadeh_hospital",
+          "sarbaz",
+          "imam_hossein",
+          "meydan_e_shohada",
+          "amirkabir",
+          "shohada_ye_hefdah_e_shahrivar",
+          "meydan_e_khorasan",
+          "shahid_rezaei",
+          "be_sat",
+          "kiyan_shahr",
+          "shohada_ye_dowlat_abad",
+          "cheshmeh_ali",
+          "ebn_e_babviyeh",
+          "meydan_e_hazrat_e_abdol_azim",
+          "haram_e_hazrat_e_abdol_azim"
+        ]
+      }
+    ]
+  },
+  "line_7": {
+    "paths": [
+      {
+        "id": "meydan_e_ketab_to_varzeshgah_e_takhti",
+        "from": "meydan_e_ketab",
+        "to": "varzeshgah_e_takhti",
+        "stations": [
+          "meydan_e_ketab",
+          "shahid_dadman",
+          "meydan_e_san_at",
+          "milad_tower",
+          "boostan_e_goftegou",
+          "daneshgah_e_tarbiat_modarres",
+          "modafean_e_salamat",
+          "towhid",
+          "shahid_navab_e_safavi",
+          "roudaki",
+          "komeyl",
+          "beryanak",
+          "helal_ahmar",
+          "mahdiyeh",
+          "meydan_e_mohammadiyeh",
+          "mowlavi",
+          "meydan_e_giyam",
+          "shohada_ye_hefdah_e_shahrivar",
+          "chehel_tan_e_doulab",
+          "ahang",
+          "basij",
+          "varzeshgah_e_takhti"
+        ]
+      }
+    ]
+  }
+}

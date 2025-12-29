@@ -1,0 +1,75 @@
+{
+  "common": {
+    "home": "خانه",
+    "search": "جستجو",
+    "loading": "در حال بارگذاری...",
+    "error": "خطا",
+    "retry": "تلاش مجدد",
+    "close": "بستن",
+    "cancel": "لغو",
+    "confirm": "تایید",
+    "delete": "حذف",
+    "edit": "ویرایش",
+    "save": "ذخیره"
+  },
+  "metro": {
+    "title": "مترو",
+    "stations": "ایستگاه‌ها",
+    "lines": "خطوط",
+    "route": "مسیریابی",
+    "map": "نقشه",
+    "download_map": "دانلود نقشه"
+  },
+  "theme": {
+    "title": "حالت نمایش",
+    "description": "انتخاب حالت نمایش اپلیکیشن",
+    "system": "مطابق با سیستم عامل",
+    "light": "حالت روز",
+    "dark": "حالت شب",
+    "select": "انتخاب"
+  },
+  "locale": {
+    "title": "انتخاب زبان",
+    "description": "انتخاب زبان اپلیکیشن",
+    "english": "English",
+    "persian": "فارسی",
+    "select": "انتخاب"
+  },
+  "page_route": {
+    "routing_title": "مسیریابی",
+    "select_origin": "انتخاب مبدا",
+    "select_destination": "انتخاب مقصد",
+    "find_route": "پیدا کردن مسیر",
+    "swap": "جابجایی",
+    "recent_routes": "مسیرهای اخیر",
+    "no_recent_routes": "هنوز مسیریابی نکرده‌اید.",
+    "route_found": "مسیر یافت شد",
+    "total_stations": "کل ایستگاه‌ها",
+    "total_transfers": "کل تعویض‌ها",
+    "lines_used": "خطوط استفاده شده",
+    "view_route": "مشاهده مسیر",
+    "delete": "حذف",
+    "transfer": "تعویض",
+    "search_origin_description": "ایستگاه مبدا خود را جستجو و انتخاب کنید",
+    "search_destination_description": "ایستگاه مقصد خود را جستجو و انتخاب کنید",
+    "no_stations_found": "ایستگاهی یافت نشد.",
+    "route_details": "جزئیات مسیر",
+    "detailed_route_steps": "مراحل مسیر به صورت جزئی",
+    "recommended": "پیشنهادی",
+    "select_route": "یک مسیر انتخاب کنید",
+    "missed_stop": "ایستگاهمو رد کردم",
+    "share": "اشتراک",
+    "recalculate_from": "از ایستگاه فعلی مسیر جدید بساز",
+    "select_current_station": "ایستگاه فعلی خود را انتخاب کنید",
+    "new_route_to_destination": "مسیر جدید به مقصد",
+    "used_count": "استفاده شده {count} بار"
+  },
+  "pwa": {
+    "install": "نصب اپلیکیشن",
+    "install_title": "نصب تی‌گو",
+    "install_description": "برای دسترسی سریع و استفاده آفلاین نصب کنید",
+    "install_button": "نصب",
+    "add_home_screen": "افزودن به صفحه اصلی",
+    "ios_instruction": "برای نصب این اپلیکیشن روی دستگاه iOS خود، دکمه اشتراک گذاری را بزنید و سپس \"افزودن به صفحه اصلی\" را انتخاب کنید."
+  }
+}
