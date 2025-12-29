@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://tehgo.com' // Replace with your actual domain
+  const baseUrl = 'https://tehgo.ir' // Replace with your actual domain
 
   const locales = ['en', 'fa']
   const pages = ['', 'route', 'map']
