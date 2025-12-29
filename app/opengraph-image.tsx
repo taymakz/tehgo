@@ -68,7 +68,7 @@ export default async function Image() {
             fontFamily: "sans-serif",
           }}
         >
-          TehGo • تی‌گو
+          Tehgo.ir
         </p>
 
         {/* Main title - English */}
@@ -88,18 +88,6 @@ export default async function Image() {
           <span>Tehran Metro</span>
         </h1>
 
-        {/* Persian title */}
-        <p
-          style={{
-            fontSize: "36px",
-            lineHeight: "1.3",
-            color: "#E4E4E7",
-            fontFamily: "Tahoma, Arial, sans-serif",
-            marginBottom: "8px",
-          }}
-        >
-          راهنمای مترو تهران
-        </p>
 
         {/* Subtitle */}
         <p
