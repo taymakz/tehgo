@@ -30,7 +30,7 @@ export default async function MapPage({ params }: MapPageProps) {
   const dict = await getDictionary(lang);
 
   return (
-    <div className="min-h-screen p-4">
+    <div className="min-h-screen p-4 pb-26">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Page Header */}
         <div className="text-center">
@@ -55,7 +55,7 @@ export default async function MapPage({ params }: MapPageProps) {
 
             {/* Download Button */}
             <div className="flex justify-center pt-4">
-              <a href="/map.jpg" download="tehran-metro-map.jpg">
+              <a href="/map.jpg">
                 <Button size="lg" className="flex items-center gap-2">
                   <Download className="size-5" />
                   {dict.metro.download_map}
