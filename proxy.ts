@@ -83,6 +83,7 @@ export function proxy(request: NextRequest) {
     '/fonts/', // Font files
     '/icons/', // Icon assets
     '/images/', // Image assets
+    '/opengraph-image/', // OG image generation
   ];
 
   // Skip locale routing for files with these extensions

@@ -46,25 +46,29 @@ export async function generateMetadata({
   if (!hasLocale(lang)) {
     return {}
   }
-
-  const dict = await getDictionary(lang as Locale)
-
-  const isRTL = lang === 'fa'
   const siteName = 'TehGo'
+  const appUrl = 'https://tehgo.ir'
   const title = lang === 'fa'
     ? 'تی‌گو - راهنمای مترو تهران'
     : 'TehGo - Tehran Metro Guide'
   const description = lang === 'fa'
     ? 'بهترین مسیریاب مترو تهران. مسیریابی آسان، اطلاعات ایستگاه‌ها و خطوط مترو.'
     : 'The best Tehran Metro route planner. Easy routing, station info, and metro lines.'
+  const keywords = lang === 'fa'
+    ? ['تهران', 'مترو', 'مسیریاب', 'حمل و نقل', 'ایران', 'تی‌گو']
+    : ['Tehran', 'Metro', 'Route Planner', 'Transportation', 'Iran', 'TehGo']
 
   return {
     // Basic metadata
+    metadataBase: new URL(appUrl),
     title: {
       default: title,
       template: `%s | ${siteName}`,
     },
     description,
+    keywords,
+    authors: [{ name: 'TehGo Contributors' }],
+    generator: 'Next.js',
 
     // Application name for PWA
     applicationName: siteName,
@@ -99,6 +103,8 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title,
       description,
+      site: '@tehgo',
+      creator: '@taymakz',
     },
 
     // Robots configuration
@@ -118,8 +124,9 @@ export async function generateMetadata({
     alternates: {
       canonical: `/${lang}`,
       languages: {
-        'fa-IR': '/fa',
-        'en-US': '/en',
+        fa: '/fa',
+        en: '/en',
+        'x-default': '/fa',
       },
     },
 
@@ -201,6 +208,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="theme-color" content="#09090b" />
 
         {/* Preconnect to important origins */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
