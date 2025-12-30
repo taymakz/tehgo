@@ -19,7 +19,7 @@ import { useEffect, useState, use } from 'react';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, MapPin, Share2, Image as ImageIcon } from 'lucide-react';
+import { ArrowLeft, MapPin, Share2, Image as ImageIcon, Sun, Moon, FileText, Eye } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import {
   BottomSheet,
@@ -361,9 +361,12 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                     : 'border-border'
                     }`}
                 >
-                  <p className="text-center text-sm font-medium">
-                    {lang === 'fa' ? 'روشن' : 'Light'}
-                  </p>
+                  <div className="flex flex-col items-center gap-2">
+                    <Sun className="w-6 h-6" />
+                    <p className="text-center text-sm font-medium">
+                      {lang === 'fa' ? 'روشن' : 'Light'}
+                    </p>
+                  </div>
                 </button>
                 <button
                   onClick={() => setExportTheme('dark')}
@@ -372,9 +375,12 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                     : 'border-border'
                     }`}
                 >
-                  <p className="text-center text-sm font-medium">
-                    {lang === 'fa' ? 'تیره' : 'Dark'}
-                  </p>
+                  <div className="flex flex-col items-center gap-2">
+                    <Moon className="w-6 h-6" />
+                    <p className="text-center text-sm font-medium">
+                      {lang === 'fa' ? 'تیره' : 'Dark'}
+                    </p>
+                  </div>
                 </button>
               </div>
             </div>
@@ -392,9 +398,12 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                     : 'border-border'
                     }`}
                 >
-                  <p className="text-center text-sm font-medium">
-                    {lang === 'fa' ? 'خلاصه' : 'Summary'}
-                  </p>
+                  <div className="flex flex-col items-center gap-2">
+                    <FileText className="w-6 h-6" />
+                    <p className="text-center text-sm font-medium">
+                      {lang === 'fa' ? 'خلاصه' : 'Summary'}
+                    </p>
+                  </div>
                 </button>
                 <button
                   onClick={() => setExportDetailLevel('detailed')}
@@ -403,9 +412,12 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                     : 'border-border'
                     }`}
                 >
-                  <p className="text-center text-sm font-medium">
-                    {lang === 'fa' ? 'با جزئیات' : 'Detailed'}
-                  </p>
+                  <div className="flex flex-col items-center gap-2">
+                    <Eye className="w-6 h-6" />
+                    <p className="text-center text-sm font-medium">
+                      {lang === 'fa' ? 'با جزئیات' : 'Detailed'}
+                    </p>
+                  </div>
                 </button>
               </div>
             </div>
