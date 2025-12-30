@@ -238,7 +238,7 @@ export function RecentRoutes({ dict }: RecentRoutesProps) {
               {/* Route info */}
               <div>
                 <p className="font-medium">
-                  {getStationDisplay(route.from)} →{' '}
+                  {getStationDisplay(route.from)} <span className="rtl:rotate-180">→</span>{' '}
                   {getStationDisplay(route.to)}
                 </p>
                 <p className="text-sm text-muted-foreground">
