@@ -32,7 +32,7 @@ import { Search } from 'lucide-react';
 import { toast } from 'sonner';
 import stationsData from '@/data/stations.json';
 import linesData from '@/data/lines.json';
-import type { StationsMap, LinesMap } from '@/types/metro';
+import type { StationsMap, LinesMap, Station } from '@/types/metro';
 
 // Type assertions for JSON data
 const stations = stationsData as StationsMap;
@@ -137,7 +137,7 @@ export function StationSelector({
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        let closest = null;
+        let closest: Station | undefined = undefined;
         let minDist = Infinity;
         Object.values(stations).forEach((station) => {
           const dist = haversine(latitude, longitude, parseFloat(station.latitude), parseFloat(station.longitude));
@@ -147,7 +147,7 @@ export function StationSelector({
           }
         });
         if (closest) {
-          handleSelect(closest.id);
+          handleSelect((closest as Station).id);
         }
       },
       (error) => {

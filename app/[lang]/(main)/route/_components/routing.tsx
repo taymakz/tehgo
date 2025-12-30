@@ -54,6 +54,9 @@ interface RoutingProps {
       missed_stop: string;
       recalculate_from: string;
       select_current_station: string;
+      closest_to_my_location: string
+      location_permission_denied: string
+      geolocation_not_supported: string
     };
   };
 }
