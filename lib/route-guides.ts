@@ -21,34 +21,41 @@ function getLineTerminal(line: string, startStationId: string, nextStationId: st
   return '';
 }
 
+export { getLineTerminal };
+
 export function getFirstStepGuide(
   route: RouteResult,
   lines: LinesMap,
   lang: 'en' | 'fa',
   getStationDisplay: (id: string) => string
 ): string {
-  if (!route.steps.length) return '';
+  if (route.steps.length === 0) return '';
 
   const firstStep = route.steps[0];
-  const lastStep = route.steps[route.steps.length - 1];
-  const lineName = lines[firstStep.line]?.name[lang] || firstStep.line;
+  const lineId = firstStep.line;
+  const lineName = lines[lineId]?.name[lang] || lineId;
 
-  // سرخط را از مسیر استخراج می‌کنیم: اولین یا آخرین ایستگاه path در همان خط
-  let segmentEndIndex = route.steps.length - 1;
-  for (let i = route.steps.length - 1; i >= 0; i--) {
-    if (route.steps[i].line === firstStep.line) {
-      segmentEndIndex = i;
-      break;
-    }
+  // پیدا کردن آخرین ایستگاه این خط در مسیر
+  let lastStationOnLine = firstStep.stationId;
+  for (const step of route.steps) {
+    if (step.line !== lineId) break;
+    lastStationOnLine = step.stationId;
   }
 
-  const endStationName = getStationDisplay(route.steps[segmentEndIndex].stationId);
+  const terminal = getLineTerminal(
+    lineId,
+    firstStep.stationId,
+    lastStationOnLine
+  );
+
   const stationName = getStationDisplay(firstStep.stationId);
+  const terminalName = getStationDisplay(terminal);
 
   return lang === 'fa'
-    ? `از ایستگاه ${stationName} سوار ${lineName} به سمت ${endStationName} شوید`
-    : `Board ${lineName} at ${stationName} station towards ${endStationName}`;
+    ? `از ایستگاه ${stationName} سوار ${lineName} به سمت ${terminalName} شوید`
+    : `Board ${lineName} at ${stationName} station towards ${terminalName}`;
 }
+
 
 export function getTransferGuide(
   route: RouteResult,
