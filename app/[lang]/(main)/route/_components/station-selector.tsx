@@ -97,6 +97,7 @@ export function StationSelector({
   // Internal state for uncontrolled mode
   const [internalOpen, setInternalOpen] = useState(false);
   const [search, setSearch] = useState('');
+  const [geoLoading, setGeoLoading] = useState(false);
 
   // Use controlled state if provided, otherwise use internal state
   const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen;
@@ -129,8 +130,10 @@ export function StationSelector({
    * Get user's location and find closest station
    */
   const getClosestStation = () => {
+    setGeoLoading(true);
     if (!navigator.geolocation) {
       toast.error(dict.geolocation_not_supported);
+      setGeoLoading(false);
       return;
     }
 
@@ -149,10 +152,12 @@ export function StationSelector({
         if (closest) {
           handleSelect((closest as Station).id);
         }
+        setGeoLoading(false);
       },
       (error) => {
         console.error('Error getting location:', error);
         toast.error(dict.location_permission_denied);
+        setGeoLoading(false);
       }
     );
   };
@@ -197,6 +202,7 @@ export function StationSelector({
                 onClick={getClosestStation}
                 variant="outline"
                 className="w-full"
+                loading={geoLoading}
               >
                 {dict.closest_to_my_location}
               </Button>
