@@ -310,11 +310,10 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
             {routeOptions.map((option) => (
               <Card
                 key={`${option.type}-${option.index}`}
-                className={`p-4 cursor-pointer transition-all hover:shadow-md ${
-                  selectedRouteIndex === option.index
-                    ? 'ring-2 ring-primary bg-primary/5'
-                    : 'hover:bg-muted/50'
-                }`}
+                className={`p-4 cursor-pointer transition-all hover:shadow-md ${selectedRouteIndex === option.index
+                  ? 'ring-2 ring-primary bg-primary/5'
+                  : 'hover:bg-muted/50'
+                  }`}
                 onClick={() => selectRoute(option.index)}
               >
                 <div className="text-center">
@@ -357,11 +356,10 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
               <div className="grid grid-cols-2 gap-4">
                 <button
                   onClick={() => setExportTheme('light')}
-                  className={`relative rounded-lg border-2 p-4 transition-all hover:border-primary ${
-                    exportTheme === 'light'
-                      ? 'border-primary bg-primary/5'
-                      : 'border-border'
-                  }`}
+                  className={`relative rounded-lg border-2 p-4 transition-all hover:border-primary ${exportTheme === 'light'
+                    ? 'border-primary bg-primary/5'
+                    : 'border-border'
+                    }`}
                 >
                   <p className="text-center text-sm font-medium">
                     {lang === 'fa' ? 'روشن' : 'Light'}
@@ -369,11 +367,10 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                 </button>
                 <button
                   onClick={() => setExportTheme('dark')}
-                  className={`relative rounded-lg border-2 p-4 transition-all hover:border-primary ${
-                    exportTheme === 'dark'
-                      ? 'border-primary bg-primary/5'
-                      : 'border-border'
-                  }`}
+                  className={`relative rounded-lg border-2 p-4 transition-all hover:border-primary ${exportTheme === 'dark'
+                    ? 'border-primary bg-primary/5'
+                    : 'border-border'
+                    }`}
                 >
                   <p className="text-center text-sm font-medium">
                     {lang === 'fa' ? 'تیره' : 'Dark'}
@@ -390,11 +387,10 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
               <div className="grid grid-cols-2 gap-4">
                 <button
                   onClick={() => setExportDetailLevel('summary')}
-                  className={`relative rounded-lg border-2 p-4 transition-all hover:border-primary ${
-                    exportDetailLevel === 'summary'
-                      ? 'border-primary bg-primary/5'
-                      : 'border-border'
-                  }`}
+                  className={`relative rounded-lg border-2 p-4 transition-all hover:border-primary ${exportDetailLevel === 'summary'
+                    ? 'border-primary bg-primary/5'
+                    : 'border-border'
+                    }`}
                 >
                   <p className="text-center text-sm font-medium">
                     {lang === 'fa' ? 'خلاصه' : 'Summary'}
@@ -402,11 +398,10 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                 </button>
                 <button
                   onClick={() => setExportDetailLevel('detailed')}
-                  className={`relative rounded-lg border-2 p-4 transition-all hover:border-primary ${
-                    exportDetailLevel === 'detailed'
-                      ? 'border-primary bg-primary/5'
-                      : 'border-border'
-                  }`}
+                  className={`relative rounded-lg border-2 p-4 transition-all hover:border-primary ${exportDetailLevel === 'detailed'
+                    ? 'border-primary bg-primary/5'
+                    : 'border-border'
+                    }`}
                 >
                   <p className="text-center text-sm font-medium">
                     {lang === 'fa' ? 'با جزئیات' : 'Detailed'}
@@ -587,11 +582,11 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
             {(showDetailedSteps
               ? route.steps
               : route.steps.filter((step, index) => {
-                  if (index === 0 || index === route.steps.length - 1)
-                    return true;
-                  const nextStep = route.steps[index + 1];
-                  return nextStep && nextStep.line !== step.line;
-                })
+                if (index === 0 || index === route.steps.length - 1)
+                  return true;
+                const nextStep = route.steps[index + 1];
+                return nextStep && nextStep.line !== step.line;
+              })
             ).map((step, index, filteredSteps) => {
               const originalIndex = route.steps.findIndex((s) => s === step);
               const lineKey = step.line;
@@ -615,11 +610,10 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
 
                   {/* Step number with line color */}
                   <div
-                    className={`flex shrink-0 items-center justify-center w-8 h-8 rounded-full text-sm font-bold shadow-md relative z-10 ${
-                      ['line_3', 'line_4'].includes(lineKey)
-                        ? 'text-black'
-                        : 'text-white'
-                    }`}
+                    className={`flex shrink-0 items-center justify-center w-8 h-8 rounded-full text-sm font-bold shadow-md relative z-10 ${['line_3', 'line_4'].includes(lineKey)
+                      ? 'text-black'
+                      : 'text-white'
+                      }`}
                     style={{ backgroundColor: lineColor }}
                   >
                     {originalIndex + 1}
@@ -630,11 +624,10 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                     <div className="flex items-center gap-3 mb-2">
                       {/* Line badge */}
                       <Badge
-                        className={`${
-                          ['line_3', 'line_4'].includes(lineKey)
-                            ? 'text-black'
-                            : 'text-white'
-                        }`}
+                        className={`${['line_3', 'line_4'].includes(lineKey)
+                          ? 'text-black'
+                          : 'text-white'
+                          }`}
                         style={{ backgroundColor: lineColor }}
                       >
                         {lines[lineKey]?.name[lang] ||
@@ -712,6 +705,9 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
         }}
         dict={{
           no_stations_found: dict.page_route.no_stations_found,
+          closest_to_my_location: dict.page_route.closest_to_my_location,
+          location_permission_denied: dict.page_route.location_permission_denied,
+          geolocation_not_supported: dict.page_route.geolocation_not_supported,
         }}
         open={missedStopOpen}
         onOpenChange={setMissedStopOpen}

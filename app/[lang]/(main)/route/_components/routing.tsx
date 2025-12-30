@@ -137,7 +137,12 @@ export function Routing({ dict }: RoutingProps) {
             description={dict.page_route.search_origin_description}
             placeholder={dict.page_route.select_origin}
             onSelect={setFromStation}
-            dict={{ no_stations_found: dict.page_route.no_stations_found }}
+            dict={{
+              no_stations_found: dict.page_route.no_stations_found,
+              closest_to_my_location: dict.page_route.closest_to_my_location,
+              location_permission_denied: dict.page_route.location_permission_denied,
+              geolocation_not_supported: dict.page_route.geolocation_not_supported
+            }}
           />
 
           {/* Swap Button */}
@@ -166,7 +171,12 @@ export function Routing({ dict }: RoutingProps) {
             description={dict.page_route.search_destination_description}
             placeholder={dict.page_route.select_destination}
             onSelect={setToStation}
-            dict={{ no_stations_found: dict.page_route.no_stations_found }}
+            dict={{
+              no_stations_found: dict.page_route.no_stations_found,
+              closest_to_my_location: dict.page_route.closest_to_my_location,
+              location_permission_denied: dict.page_route.location_permission_denied,
+              geolocation_not_supported: dict.page_route.geolocation_not_supported
+            }}
           />
 
           {/* Find Route Button */}

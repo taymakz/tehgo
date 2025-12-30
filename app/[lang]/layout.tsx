@@ -218,6 +218,8 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="theme-color" content="#09090b" />
+        {/* Permissions policy for geolocation */}
+        <meta httpEquiv="Permissions-Policy" content="geolocation=*" />
       </head>
       <body className={`${fontVariables} antialiased`}>
         <Providers lang={lang}>

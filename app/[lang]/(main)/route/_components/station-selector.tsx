@@ -27,7 +27,9 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from '@/components/ui/input-group';
+import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
+import { toast } from 'sonner';
 import stationsData from '@/data/stations.json';
 import linesData from '@/data/lines.json';
 import type { StationsMap, LinesMap } from '@/types/metro';
@@ -53,6 +55,9 @@ interface StationSelectorProps {
   /** Translation dictionary */
   dict: {
     no_stations_found: string;
+    closest_to_my_location: string;
+    location_permission_denied: string;
+    geolocation_not_supported: string;
   };
   /** Controlled open state (optional) */
   open?: boolean;
@@ -107,6 +112,52 @@ export function StationSelector({
   });
 
   /**
+   * Calculate distance between two points using Haversine formula
+   */
+  const haversine = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+    const R = 6371; // Earth's radius in km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+
+  /**
+   * Get user's location and find closest station
+   */
+  const getClosestStation = () => {
+    if (!navigator.geolocation) {
+      toast.error(dict.geolocation_not_supported);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        let closest = null;
+        let minDist = Infinity;
+        Object.values(stations).forEach((station) => {
+          const dist = haversine(latitude, longitude, parseFloat(station.latitude), parseFloat(station.longitude));
+          if (dist < minDist) {
+            minDist = dist;
+            closest = station;
+          }
+        });
+        if (closest) {
+          handleSelect(closest.id);
+        }
+      },
+      (error) => {
+        console.error('Error getting location:', error);
+        toast.error(dict.location_permission_denied);
+      }
+    );
+  };
+
+  /**
    * Handles station selection
    * Closes sheet and clears search
    */
@@ -138,6 +189,17 @@ export function StationSelector({
                   <Search />
                 </InputGroupAddon>
               </InputGroup>
+            </div>
+
+            {/* Closest Location Button */}
+            <div className="container">
+              <Button
+                onClick={getClosestStation}
+                variant="outline"
+                className="w-full"
+              >
+                {dict.closest_to_my_location}
+              </Button>
             </div>
           </BottomSheetHeader>
         }
@@ -171,11 +233,10 @@ export function StationSelector({
                         return line ? (
                           <span
                             key={lineId}
-                            className={`px-1.5 py-0.5 text-xs font-medium rounded ${
-                              ['line_3', 'line_4'].includes(lineId)
-                                ? 'text-black'
-                                : 'text-white'
-                            }`}
+                            className={`px-1.5 py-0.5 text-xs font-medium rounded ${['line_3', 'line_4'].includes(lineId)
+                              ? 'text-black'
+                              : 'text-white'
+                              }`}
                             style={{ backgroundColor: line.color }}
                           >
                             {line.name[lang]}
