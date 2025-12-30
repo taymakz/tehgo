@@ -636,30 +636,32 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                     <div className="flex items-center gap-3 mb-2">
                       {/* Line badge */}
                       <Badge
-                        className={`flex flex-col items-start py-1.5 px-2 corner-squircle ${['line_3', 'line_4'].includes(lineKey)
+                        className={`flex flex-col items-start py-1.5 px-2 corner-squircle whitespace-normal ${['line_3', 'line_4'].includes(lineKey)
                           ? 'text-black'
                           : 'text-white'
                           }`}
                         style={{ backgroundColor: lineColor }}
                       >
-                        {lines[lineKey]?.name[lang] ||
+                        <span>
+                          {lines[lineKey]?.name[lang] ||
                           step.line ||
                           'Unknown Line'}
+                        </span>
 
                         <span className='text-xs'>
                           {/* Guide text */}
                           {originalIndex === 0 && (
-                            <p >
+                            <span >
                               {getFirstStepGuide(
                                 route,
                                 lines,
                                 lang,
                                 getStationDisplay
                               )}
-                            </p>
+                            </span>
                           )}
 
-                          <p >
+                       
                             {getTransferGuide(
                               route,
                               originalIndex,
@@ -667,7 +669,7 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                               lang,
                               getStationDisplay
                             )}
-                          </p>
+                        
 
                         </span>
                       </Badge>
