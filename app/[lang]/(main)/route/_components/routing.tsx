@@ -75,6 +75,7 @@ export function Routing({ dict }: RoutingProps) {
   // State for selected stations
   const [fromStation, setFromStation] = useState<string>('');
   const [toStation, setToStation] = useState<string>('');
+  const [findRouteLoading, setFindRouteLoading] = useState(false);
 
   // Get store actions
   const setSelectedRoute = useRecentRoutesStore(
@@ -88,12 +89,14 @@ export function Routing({ dict }: RoutingProps) {
   const handleFindRoute = () => {
     if (!fromStation || !toStation) return;
 
+    setFindRouteLoading(true);
     const results = findRoutes(graph, stations, fromStation, toStation);
 
     if (results.length > 0) {
       // Navigate to detail page with query params
       router.push(`/${lang}/route/detail?from=${fromStation}&to=${toStation}`);
     }
+    setFindRouteLoading(false);
   };
 
   /**
@@ -187,6 +190,7 @@ export function Routing({ dict }: RoutingProps) {
             onClick={handleFindRoute}
             className="w-full"
             disabled={!fromStation || !toStation}
+            loading={findRouteLoading}
           >
             {dict.page_route.find_route}
           </Button>
