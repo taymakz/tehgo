@@ -624,7 +624,7 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                     <div className="flex items-center gap-3 mb-2">
                       {/* Line badge */}
                       <Badge
-                        className={`${['line_3', 'line_4'].includes(lineKey)
+                        className={`flex flex-col items-start py-1.5 px-2 corner-squircle ${['line_3', 'line_4'].includes(lineKey)
                           ? 'text-black'
                           : 'text-white'
                           }`}
@@ -633,38 +633,35 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                         {lines[lineKey]?.name[lang] ||
                           step.line ||
                           'Unknown Line'}
+
+                        <span className='text-xs'>
+                          {/* Guide text */}
+                          {originalIndex === 0 && (
+                            <p >
+                              {getFirstStepGuide(
+                                route,
+                                lines,
+                                lang,
+                                getStationDisplay
+                              )}
+                            </p>
+                          )}
+
+                          <p >
+                            {getTransferGuide(
+                              route,
+                              originalIndex,
+                              lines,
+                              lang,
+                              getStationDisplay
+                            )}
+                          </p>
+
+                        </span>
                       </Badge>
 
-                      {/* Transfer badge */}
-                      {step.isTransfer && (
-                        <Badge variant="secondary">
-                          {dict.page_route.transfer}
-                        </Badge>
-                      )}
                     </div>
 
-                    {/* Guide text */}
-                    {originalIndex === 0 && (
-                      <p className="text-xs text-muted-foreground mb-1">
-                        {getFirstStepGuide(
-                          route,
-                          lines,
-                          lang,
-                          getStationDisplay
-                        )}
-                      </p>
-                    )}
-                    {originalIndex !== 0 && isLineChange && nextStep && (
-                      <p className="text-xs text-muted-foreground mb-1">
-                        {getTransferGuide(
-                          route,
-                          originalIndex,
-                          lines,
-                          lang,
-                          getStationDisplay
-                        )}
-                      </p>
-                    )}
 
                     {/* Station name */}
                     <h3 className="font-semibold text-base text-foreground mb-1">
