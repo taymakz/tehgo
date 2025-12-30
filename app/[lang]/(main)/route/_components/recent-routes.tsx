@@ -237,8 +237,10 @@ export function RecentRoutes({ dict }: RecentRoutesProps) {
             <div className="flex justify-between items-start mb-2">
               {/* Route info */}
               <div>
-                <p className="font-medium">
-                  {getStationDisplay(route.from)} <span className="rtl:rotate-180">→</span>{' '}
+                <p className="font-medium flex items-center gap-2">
+                  {getStationDisplay(route.from)}
+                  <span className="rtl:rotate-180 icon-[material-symbols--arrow-right-alt-rounded] size-4"></span>
+            
                   {getStationDisplay(route.to)}
                 </p>
                 <p className="text-sm text-muted-foreground">
