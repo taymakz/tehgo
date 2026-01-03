@@ -962,7 +962,7 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
             <X className="size-5" />
           </Button>
 
-          <Map center={TEHRAN_CENTER} zoom={11}>
+          <Map center={route?.steps?.[0] ? [Number.parseFloat(route.steps[0].station.longitude), Number.parseFloat(route.steps[0].station.latitude)] : TEHRAN_CENTER} zoom={11}>
             {/* Show all metro lines on the map */}
             {Object.entries(paths).map(([lineId, { paths: linePaths }]) =>
               linePaths.map((path) => {
@@ -1065,6 +1065,7 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                 key={`${p.id}-guide`}
                 longitude={p.longitude}
                 latitude={p.latitude}
+                className="z-[1000]"
               >
                 <MarkerContent>
                   <div className="size-3 rounded-full bg-primary border-2 border-white shadow" />
@@ -1118,7 +1119,7 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                   selectRoute(isFastestSelected ? lowest.index : fastest.index);
                 }}
               >
-                  <i className={`${icon} size-5`}></i>
+                <i className={`${icon} size-5`}></i>
                 {label}
               </Button>
             );
