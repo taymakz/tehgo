@@ -19,8 +19,16 @@ import { useEffect, useState, use } from 'react';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, MapPin, Share2, Image as ImageIcon, Sun, Moon, FileText, Eye } from 'lucide-react';
+import { ArrowLeft, MapPin, Share2, Image as ImageIcon, Sun, Moon, FileText, Eye, Map as MapIcon, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import {
+  Map,
+  MapMarker,
+  MarkerContent,
+  MarkerLabel,
+  MapControls,
+  MapRoute,
+} from '@/components/ui/map';
 import {
   BottomSheet,
   BottomSheetContent,
@@ -28,9 +36,17 @@ import {
   BottomSheetTitle,
 } from '@/components/ui/bottom-sheet';
 import { StationSelector } from '../_components/station-selector';
-import type { RouteResult, Graph, StationsMap, LinesMap } from '@/types/metro';
+import type {
+  RouteResult,
+  Graph,
+  StationsMap,
+  LinesMap,
+  PathsMap,
+  Station,
+} from '@/types/metro';
 import stationsData from '@/data/stations.json';
 import linesData from '@/data/lines.json';
+import pathsData from '@/data/paths.json';
 import { findRoutes } from '@/lib/route-finder';
 import { exportRouteImage } from '@/lib/route-export';
 import { getDictionarySync } from '@/dictionaries/client';
@@ -41,6 +57,10 @@ import en from '@/dictionaries/en.json';
 // Type assertions for JSON data
 const stations = stationsData as StationsMap;
 const lines = linesData as LinesMap;
+const paths = pathsData as PathsMap;
+
+// Tehran center coordinates
+const TEHRAN_CENTER: [number, number] = [51.3890, 35.6892];
 
 /**
  * Route option type for selection
@@ -83,6 +103,7 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
   const [dict, setDict] = useState<typeof en | null>(null);
   const [graph, setGraph] = useState<Graph | null>(null);
   const [showDetailedSteps, setShowDetailedSteps] = useState(true);
+  const [showRouteMap, setShowRouteMap] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [exportTheme, setExportTheme] = useState<'light' | 'dark'>('light');
   const [exportDetailLevel, setExportDetailLevel] = useState<
@@ -154,17 +175,120 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
   // Current selected route
   const route = allRoutes[selectedRouteIndex] || null;
 
+  const routeCoordinates: [number, number][] = route
+    ? route.steps
+      .map((step) => {
+        const lng = Number.parseFloat(step.station.longitude);
+        const lat = Number.parseFloat(step.station.latitude);
+        if (Number.isFinite(lng) && Number.isFinite(lat)) return [lng, lat] as [number, number];
+        return null;
+      })
+      .filter((c): c is [number, number] => Boolean(c))
+    : [];
+
+  const routeSegments: Array<{ coordinates: [number, number][]; color: string }> =
+    route
+      ? (() => {
+        const segments: Array<{ coordinates: [number, number][]; color: string }> = [];
+
+        let currentLine: string | null = null;
+        let currentCoords: [number, number][] = [];
+
+        for (const step of route.steps) {
+          const lng = Number.parseFloat(step.station.longitude);
+          const lat = Number.parseFloat(step.station.latitude);
+          if (!Number.isFinite(lng) || !Number.isFinite(lat)) continue;
+
+          const stepLine = step.line || null;
+
+          if (currentLine === null) {
+            currentLine = stepLine;
+            currentCoords = [[lng, lat]];
+            continue;
+          }
+
+          if (stepLine !== currentLine && currentCoords.length >= 2) {
+            const color =
+              (currentLine ? lines[currentLine]?.color : undefined) ?? '#6b7280';
+            segments.push({ coordinates: currentCoords, color });
+            currentLine = stepLine;
+            currentCoords = [currentCoords[currentCoords.length - 1], [lng, lat]];
+            continue;
+          }
+
+          currentCoords.push([lng, lat]);
+        }
+
+        if (currentCoords.length >= 2) {
+          const color =
+            (currentLine ? lines[currentLine]?.color : undefined) ?? '#6b7280';
+          segments.push({ coordinates: currentCoords, color });
+        }
+
+        return segments;
+      })()
+      : [];
+
+  const guidePoints = route
+    ? route.steps
+      .map((step, index) => {
+        const firstGuide =
+          index === 0
+            ? getFirstStepGuide(route, lines, lang, getStationDisplay)
+            : '';
+        const transferGuide = getTransferGuide(
+          route,
+          index,
+          lines,
+          lang,
+          getStationDisplay
+        );
+
+        const guideText = [firstGuide, transferGuide]
+          .map((t) => (t ?? '').trim())
+          .filter(Boolean)
+          .join('\n');
+
+        if (!guideText) return null;
+
+        const lng = Number.parseFloat(step.station.longitude);
+        const lat = Number.parseFloat(step.station.latitude);
+        if (!Number.isFinite(lng) || !Number.isFinite(lat)) return null;
+
+        return {
+          id: step.station.id,
+          longitude: lng,
+          latitude: lat,
+          stationName: getStationDisplay(step.station.id),
+          guideText,
+          line: step.line,
+        };
+      })
+      .filter(
+        (
+          p
+        ): p is {
+          id: string;
+          longitude: number;
+          latitude: number;
+          stationName: string;
+          guideText: string;
+          line: string;
+        } => Boolean(p)
+      )
+    : [];
+
   /**
    * Gets display name for a station based on current language
    */
-  const getStationDisplay = (id: string) => {
+  function getStationDisplay(id: string) {
     const station = stations[id];
     return station
       ? lang === 'fa'
         ? station.translations.fa
         : station.name
       : id;
-  };
+  }
 
   /**
    * Get route options for selection
@@ -576,18 +700,29 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
             <h2 className="font-semibold text-lg">
               {dict.page_route.detailed_route_steps}
             </h2>
-            <Button
-              variant="outline"
-              onClick={() => setShowDetailedSteps(!showDetailedSteps)}
-            >
-              {showDetailedSteps
-                ? lang === 'fa'
-                  ? 'خلاصه نشون بده'
-                  : 'Show Summary'
-                : lang === 'fa'
-                  ? 'جزئیات رو نشون بده'
-                  : 'Show Details'}
-            </Button>
+            <div className="flex gap-2 w-full xs:w-auto">
+              <Button
+                variant="outline"
+                onClick={() => setShowDetailedSteps(!showDetailedSteps)}
+                className="flex-1 xs:flex-none"
+              >
+                {showDetailedSteps
+                  ? lang === 'fa'
+                    ? 'خلاصه نشون بده'
+                    : 'Show Summary'
+                  : lang === 'fa'
+                    ? 'جزئیات رو نشون بده'
+                    : 'Show Details'}
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setShowRouteMap(true)}
+                className="flex-1 xs:flex-none"
+              >
+                <MapIcon className="w-4 h-4 mr-2" />
+                {lang === 'fa' ? 'نمایش روی نقشه' : 'View on Map'}
+              </Button>
+            </div>
           </div>
 
           <div className="relative">
@@ -644,8 +779,8 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                       >
                         <span>
                           {lines[lineKey]?.name[lang] ||
-                          step.line ||
-                          'Unknown Line'}
+                            step.line ||
+                            'Unknown Line'}
                         </span>
 
                         <span className='text-xs'>
@@ -661,15 +796,15 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                             </span>
                           )}
 
-                       
-                            {getTransferGuide(
-                              route,
-                              originalIndex,
-                              lines,
-                              lang,
-                              getStationDisplay
-                            )}
-                        
+
+                          {getTransferGuide(
+                            route,
+                            originalIndex,
+                            lines,
+                            lang,
+                            getStationDisplay
+                          )}
+
 
                         </span>
                       </Badge>
@@ -698,6 +833,149 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
           </div>
         </Card>
       </div>
+
+      {/* Full screen route + guides map */}
+      {showRouteMap && (
+        <div className="fixed inset-0 z-50 bg-background">
+          <Button
+            variant="secondary"
+            size="icon"
+            className="absolute top-4 right-4 z-10 shadow-lg"
+            onClick={() => setShowRouteMap(false)}
+            aria-label={lang === 'fa' ? 'بستن' : 'Close'}
+          >
+            <X className="size-5" />
+          </Button>
+
+          <Map center={TEHRAN_CENTER} zoom={11}>
+            {/* Show all metro lines on the map */}
+            {Object.entries(paths).map(([lineId, { paths: linePaths }]) =>
+              linePaths.map((path) => {
+                const coordinates = path.stations
+                  .map((stationId) => stations[stationId])
+                  .filter((station): station is Station => Boolean(station))
+                  .map(
+                    (station) =>
+                      [
+                        Number.parseFloat(station.longitude),
+                        Number.parseFloat(station.latitude),
+                      ] as [number, number]
+                  )
+                  .filter(
+                    ([lng, lat]) => Number.isFinite(lng) && Number.isFinite(lat)
+                  );
+
+                const line = lines[lineId];
+                if (!line || coordinates.length < 2) return null;
+
+                return (
+                  <MapRoute
+                    key={path.id}
+                    coordinates={coordinates}
+                    color={line.color}
+                    width={3}
+                    opacity={0.35}
+                  />
+                );
+              })
+            )}
+
+            {/* Highlight selected route */}
+            {routeSegments.length > 0
+              ? routeSegments.map((seg, idx) => (
+                <MapRoute
+                  key={`route-seg-${idx}`}
+                  coordinates={seg.coordinates}
+                  color={seg.color}
+                  width={6}
+                  opacity={0.9}
+                />
+              ))
+              : routeCoordinates.length >= 2 && (
+                <MapRoute
+                  coordinates={routeCoordinates}
+                  color="#6b7280"
+                  width={6}
+                  opacity={0.9}
+                />
+              )}
+
+            {/* Origin / Destination markers */}
+            {route?.steps?.[0] && (
+              <MapMarker
+                longitude={Number.parseFloat(route.steps[0].station.longitude)}
+                latitude={Number.parseFloat(route.steps[0].station.latitude)}
+              >
+                <MarkerContent>
+                  <div className="size-5 rounded-full bg-green-500 border-2 border-white shadow-lg" />
+                  <MarkerLabel
+                    position="top"
+                    className={
+                      "font-vazir! text-xs font-medium whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-background shadow-md " +
+                      (lang === 'fa' ? 'rtl text-right' : 'ltr text-left')
+                    }
+                  >
+                    {lang === 'fa' ? 'مبدا' : 'Origin'}
+                  </MarkerLabel>
+                </MarkerContent>
+              </MapMarker>
+            )}
+            {route?.steps?.[route.steps.length - 1] && (
+              <MapMarker
+                longitude={Number.parseFloat(
+                  route.steps[route.steps.length - 1].station.longitude
+                )}
+                latitude={Number.parseFloat(
+                  route.steps[route.steps.length - 1].station.latitude
+                )}
+              >
+                <MarkerContent>
+                  <div className="size-5 rounded-full bg-red-500 border-2 border-white shadow-lg" />
+                  <MarkerLabel
+                    position="top"
+                    className={
+                      "font-vazir! text-xs font-medium whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-background shadow-md " +
+                      (lang === 'fa' ? 'rtl text-right' : 'ltr text-left')
+                    }
+                  >
+                    {lang === 'fa' ? 'مقصد' : 'Destination'}
+                  </MarkerLabel>
+                </MarkerContent>
+              </MapMarker>
+            )}
+
+            {/* Always-visible guide callouts */}
+            {guidePoints.map((p) => (
+              <MapMarker
+                key={`${p.id}-guide`}
+                longitude={p.longitude}
+                latitude={p.latitude}
+              >
+                <MarkerContent>
+                  <div className="size-3 rounded-full bg-primary border-2 border-white shadow" />
+                  <MarkerLabel
+                    position="bottom"
+                    className={
+                      "font-vazir! text-xs font-medium whitespace-pre-line rounded-md bg-foreground px-2 py-1 text-background shadow-md w-full min-w-50! " +
+                      (lang === 'fa' ? 'rtl text-right' : 'ltr text-left')
+                    }
+                  >
+                    <div className="font-semibold">
+                      {p.stationName}
+                      <span className="">
+                        {p.line}
+                      </span>
+                      </div>
+                    <div className="opacity-90">{p.guideText}</div>
+                  </MarkerLabel>
+                </MarkerContent>
+              </MapMarker>
+            ))}
+
+            <MapControls position="bottom-right" showZoom />
+          </Map>
+        </div>
+      )}
 
       {/* Missed Stop Bottom Sheet */}
       <StationSelector

@@ -143,6 +143,8 @@ export function Routing({ dict }: RoutingProps) {
             description={dict.page_route.search_origin_description}
             placeholder={dict.page_route.select_origin}
             onSelect={setFromStation}
+            selectedFromStationId={fromStation}
+            selectedToStationId={toStation}
             dict={{
               no_stations_found: dict.page_route.no_stations_found,
               closest_to_my_location: dict.page_route.closest_to_my_location,
@@ -177,6 +179,8 @@ export function Routing({ dict }: RoutingProps) {
             description={dict.page_route.search_destination_description}
             placeholder={dict.page_route.select_destination}
             onSelect={setToStation}
+            selectedFromStationId={fromStation}
+            selectedToStationId={toStation}
             dict={{
               no_stations_found: dict.page_route.no_stations_found,
               closest_to_my_location: dict.page_route.closest_to_my_location,

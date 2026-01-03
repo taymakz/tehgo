@@ -78,6 +78,11 @@ interface StationSelectorProps {
   open?: boolean;
   /** Controlled open state change handler (optional) */
   onOpenChange?: (open: boolean) => void;
+
+  /** Currently selected origin station id (optional, for map annotations) */
+  selectedFromStationId?: string;
+  /** Currently selected destination station id (optional, for map annotations) */
+  selectedToStationId?: string;
 }
 
 // Tehran center coordinates
@@ -117,9 +122,13 @@ async function fetchOsrmRoute(options: {
 function StationMarkers({
   lang,
   onStationClick,
+  selectedFromStationId,
+  selectedToStationId,
 }: {
   lang: 'en' | 'fa';
   onStationClick: (station: Station) => void;
+  selectedFromStationId?: string;
+  selectedToStationId?: string;
 }) {
   const { map, isLoaded } = useMap();
   const [zoom, setZoom] = useState(() => map?.getZoom() ?? 11);
@@ -185,6 +194,40 @@ function StationMarkers({
               className="size-4 rounded-full border-2 border-white shadow-lg cursor-pointer hover:scale-125 transition-transform"
               style={{ background: getStationMarkerBackground(station) }}
             />
+
+            {/* Always-visible selected origin/destination label (no zoom required) */}
+            {(() => {
+              const isFrom =
+                Boolean(selectedFromStationId) &&
+                station.id === selectedFromStationId;
+              const isTo =
+                Boolean(selectedToStationId) && station.id === selectedToStationId;
+
+              if (!isFrom && !isTo) return null;
+
+              const labels: string[] = [];
+              if (isFrom) {
+                labels.push(lang === 'fa' ? 'مبدا انتخاب شده' : 'Origin selected');
+              }
+              if (isTo) {
+                labels.push(
+                  lang === 'fa' ? 'مقصد انتخاب شده' : 'Destination selected'
+                );
+              }
+
+              return (
+                <MarkerLabel
+                  position="top"
+                  className={
+                    "font-vazir! text-xs font-medium whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-background shadow-md " +
+                    (lang === 'fa' ? 'rtl text-right' : 'ltr text-left')
+                  }
+                >
+                  {labels.join(lang === 'fa' ? '، ' : ', ')}
+                </MarkerLabel>
+              );
+            })()}
+
             {/* Show label when zoomed in */}
             {showLabels && (
               <MarkerLabel
@@ -264,6 +307,8 @@ export function StationSelector({
   dict,
   open: controlledOpen,
   onOpenChange: controlledOnOpenChange,
+  selectedFromStationId,
+  selectedToStationId,
 }: StationSelectorProps) {
   const pathname = usePathname();
   const lang = pathname.split('/')[1] as 'en' | 'fa';
@@ -412,7 +457,16 @@ export function StationSelector({
         <Map center={TEHRAN_CENTER} zoom={11}>
           {/* OSRM route (user -> selected station) */}
           {osrmRoute && (
-            <MapRoute coordinates={osrmRoute} color="#6366f1" width={5} opacity={0.85} />
+            <MapRoute
+              coordinates={osrmRoute}
+              color={
+                (selectedStationOnMap?.lines?.[0]
+                  ? lines[selectedStationOnMap.lines[0]]?.color
+                  : undefined) ?? '#6366f1'
+              }
+              width={5}
+              opacity={0.85}
+            />
           )}
 
           {/* User location marker */}
@@ -433,7 +487,12 @@ export function StationSelector({
           )}
 
           {/* Station markers with zoom-dependent labels */}
-          <StationMarkers lang={lang} onStationClick={handleStationClickOnMap} />
+          <StationMarkers
+            lang={lang}
+            onStationClick={handleStationClickOnMap}
+            selectedFromStationId={selectedFromStationId}
+            selectedToStationId={selectedToStationId}
+          />
 
           {/* Station action popup */}
           {selectedStationOnMap && (
