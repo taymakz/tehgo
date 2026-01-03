@@ -36,17 +36,20 @@ import {
   MarkerTooltip,
   MarkerLabel,
   MapControls,
+  MapRoute,
   useMap,
 } from '@/components/ui/map';
 import { Search, X, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 import stationsData from '@/data/stations.json';
 import linesData from '@/data/lines.json';
-import type { StationsMap, LinesMap, Station } from '@/types/metro';
+import pathsData from '@/data/paths.json';
+import type { StationsMap, LinesMap, PathsMap, Station } from '@/types/metro';
 
 // Type assertions for JSON data
 const stations = stationsData as StationsMap;
 const lines = linesData as LinesMap;
+const paths = pathsData as PathsMap;
 
 /**
  * Station Selector Props
@@ -161,14 +164,14 @@ function StationMarkers({
             {showLabels && (
               <MarkerLabel
                 position="bottom"
-                className={`font-vazir text-xs font-medium whitespace-nowrap ${lang === 'fa' ? 'rtl text-right' : 'ltr text-left'}`}
+                className={`font-vazir! text-xs font-medium whitespace-nowrap ${lang === 'fa' ? 'rtl text-right' : 'ltr text-left'}`}
               >
                 {lang === 'fa' ? station.translations.fa : station.name}
               </MarkerLabel>
             )}
           </MarkerContent>
           <MarkerTooltip>
-            <div className={`font-vazir font-medium text-lg ${lang === 'fa' ? 'rtl text-right' : ''}`}>
+            <div className={`font-vazir! font-medium text-lg ${lang === 'fa' ? 'rtl text-right' : ''}`}>
               {lang === 'fa' ? station.translations.fa : station.name}
             </div>
             <div className="flex gap-1 mt-1">
@@ -188,6 +191,25 @@ function StationMarkers({
           </MarkerTooltip>
         </MapMarker>
       ))}
+      {/* Render routes for each line */}
+      {Object.entries(paths).map(([lineId, { paths: linePaths }]) =>
+        linePaths.map((path) => {
+          const coordinates = path.stations
+            .map((stationId) => stations[stationId])
+            .filter((station): station is Station => station !== undefined)
+            .map((station) => [parseFloat(station.longitude), parseFloat(station.latitude)] as [number, number]);
+          const line = lines[lineId];
+          return (
+            <MapRoute
+              key={path.id}
+              coordinates={coordinates}
+              color={line.color}
+              width={3}
+              opacity={0.7}
+            />
+          );
+        })
+      )}
     </>
   );
 }
