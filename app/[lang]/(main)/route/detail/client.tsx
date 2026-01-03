@@ -811,7 +811,7 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
 
         {/* Route Steps */}
         <Card className="p-6">
-          <div className="flex xs:items-center justify-between flex-col xs:flex-row gap-4 mb-6">
+          <div className="flex sm:items-center justify-between flex-col sm:flex-row gap-4 mb-6">
             <h2 className="font-semibold text-lg">
               {dict.page_route.detailed_route_steps}
             </h2>
@@ -830,7 +830,7 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                     : 'Show Details'}
               </Button>
               <Button
-                variant="outline"
+               
                 onClick={() => setShowRouteMap(true)}
                 className="flex-1 xs:flex-none"
               >
