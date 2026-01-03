@@ -80,7 +80,7 @@ interface StationSelectorProps {
 const TEHRAN_CENTER: [number, number] = [51.3890, 35.6892];
 
 // Zoom threshold for showing station labels
-const LABEL_ZOOM_THRESHOLD = 12;
+const LABEL_ZOOM_THRESHOLD = 11.5;
 
 /**
  * Station Markers Component
