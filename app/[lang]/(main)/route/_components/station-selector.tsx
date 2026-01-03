@@ -35,11 +35,12 @@ import {
   MarkerContent,
   MarkerTooltip,
   MarkerLabel,
+  MapPopup,
   MapControls,
   MapRoute,
   useMap,
 } from '@/components/ui/map';
-import { Search, X, MapPin } from 'lucide-react';
+import { Search, X, MapPin, LocateFixed, Route } from 'lucide-react';
 import { toast } from 'sonner';
 import stationsData from '@/data/stations.json';
 import linesData from '@/data/lines.json';
@@ -85,16 +86,40 @@ const TEHRAN_CENTER: [number, number] = [51.3890, 35.6892];
 // Zoom threshold for showing station labels
 const LABEL_ZOOM_THRESHOLD = 11.5;
 
+type LngLat = { longitude: number; latitude: number };
+
+async function fetchOsrmRoute(options: {
+  start: { lng: number; lat: number };
+  end: { lng: number; lat: number };
+}): Promise<[number, number][]> {
+  const { start, end } = options;
+  const response = await fetch(
+    `https://router.project-osrm.org/route/v1/driving/${start.lng},${start.lat};${end.lng},${end.lat}?overview=full&geometries=geojson`
+  );
+
+  if (!response.ok) {
+    throw new Error(`OSRM request failed: ${response.status}`);
+  }
+
+  const data = await response.json();
+  const coordinates = data?.routes?.[0]?.geometry?.coordinates;
+  if (!coordinates || !Array.isArray(coordinates)) {
+    throw new Error('OSRM response did not include route geometry');
+  }
+
+  return coordinates as [number, number][];
+}
+
 /**
  * Station Markers Component
  * Renders all station markers with labels that appear at higher zoom levels
  */
 function StationMarkers({
   lang,
-  onSelect,
+  onStationClick,
 }: {
   lang: 'en' | 'fa';
-  onSelect: (stationId: string) => void;
+  onStationClick: (station: Station) => void;
 }) {
   const { map, isLoaded } = useMap();
   const [zoom, setZoom] = useState(() => map?.getZoom() ?? 11);
@@ -153,7 +178,7 @@ function StationMarkers({
           key={station.id}
           longitude={parseFloat(station.longitude)}
           latitude={parseFloat(station.latitude)}
-          onClick={() => onSelect(station.id)}
+          onClick={() => onStationClick(station)}
         >
           <MarkerContent>
             <div
@@ -248,6 +273,10 @@ export function StationSelector({
   const [search, setSearch] = useState('');
   const [geoLoading, setGeoLoading] = useState(false);
   const [showMap, setShowMap] = useState(false);
+  const [userLocation, setUserLocation] = useState<LngLat | null>(null);
+  const [selectedStationOnMap, setSelectedStationOnMap] = useState<Station | null>(null);
+  const [osrmRoute, setOsrmRoute] = useState<[number, number][] | null>(null);
+  const [routeLoading, setRouteLoading] = useState(false);
 
   // Use controlled state if provided, otherwise use internal state
   const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen;
@@ -320,27 +349,46 @@ export function StationSelector({
     onSelect(stationId);
     setIsOpen(false);
     setShowMap(false);
+    setSelectedStationOnMap(null);
+    setOsrmRoute(null);
     setSearch('');
   };
 
   /**
    * Handle locate callback from map controls
    */
-  const handleLocate = useCallback((coords: { longitude: number; latitude: number }) => {
-    const { latitude, longitude } = coords;
-    let closest: Station | undefined = undefined;
-    let minDist = Infinity;
-    Object.values(stations).forEach((station) => {
-      const dist = haversine(latitude, longitude, parseFloat(station.latitude), parseFloat(station.longitude));
-      if (dist < minDist) {
-        minDist = dist;
-        closest = station;
-      }
-    });
-    if (closest) {
-      toast.success(lang === 'fa' ? `نزدیک‌ترین ایستگاه: ${(closest as Station).translations.fa}` : `Nearest station: ${(closest as Station).name}`);
+  const handleLocate = useCallback((coords: LngLat) => {
+    setUserLocation(coords);
+  }, []);
+
+  const handleStationClickOnMap = useCallback((station: Station) => {
+    setSelectedStationOnMap(station);
+  }, []);
+
+  const handleGuideToStation = useCallback(async () => {
+    if (!selectedStationOnMap) return;
+    if (!userLocation) {
+      toast.error(lang === 'fa' ? 'اول مکان خود را پیدا کنید' : 'Please find your location first');
+      return;
     }
-  }, [lang]);
+
+    try {
+      setRouteLoading(true);
+      const route = await fetchOsrmRoute({
+        start: { lng: userLocation.longitude, lat: userLocation.latitude },
+        end: {
+          lng: parseFloat(selectedStationOnMap.longitude),
+          lat: parseFloat(selectedStationOnMap.latitude),
+        },
+      });
+      setOsrmRoute(route);
+    } catch (error) {
+      console.error('Failed to fetch OSRM route:', error);
+      toast.error(lang === 'fa' ? 'دریافت مسیر ناموفق بود' : 'Failed to fetch route');
+    } finally {
+      setRouteLoading(false);
+    }
+  }, [lang, selectedStationOnMap, userLocation]);
 
   // Full screen map view
   if (showMap) {
@@ -351,15 +399,78 @@ export function StationSelector({
           variant="secondary"
           size="icon"
           className="absolute top-4 right-4 z-10 shadow-lg"
-          onClick={() => setShowMap(false)}
+          onClick={() => {
+            setShowMap(false);
+            setSelectedStationOnMap(null);
+            setOsrmRoute(null);
+          }}
         >
           <X className="size-5" />
         </Button>
 
         {/* Full screen map */}
         <Map center={TEHRAN_CENTER} zoom={11}>
+          {/* OSRM route (user -> selected station) */}
+          {osrmRoute && (
+            <MapRoute coordinates={osrmRoute} color="#6366f1" width={5} opacity={0.85} />
+          )}
+
+          {/* User location marker */}
+          {userLocation && (
+            <MapMarker longitude={userLocation.longitude} latitude={userLocation.latitude}>
+              <MarkerContent>
+                <div className="size-6 rounded-full bg-primary border-2 border-white shadow-lg flex items-center justify-center">
+                  <LocateFixed className="size-4 text-primary-foreground" />
+                </div>
+                <MarkerLabel
+                  position="bottom"
+                  className={`font-vazir! text-xs font-medium whitespace-nowrap ${lang === 'fa' ? 'rtl text-right' : 'ltr text-left'}`}
+                >
+                  {lang === 'fa' ? 'موقعیت من' : 'My location'}
+                </MarkerLabel>
+              </MarkerContent>
+            </MapMarker>
+          )}
+
           {/* Station markers with zoom-dependent labels */}
-          <StationMarkers lang={lang} onSelect={handleSelect} />
+          <StationMarkers lang={lang} onStationClick={handleStationClickOnMap} />
+
+          {/* Station action popup */}
+          {selectedStationOnMap && (
+            <MapPopup
+              longitude={parseFloat(selectedStationOnMap.longitude)}
+              latitude={parseFloat(selectedStationOnMap.latitude)}
+              onClose={() => setSelectedStationOnMap(null)}
+              closeButton
+              focusAfterOpen={false}
+              closeOnClick={false}
+            >
+              <div className={`min-w-[220px] rounded-md border bg-background p-3 shadow-sm ${lang === 'fa' ? 'rtl text-right' : ''}`}>
+                <div className={`font-vazir! font-semibold text-foreground ${lang === 'fa' ? 'text-right' : ''}`}>
+                  {lang === 'fa' ? selectedStationOnMap.translations.fa : selectedStationOnMap.name}
+                </div>
+                <div className="mt-2 flex gap-2 font-vazir!">
+                  <Button
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => handleSelect(selectedStationOnMap.id)}
+                  >
+                    {lang === 'fa' ? 'انتخاب' : 'Select'}
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1"
+                    onClick={handleGuideToStation}
+                    loading={routeLoading}
+                  >
+                    <Route className="size-4 me-2" />
+                    {lang === 'fa' ? 'راهنما' : 'Guide'}
+                  </Button>
+                </div>
+              </div>
+            </MapPopup>
+          )}
 
           {/* Map controls with locate button */}
           <MapControls
