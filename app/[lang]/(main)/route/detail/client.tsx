@@ -28,6 +28,7 @@ import {
   MarkerLabel,
   MapControls,
   MapRoute,
+  useMap,
 } from '@/components/ui/map';
 import {
   BottomSheet,
@@ -61,6 +62,103 @@ const paths = pathsData as PathsMap;
 
 // Tehran center coordinates
 const TEHRAN_CENTER: [number, number] = [51.3890, 35.6892];
+
+// Zoom threshold for showing route station labels
+const ROUTE_LABEL_ZOOM_THRESHOLD = 11.5;
+
+function RouteStationMarkers({
+  lang,
+  route,
+}: {
+  lang: 'en' | 'fa';
+  route: RouteResult | null;
+}) {
+  const { map, isLoaded } = useMap();
+  const [zoom, setZoom] = useState(() => map?.getZoom() ?? 11);
+
+  useEffect(() => {
+    if (!map || !isLoaded) return;
+
+    const handleZoom = () => {
+      setZoom(map.getZoom());
+    };
+
+    map.on('zoom', handleZoom);
+    return () => {
+      map.off('zoom', handleZoom);
+    };
+  }, [map, isLoaded]);
+
+  const showLabels = zoom >= ROUTE_LABEL_ZOOM_THRESHOLD;
+  if (!route) return null;
+
+  const getStationMarkerBackground = (station: Station): string => {
+    const colors = (station.lines ?? [])
+      .map((lineId) => lines[lineId]?.color)
+      .filter((color): color is string => Boolean(color));
+
+    if (colors.length === 0) return '#3b82f6';
+    if (colors.length === 1) return colors[0];
+
+    if (colors.length === 2) {
+      return `linear-gradient(90deg, ${colors[0]} 0 50%, ${colors[1]} 50% 100%)`;
+    }
+
+    const step = 100 / colors.length;
+    const stops = colors
+      .map((color, index) => {
+        const start = (index * step).toFixed(4);
+        const end = ((index + 1) * step).toFixed(4);
+        return `${color} ${start}% ${end}%`;
+      })
+      .join(', ');
+
+    return `conic-gradient(${stops})`;
+  };
+
+  return (
+    <>
+      {route.steps.map((step, index) => {
+        const isOrigin = index === 0;
+        const isDestination = index === route.steps.length - 1;
+        if (isOrigin || isDestination) return null;
+
+        const lng = Number.parseFloat(step.station.longitude);
+        const lat = Number.parseFloat(step.station.latitude);
+        if (!Number.isFinite(lng) || !Number.isFinite(lat)) return null;
+
+        return (
+          <MapMarker
+            key={`route-station-${step.station.id}-${index}`}
+            longitude={lng}
+            latitude={lat}
+          >
+            <MarkerContent>
+              <div
+                className="size-4 rounded-full border-2 border-white shadow-lg"
+                style={{ background: getStationMarkerBackground(step.station) }}
+              />
+
+              {showLabels && (
+                <MarkerLabel
+                  position="bottom"
+                  className={
+                    "font-vazir! text-xs font-medium whitespace-nowrap " +
+                    (lang === 'fa' ? 'rtl text-right' : 'ltr text-left')
+                  }
+                >
+                  {lang === 'fa'
+                    ? step.station.translations.fa
+                    : step.station.name}
+                </MarkerLabel>
+              )}
+            </MarkerContent>
+          </MapMarker>
+        );
+      })}
+    </>
+  );
+}
 
 /**
  * Route option type for selection
@@ -968,6 +1066,9 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                 </MarkerContent>
               </MapMarker>
             ))}
+
+            {/* Other stations on this route (labels appear on zoom) */}
+            <RouteStationMarkers lang={lang} route={route} />
 
             <MapControls position="bottom-right" showZoom />
           </Map>
