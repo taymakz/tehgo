@@ -114,12 +114,33 @@ function StationMarkers({
   const showLabels = zoom >= LABEL_ZOOM_THRESHOLD;
 
   /**
-   * Get station color based on its primary line
+   * Get station marker background based on its lines.
+   * - 1 line: solid color
+   * - 2 lines: half/half split
+   * - 3+ lines: conic slices
    */
-  const getStationColor = (station: Station): string => {
-    const primaryLineId = station.lines[0];
-    const line = lines[primaryLineId];
-    return line?.color || '#3b82f6';
+  const getStationMarkerBackground = (station: Station): string => {
+    const colors = station.lines
+      .map((lineId) => lines[lineId]?.color)
+      .filter((color): color is string => Boolean(color));
+
+    if (colors.length === 0) return '#3b82f6';
+    if (colors.length === 1) return colors[0];
+
+    if (colors.length === 2) {
+      return `linear-gradient(90deg, ${colors[0]} 0 50%, ${colors[1]} 50% 100%)`;
+    }
+
+    const step = 100 / colors.length;
+    const stops = colors
+      .map((color, index) => {
+        const start = (index * step).toFixed(4);
+        const end = ((index + 1) * step).toFixed(4);
+        return `${color} ${start}% ${end}%`;
+      })
+      .join(', ');
+
+    return `conic-gradient(${stops})`;
   };
 
   return (
@@ -134,7 +155,7 @@ function StationMarkers({
           <MarkerContent>
             <div
               className="size-4 rounded-full border-2 border-white shadow-lg cursor-pointer hover:scale-125 transition-transform"
-              style={{ backgroundColor: getStationColor(station) }}
+              style={{ background: getStationMarkerBackground(station) }}
             />
             {/* Show label when zoomed in */}
             {showLabels && (
