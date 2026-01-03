@@ -960,12 +960,9 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
                       (lang === 'fa' ? 'rtl text-right' : 'ltr text-left')
                     }
                   >
-                    <div className="font-semibold">
+                    <div className="font-semibold mb-2">
                       {p.stationName}
-                      <span className="">
-                        {p.line}
-                      </span>
-                      </div>
+                    </div>
                     <div className="opacity-90">{p.guideText}</div>
                   </MarkerLabel>
                 </MarkerContent>
