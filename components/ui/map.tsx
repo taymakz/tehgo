@@ -39,6 +39,9 @@ const defaultStyles = {
   light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
 };
 
+// Default font stack including Vazir for RTL and Persian text
+const defaultFontStack = ["Geist", "Vazir"];
+
 type MapStyleOption = string | MapLibreGL.StyleSpecification;
 
 type MapProps = {
@@ -91,7 +94,23 @@ function Map({ children, styles, ...props }: MapProps) {
       ...props,
     });
 
-    const styleDataHandler = () => setIsStyleLoaded(true);
+    const styleDataHandler = () => {
+      setIsStyleLoaded(true);
+      // Apply default font stack to all symbol layers
+      if (mapInstance) {
+        const style = mapInstance.getStyle();
+        if (style.layers) {
+          style.layers.forEach((layer) => {
+            if (layer.type === 'symbol' && layer.layout) {
+              // Only set if not already set
+              if (!layer.layout['text-font']) {
+                mapInstance.setLayoutProperty(layer.id, 'text-font', defaultFontStack);
+              }
+            }
+          });
+        }
+      }
+    };
     const loadHandler = () => setIsLoaded(true);
 
     mapInstance.on("load", loadHandler);
@@ -115,6 +134,24 @@ function Map({ children, styles, ...props }: MapProps) {
         resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light,
         { diff: true }
       );
+      // Re-apply font stack after style change
+      const applyFonts = () => {
+        if (mapRef.current) {
+          const style = mapRef.current.getStyle();
+          if (style.layers) {
+            style.layers.forEach((layer) => {
+              if (layer.type === 'symbol' && layer.layout) {
+                if (!layer.layout['text-font']) {
+                  mapRef.current!.setLayoutProperty(layer.id, 'text-font', defaultFontStack);
+                }
+              }
+            });
+          }
+          setIsStyleLoaded(true);
+        }
+      };
+      // Wait for style to load
+      mapRef.current.once('styledata', applyFonts);
     }
   }, [resolvedTheme, mapStyles]);
 
@@ -390,7 +427,7 @@ function MarkerPopup({
   return createPortal(
     <div
       className={cn(
-        "relative rounded-md border bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
+        "relative rounded-md border bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 font-vazir",
         className
       )}
     >
@@ -488,7 +525,7 @@ function MarkerTooltip({
   return createPortal(
     <div
       className={cn(
-        "rounded-md bg-foreground px-2 py-1 text-xs text-background shadow-md animate-in fade-in-0 zoom-in-95",
+        "rounded-md bg-foreground px-2 py-1 text-xs text-background shadow-md animate-in fade-in-0 zoom-in-95 font-vazir",
         className
       )}
     >
@@ -521,7 +558,7 @@ function MarkerLabel({
     <div
       className={cn(
         "absolute left-1/2 -translate-x-1/2 whitespace-nowrap",
-        "text-[10px] font-medium text-foreground",
+        "text-[10px] font-medium text-foreground font-vazir",
         positionClasses[position],
         className
       )}
@@ -826,7 +863,7 @@ function MapPopup({
   return createPortal(
     <div
       className={cn(
-        "relative rounded-md border bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
+        "relative rounded-md border bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 font-vazir",
         className
       )}
     >
