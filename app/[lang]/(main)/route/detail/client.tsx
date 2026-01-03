@@ -69,9 +69,11 @@ const ROUTE_LABEL_ZOOM_THRESHOLD = 11.5;
 function RouteStationMarkers({
   lang,
   route,
+  hiddenStationIds,
 }: {
   lang: 'en' | 'fa';
   route: RouteResult | null;
+  hiddenStationIds?: string[];
 }) {
   const { map, isLoaded } = useMap();
   const [zoom, setZoom] = useState(() => map?.getZoom() ?? 11);
@@ -91,6 +93,8 @@ function RouteStationMarkers({
 
   const showLabels = zoom >= ROUTE_LABEL_ZOOM_THRESHOLD;
   if (!route) return null;
+
+  const hiddenSet = new Set(hiddenStationIds ?? []);
 
   const getStationMarkerBackground = (station: Station): string => {
     const colors = (station.lines ?? [])
@@ -123,6 +127,9 @@ function RouteStationMarkers({
         const isDestination = index === route.steps.length - 1;
         if (isOrigin || isDestination) return null;
 
+        // If this station has an always-visible guide callout, don't show a duplicate station label.
+        if (hiddenSet.has(step.station.id)) return null;
+
         const lng = Number.parseFloat(step.station.longitude);
         const lat = Number.parseFloat(step.station.latitude);
         if (!Number.isFinite(lng) || !Number.isFinite(lat)) return null;
@@ -141,7 +148,7 @@ function RouteStationMarkers({
 
               {showLabels && (
                 <MarkerLabel
-                  position="bottom"
+                  position="top"
                   className={
                     "font-vazir! text-xs font-medium whitespace-nowrap " +
                     (lang === 'fa' ? 'rtl text-right' : 'ltr text-left')
@@ -209,6 +216,16 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
   >('detailed');
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const [missedStopOpen, setMissedStopOpen] = useState(false);
+
+  // Prevent background scroll when fullscreen map is open
+  useEffect(() => {
+    if (!showRouteMap) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [showRouteMap]);
 
   // Store action
   const addRoute = useRecentRoutesStore((state) => state.addRoute);
@@ -1068,10 +1085,44 @@ export function RouteDetailClient({ searchParams }: RouteDetailClientProps) {
             ))}
 
             {/* Other stations on this route (labels appear on zoom) */}
-            <RouteStationMarkers lang={lang} route={route} />
+            <RouteStationMarkers
+              lang={lang}
+              route={route}
+              hiddenStationIds={guidePoints.map((p) => p.id)}
+            />
 
             <MapControls position="bottom-right" showZoom />
           </Map>
+
+          {/* Floating route toggle (no confirmation) */}
+          {(() => {
+            if (routeOptions.length <= 1) return null;
+            const fastest = routeOptions.find((o) => o.type === 'fastest');
+            const lowest = routeOptions.find((o) => o.type === 'lowest_transfers');
+            if (!fastest || !lowest) return null;
+
+            const isFastestSelected = selectedRouteIndex === fastest.index;
+            const label =
+              lang === 'fa'
+                ? isFastestSelected
+                  ? 'تغییر مسیر به کم تعویض ترین'
+                  : 'تغییر مسیر به سریعترین'
+                : isFastestSelected
+                  ? 'Switch to Lowest Transfers'
+                  : 'Switch to Fastest';
+            const icon = isFastestSelected ? 'icon-[solar--sleeping-circle-outline]' : 'icon-[icon-park-outline--flash-payment]'
+            return (
+              <Button
+                className="fixed bottom-4 left-1/2 -translate-x-1/2 z-10 shadow-lg rounded-full corner-squircle"
+                onClick={() => {
+                  selectRoute(isFastestSelected ? lowest.index : fastest.index);
+                }}
+              >
+                  <i className={`${icon} size-5`}></i>
+                {label}
+              </Button>
+            );
+          })()}
         </div>
       )}
 
