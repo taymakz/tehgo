@@ -54,6 +54,7 @@
     "search_destination_description": "Search and select your destination station",
     "no_stations_found": "No stations found.",
     "closest_to_my_location": "Closest to my location",
+    "choose_on_map": "Choose on Map",
     "location_permission_denied": "Please turn on location and try again.",
     "geolocation_not_supported": "Geolocation is not supported by this browser.",
     "route_details": "Route Details",

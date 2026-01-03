@@ -133,6 +133,9 @@
   font-family: var(--font-vazir);
   font-feature-settings: "ss01";
 }
+@utility font-vazir {
+  font-family: var(--font-vazir);
+}
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -140,6 +143,12 @@
   body {
     font-family: "Geist", "fontVazir", sans-serif;
     @apply bg-background text-foreground;
+  }
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+  }
+  .maplibregl-popup-tip {
+    @apply hidden!;
   }
 }
 

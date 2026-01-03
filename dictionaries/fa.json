@@ -54,6 +54,7 @@
     "search_destination_description": "ایستگاه مقصد خود را جستجو و انتخاب کنید",
     "no_stations_found": "ایستگاهی یافت نشد.",
     "closest_to_my_location": "نزدیک‌ترین به مکان من",
+    "choose_on_map": "انتخاب از نقشه",
     "location_permission_denied": "لطفا location رو روشن کنید و دوباره تست کنید",
     "geolocation_not_supported": "این مرورگر از موقعیت مکانی پشتیبانی نمی‌کند.",
     "route_details": "جزئیات مسیر",
