@@ -2,13 +2,13 @@
   "abdol_abad": [
     {
       "from": "abdol_abad",
-      "to": "shahrak_e_shariaty",
+      "to": "nemat_abad",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "abdol_abad",
-      "to": "nemat_abad",
+      "to": "shahrak_e_shariaty",
       "line": "line_3",
       "weight": 1
     }
@@ -16,13 +16,13 @@
   "aghdasiyeh": [
     {
       "from": "aghdasiyeh",
-      "to": "shahid_mahallati",
+      "to": "nobonyad",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "aghdasiyeh",
-      "to": "nobonyad",
+      "to": "shahid_mahallati",
       "line": "line_3",
       "weight": 1
     }
@@ -30,13 +30,13 @@
   "ahang": [
     {
       "from": "ahang",
-      "to": "basij",
+      "to": "chehel_tan_e_doulab",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "ahang",
-      "to": "chehel_tan_e_doulab",
+      "to": "basij",
       "line": "line_7",
       "weight": 1
     }
@@ -58,6 +58,12 @@
   "allameh_jafari": [
     {
       "from": "allameh_jafari",
+      "to": "ayatollah_kashani",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "allameh_jafari",
       "to": "eram_e_sabz",
       "line": "line_4",
       "weight": 1
@@ -66,13 +72,13 @@
   "amirkabir": [
     {
       "from": "amirkabir",
-      "to": "shohada_ye_hefdah_e_shahrivar",
+      "to": "meydan_e_shohada",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "amirkabir",
-      "to": "meydan_e_shohada",
+      "to": "shohada_ye_hefdah_e_shahrivar",
       "line": "line_6",
       "weight": 1
     }
@@ -94,13 +100,25 @@
   "ayatollah_kashani": [
     {
       "from": "ayatollah_kashani",
-      "to": "shahid_sattari",
-      "line": "line_6",
+      "to": "chaharbagh",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "ayatollah_kashani",
+      "to": "allameh_jafari",
+      "line": "line_4",
       "weight": 1
     },
     {
       "from": "ayatollah_kashani",
       "to": "shahr_e_ziba",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "ayatollah_kashani",
+      "to": "shahid_sattari",
       "line": "line_6",
       "weight": 1
     }
@@ -130,13 +148,13 @@
   "bahar_shiraz_khanevadeh_hospital": [
     {
       "from": "bahar_shiraz_khanevadeh_hospital",
-      "to": "sarbaz",
+      "to": "shohada_ye_haftom_e_tir",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "bahar_shiraz_khanevadeh_hospital",
-      "to": "shohada_ye_haftom_e_tir",
+      "to": "sarbaz",
       "line": "line_6",
       "weight": 1
     }
@@ -144,13 +162,13 @@
   "baharistan": [
     {
       "from": "baharistan",
-      "to": "darvazeh_shemiran",
+      "to": "mellat",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "baharistan",
-      "to": "mellat",
+      "to": "darvazeh_shemiran",
       "line": "line_2",
       "weight": 1
     }
@@ -158,13 +176,13 @@
   "basij": [
     {
       "from": "basij",
-      "to": "varzeshgah_e_takhti",
+      "to": "ahang",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "basij",
-      "to": "ahang",
+      "to": "varzeshgah_e_takhti",
       "line": "line_7",
       "weight": 1
     }
@@ -172,13 +190,13 @@
   "be_sat": [
     {
       "from": "be_sat",
-      "to": "kiyan_shahr",
+      "to": "shahid_rezaei",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "be_sat",
-      "to": "shahid_rezaei",
+      "to": "kiyan_shahr",
       "line": "line_6",
       "weight": 1
     }
@@ -186,13 +204,13 @@
   "beryanak": [
     {
       "from": "beryanak",
-      "to": "helal_ahmar",
+      "to": "komeyl",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "beryanak",
-      "to": "komeyl",
+      "to": "helal_ahmar",
       "line": "line_7",
       "weight": 1
     }
@@ -200,13 +218,13 @@
   "bimeh": [
     {
       "from": "bimeh",
-      "to": "meydan_e_azadi",
+      "to": "shahrak_e_ekbatan",
       "line": "line_4",
       "weight": 1
     },
     {
       "from": "bimeh",
-      "to": "shahrak_e_ekbatan",
+      "to": "meydan_e_azadi",
       "line": "line_4",
       "weight": 1
     },
@@ -220,13 +238,13 @@
   "boostan_e_goftegou": [
     {
       "from": "boostan_e_goftegou",
-      "to": "daneshgah_e_tarbiat_modarres",
+      "to": "milad_tower",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "boostan_e_goftegou",
-      "to": "milad_tower",
+      "to": "daneshgah_e_tarbiat_modarres",
       "line": "line_7",
       "weight": 1
     }
@@ -234,28 +252,35 @@
   "bustan_e_laleh": [
     {
       "from": "bustan_e_laleh",
-      "to": "meydan_e_hazrat_vali_asr",
+      "to": "karagar",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "bustan_e_laleh",
-      "to": "karagar",
+      "to": "meydan_e_hazrat_vali_asr",
       "line": "line_6",
       "weight": 1
     }
   ],
-  "chaharbagh": [],
+  "chaharbagh": [
+    {
+      "from": "chaharbagh",
+      "to": "ayatollah_kashani",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
   "chehel_tan_e_doulab": [
     {
       "from": "chehel_tan_e_doulab",
-      "to": "ahang",
+      "to": "shohada_ye_hefdah_e_shahrivar",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "chehel_tan_e_doulab",
-      "to": "shohada_ye_hefdah_e_shahrivar",
+      "to": "ahang",
       "line": "line_7",
       "weight": 1
     }
@@ -263,13 +288,13 @@
   "cheshmeh_ali": [
     {
       "from": "cheshmeh_ali",
-      "to": "ebn_e_babviyeh",
+      "to": "shohada_ye_dowlat_abad",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "cheshmeh_ali",
-      "to": "shohada_ye_dowlat_abad",
+      "to": "ebn_e_babviyeh",
       "line": "line_6",
       "weight": 1
     }
@@ -291,13 +316,13 @@
   "daneshgah_e_elm_o_san_at": [
     {
       "from": "daneshgah_e_elm_o_san_at",
-      "to": "shahid_bagheri",
+      "to": "sarsabz",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "daneshgah_e_elm_o_san_at",
-      "to": "sarsabz",
+      "to": "shahid_bagheri",
       "line": "line_2",
       "weight": 1
     }
@@ -305,13 +330,13 @@
   "daneshgah_e_imam_ali": [
     {
       "from": "daneshgah_e_imam_ali",
-      "to": "hasan_abad",
+      "to": "meydan_e_horr",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "daneshgah_e_imam_ali",
-      "to": "meydan_e_horr",
+      "to": "hasan_abad",
       "line": "line_2",
       "weight": 1
     }
@@ -319,13 +344,13 @@
   "daneshgah_e_sharif": [
     {
       "from": "daneshgah_e_sharif",
-      "to": "shademan",
+      "to": "tarasht",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "daneshgah_e_sharif",
-      "to": "tarasht",
+      "to": "shademan",
       "line": "line_2",
       "weight": 1
     }
@@ -333,13 +358,13 @@
   "daneshgah_e_tarbiat_modarres": [
     {
       "from": "daneshgah_e_tarbiat_modarres",
-      "to": "karagar",
+      "to": "shahrak_e_azmayesh",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "daneshgah_e_tarbiat_modarres",
-      "to": "shahrak_e_azmayesh",
+      "to": "karagar",
       "line": "line_6",
       "weight": 1
     },
@@ -385,20 +410,14 @@
   "darvazeh_shemiran": [
     {
       "from": "darvazeh_shemiran",
-      "to": "imam_hossein",
-      "line": "line_2",
-      "weight": 1
-    },
-    {
-      "from": "darvazeh_shemiran",
       "to": "baharistan",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "darvazeh_shemiran",
-      "to": "meydan_e_shohada",
-      "line": "line_4",
+      "to": "imam_hossein",
+      "line": "line_2",
       "weight": 1
     },
     {
@@ -406,18 +425,24 @@
       "to": "darvazeh_dolat",
       "line": "line_4",
       "weight": 1
+    },
+    {
+      "from": "darvazeh_shemiran",
+      "to": "meydan_e_shohada",
+      "line": "line_4",
+      "weight": 1
     }
   ],
   "doctor_habibollah": [
     {
       "from": "doctor_habibollah",
-      "to": "shademan",
+      "to": "ostad_mo_in",
       "line": "line_4",
       "weight": 1
     },
     {
       "from": "doctor_habibollah",
-      "to": "ostad_mo_in",
+      "to": "shademan",
       "line": "line_4",
       "weight": 1
     }
@@ -439,13 +464,13 @@
   "ebn_e_babviyeh": [
     {
       "from": "ebn_e_babviyeh",
-      "to": "meydan_e_hazrat_e_abdol_azim",
+      "to": "cheshmeh_ali",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "ebn_e_babviyeh",
-      "to": "cheshmeh_ali",
+      "to": "meydan_e_hazrat_e_abdol_azim",
       "line": "line_6",
       "weight": 1
     }
@@ -453,13 +478,13 @@
   "ebn_e_sina": [
     {
       "from": "ebn_e_sina",
-      "to": "piroozi",
+      "to": "meydan_e_shohada",
       "line": "line_4",
       "weight": 1
     },
     {
       "from": "ebn_e_sina",
-      "to": "meydan_e_shohada",
+      "to": "pirooz i",
       "line": "line_4",
       "weight": 1
     }
@@ -507,13 +532,13 @@
   "fadak": [
     {
       "from": "fadak",
-      "to": "janbazan",
+      "to": "sabalan",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "fadak",
-      "to": "sabalan",
+      "to": "janbazan",
       "line": "line_2",
       "weight": 1
     }
@@ -529,13 +554,13 @@
   "ferdowsi": [
     {
       "from": "ferdowsi",
-      "to": "darvazeh_dolat",
+      "to": "teatr_e_shahr",
       "line": "line_4",
       "weight": 1
     },
     {
       "from": "ferdowsi",
-      "to": "teatr_e_shahr",
+      "to": "darvazeh_dolat",
       "line": "line_4",
       "weight": 1
     }
@@ -593,13 +618,13 @@
   "hasan_abad": [
     {
       "from": "hasan_abad",
-      "to": "imam_khomeini",
+      "to": "daneshgah_e_imam_ali",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "hasan_abad",
-      "to": "daneshgah_e_imam_ali",
+      "to": "imam_khomeini",
       "line": "line_2",
       "weight": 1
     }
@@ -607,41 +632,28 @@
   "helal_ahmar": [
     {
       "from": "helal_ahmar",
-      "to": "mahdiyeh",
+      "to": "beryanak",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "helal_ahmar",
-      "to": "beryanak",
+      "to": "mahdiyeh",
       "line": "line_7",
       "weight": 1
     }
   ],
-  "holy_shrine_of_imam_khomeini": [
-    {
-      "from": "holy_shrine_of_imam_khomeini",
-      "to": "shahed_baghershahr",
-      "line": "line_1",
-      "weight": 1
-    },
-    {
-      "from": "holy_shrine_of_imam_khomeini",
-      "to": "kahrizak",
-      "line": "line_1",
-      "weight": 1
-    }
-  ],
+  "holy_shrine_of_imam_khomeini": [],
   "hossein_abad": [
     {
       "from": "hossein_abad",
-      "to": "nobonyad",
+      "to": "meydan_e_heravi",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "hossein_abad",
-      "to": "meydan_e_heravi",
+      "to": "nobonyad",
       "line": "line_3",
       "weight": 1
     }
@@ -649,13 +661,13 @@
   "imam_hossein": [
     {
       "from": "imam_hossein",
-      "to": "shahid_madani",
+      "to": "darvazeh_shemiran",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "imam_hossein",
-      "to": "darvazeh_shemiran",
+      "to": "shahid_madani",
       "line": "line_2",
       "weight": 1
     },
@@ -715,13 +727,13 @@
   "janbazan": [
     {
       "from": "janbazan",
-      "to": "sarsabz",
+      "to": "fadak",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "janbazan",
-      "to": "fadak",
+      "to": "sarsabz",
       "line": "line_2",
       "weight": 1
     }
@@ -729,13 +741,13 @@
   "javadiyeh": [
     {
       "from": "javadiyeh",
-      "to": "rahahan",
+      "to": "zamzam",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "javadiyeh",
-      "to": "zamzam",
+      "to": "rahahan",
       "line": "line_3",
       "weight": 1
     }
@@ -757,7 +769,7 @@
   "kahrizak": [
     {
       "from": "kahrizak",
-      "to": "holy_shrine_of_imam_khomeini",
+      "to": "haram_e_motahar_e_emam_khomeini",
       "line": "line_1",
       "weight": 1
     }
@@ -765,13 +777,13 @@
   "karagar": [
     {
       "from": "karagar",
-      "to": "bustan_e_laleh",
+      "to": "daneshgah_e_tarbiat_modarres",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "karagar",
-      "to": "daneshgah_e_tarbiat_modarres",
+      "to": "bustan_e_laleh",
       "line": "line_6",
       "weight": 1
     }
@@ -793,13 +805,13 @@
   "khajeh_abdollah_e_ansari": [
     {
       "from": "khajeh_abdollah_e_ansari",
-      "to": "shahid_zeynoddin",
+      "to": "shahid_sayyad_shirazi",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "khajeh_abdollah_e_ansari",
-      "to": "shahid_sayyad_shirazi",
+      "to": "shahid_zeynoddin",
       "line": "line_3",
       "weight": 1
     }
@@ -821,13 +833,13 @@
   "kiyan_shahr": [
     {
       "from": "kiyan_shahr",
-      "to": "shohada_ye_dowlat_abad",
+      "to": "be_sat",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "kiyan_shahr",
-      "to": "be_sat",
+      "to": "shohada_ye_dowlat_abad",
       "line": "line_6",
       "weight": 1
     }
@@ -835,13 +847,13 @@
   "komeyl": [
     {
       "from": "komeyl",
-      "to": "beryanak",
+      "to": "roudaki",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "komeyl",
-      "to": "roudaki",
+      "to": "beryanak",
       "line": "line_7",
       "weight": 1
     }
@@ -857,20 +869,14 @@
   "mahdiyeh": [
     {
       "from": "mahdiyeh",
-      "to": "moniriyeh",
-      "line": "line_3",
-      "weight": 1
-    },
-    {
-      "from": "mahdiyeh",
       "to": "rahahan",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "mahdiyeh",
-      "to": "meydan_e_mohammadiyeh",
-      "line": "line_7",
+      "to": "moniriyeh",
+      "line": "line_3",
       "weight": 1
     },
     {
@@ -878,32 +884,25 @@
       "to": "helal_ahmar",
       "line": "line_7",
       "weight": 1
-    }
-  ],
-  "maryam_e_moghaddas": [
-    {
-      "from": "maryam_e_moghaddas",
-      "to": "shohada_ye_haftom_e_tir",
-      "line": "line_6",
-      "weight": 1
     },
     {
-      "from": "maryam_e_moghaddas",
-      "to": "meydan_e_hazrat_vali_asr",
-      "line": "line_6",
+      "from": "mahdiyeh",
+      "to": "meydan_e_mohammadiyeh",
+      "line": "line_7",
       "weight": 1
     }
   ],
+  "maryam_e_moghaddas": [],
   "marzdaran": [
     {
       "from": "marzdaran",
-      "to": "shahrak_e_azmayesh",
+      "to": "yadegar_e_imam",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "marzdaran",
-      "to": "yadegar_e_imam",
+      "to": "shahrak_e_azmayesh",
       "line": "line_6",
       "weight": 1
     }
@@ -933,13 +932,13 @@
   "mellat": [
     {
       "from": "mellat",
-      "to": "baharistan",
+      "to": "imam_khomeini",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "mellat",
-      "to": "imam_khomeini",
+      "to": "baharistan",
       "line": "line_2",
       "weight": 1
     }
@@ -947,13 +946,13 @@
   "meydan_e_azadi": [
     {
       "from": "meydan_e_azadi",
-      "to": "ostad_mo_in",
+      "to": "bimeh",
       "line": "line_4",
       "weight": 1
     },
     {
       "from": "meydan_e_azadi",
-      "to": "bimeh",
+      "to": "ostad_mo_in",
       "line": "line_4",
       "weight": 1
     }
@@ -961,13 +960,13 @@
   "meydan_e_enghelab_e_eslami": [
     {
       "from": "meydan_e_enghelab_e_eslami",
-      "to": "teatr_e_shahr",
+      "to": "towhid",
       "line": "line_4",
       "weight": 1
     },
     {
       "from": "meydan_e_enghelab_e_eslami",
-      "to": "towhid",
+      "to": "teatr_e_shahr",
       "line": "line_4",
       "weight": 1
     }
@@ -975,13 +974,13 @@
   "meydan_e_giyam": [
     {
       "from": "meydan_e_giyam",
-      "to": "shohada_ye_hefdah_e_shahrivar",
+      "to": "mowlavi",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "meydan_e_giyam",
-      "to": "mowlavi",
+      "to": "shohada_ye_hefdah_e_shahrivar",
       "line": "line_7",
       "weight": 1
     }
@@ -989,18 +988,24 @@
   "meydan_e_hazrat_e_abdol_azim": [
     {
       "from": "meydan_e_hazrat_e_abdol_azim",
-      "to": "haram_e_hazrat_e_abdol_azim",
+      "to": "ebn_e_babviyeh",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "meydan_e_hazrat_e_abdol_azim",
-      "to": "ebn_e_babviyeh",
+      "to": "haram_e_hazrat_e_abdol_azim",
       "line": "line_6",
       "weight": 1
     }
   ],
   "meydan_e_hazrat_vali_asr": [
+    {
+      "from": "meydan_e_hazrat_vali_asr",
+      "to": "teatr_e_shahr",
+      "line": "line_3",
+      "weight": 1
+    },
     {
       "from": "meydan_e_hazrat_vali_asr",
       "to": "meydan_e_jahad",
@@ -1009,19 +1014,13 @@
     },
     {
       "from": "meydan_e_hazrat_vali_asr",
-      "to": "teatr_e_shahr",
-      "line": "line_3",
-      "weight": 1
-    },
-    {
-      "from": "meydan_e_hazrat_vali_asr",
-      "to": "maryam_e_moghaddas",
+      "to": "bustan_e_laleh",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "meydan_e_hazrat_vali_asr",
-      "to": "bustan_e_laleh",
+      "to": "shahid_nejatollahi",
       "line": "line_6",
       "weight": 1
     }
@@ -1029,13 +1028,13 @@
   "meydan_e_heravi": [
     {
       "from": "meydan_e_heravi",
-      "to": "hossein_abad",
+      "to": "shahid_zeynoddin",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "meydan_e_heravi",
-      "to": "shahid_zeynoddin",
+      "to": "hossein_abad",
       "line": "line_3",
       "weight": 1
     }
@@ -1043,13 +1042,13 @@
   "meydan_e_horr": [
     {
       "from": "meydan_e_horr",
-      "to": "daneshgah_e_imam_ali",
+      "to": "shahid_navab_e_safavi",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "meydan_e_horr",
-      "to": "shahid_navab_e_safavi",
+      "to": "daneshgah_e_imam_ali",
       "line": "line_2",
       "weight": 1
     }
@@ -1057,13 +1056,13 @@
   "meydan_e_jahad": [
     {
       "from": "meydan_e_jahad",
-      "to": "mirza_ye_shirazi",
+      "to": "meydan_e_hazrat_vali_asr",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "meydan_e_jahad",
-      "to": "meydan_e_hazrat_vali_asr",
+      "to": "mirza_ye_shirazi",
       "line": "line_3",
       "weight": 1
     }
@@ -1079,13 +1078,13 @@
   "meydan_e_khorasan": [
     {
       "from": "meydan_e_khorasan",
-      "to": "shahid_rezaei",
+      "to": "shohada_ye_hefdah_e_shahrivar",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "meydan_e_khorasan",
-      "to": "shohada_ye_hefdah_e_shahrivar",
+      "to": "shahid_rezaei",
       "line": "line_6",
       "weight": 1
     }
@@ -1119,24 +1118,18 @@
   "meydan_e_san_at": [
     {
       "from": "meydan_e_san_at",
-      "to": "milad_tower",
+      "to": "shahid_dadman",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "meydan_e_san_at",
-      "to": "shahid_dadman",
+      "to": "milad_tower",
       "line": "line_7",
       "weight": 1
     }
   ],
   "meydan_e_shohada": [
-    {
-      "from": "meydan_e_shohada",
-      "to": "ebn_e_sina",
-      "line": "line_4",
-      "weight": 1
-    },
     {
       "from": "meydan_e_shohada",
       "to": "darvazeh_shemiran",
@@ -1145,8 +1138,8 @@
     },
     {
       "from": "meydan_e_shohada",
-      "to": "amirkabir",
-      "line": "line_6",
+      "to": "ebn_e_sina",
+      "line": "line_4",
       "weight": 1
     },
     {
@@ -1154,18 +1147,24 @@
       "to": "imam_hossein",
       "line": "line_6",
       "weight": 1
+    },
+    {
+      "from": "meydan_e_shohada",
+      "to": "amirkabir",
+      "line": "line_6",
+      "weight": 1
     }
   ],
   "milad_tower": [
     {
       "from": "milad_tower",
-      "to": "boostan_e_goftegou",
+      "to": "meydan_e_san_at",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "milad_tower",
-      "to": "meydan_e_san_at",
+      "to": "boostan_e_goftegou",
       "line": "line_7",
       "weight": 1
     }
@@ -1187,13 +1186,13 @@
   "mirza_ye_shirazi": [
     {
       "from": "mirza_ye_shirazi",
-      "to": "shahid_beheshti",
+      "to": "meydan_e_jahad",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "mirza_ye_shirazi",
-      "to": "meydan_e_jahad",
+      "to": "shahid_beheshti",
       "line": "line_3",
       "weight": 1
     }
@@ -1201,13 +1200,13 @@
   "modafean_e_salamat": [
     {
       "from": "modafean_e_salamat",
-      "to": "towhid",
+      "to": "daneshgah_e_tarbiat_modarres",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "modafean_e_salamat",
-      "to": "daneshgah_e_tarbiat_modarres",
+      "to": "towhid",
       "line": "line_7",
       "weight": 1
     }
@@ -1229,13 +1228,13 @@
   "moniriyeh": [
     {
       "from": "moniriyeh",
-      "to": "teatr_e_shahr",
+      "to": "mahdiyeh",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "moniriyeh",
-      "to": "mahdiyeh",
+      "to": "teatr_e_shahr",
       "line": "line_3",
       "weight": 1
     }
@@ -1257,13 +1256,13 @@
   "mowlavi": [
     {
       "from": "mowlavi",
-      "to": "meydan_e_giyam",
+      "to": "meydan_e_mohammadiyeh",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "mowlavi",
-      "to": "meydan_e_mohammadiyeh",
+      "to": "meydan_e_giyam",
       "line": "line_7",
       "weight": 1
     }
@@ -1271,13 +1270,13 @@
   "nabard": [
     {
       "from": "nabard",
-      "to": "nirou_havaei",
+      "to": "pirooz i",
       "line": "line_4",
       "weight": 1
     },
     {
       "from": "nabard",
-      "to": "piroozi",
+      "to": "nirou_havaei",
       "line": "line_4",
       "weight": 1
     }
@@ -1299,13 +1298,13 @@
   "nemat_abad": [
     {
       "from": "nemat_abad",
-      "to": "abdol_abad",
+      "to": "azadegan",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "nemat_abad",
-      "to": "azadegan",
+      "to": "abdol_abad",
       "line": "line_3",
       "weight": 1
     }
@@ -1313,13 +1312,13 @@
   "nirou_havaei": [
     {
       "from": "nirou_havaei",
-      "to": "shahid_kolahdooz",
+      "to": "nabard",
       "line": "line_4",
       "weight": 1
     },
     {
       "from": "nirou_havaei",
-      "to": "nabard",
+      "to": "shahid_kolahdooz",
       "line": "line_4",
       "weight": 1
     }
@@ -1327,13 +1326,13 @@
   "nobonyad": [
     {
       "from": "nobonyad",
-      "to": "aghdasiyeh",
+      "to": "hossein_abad",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "nobonyad",
-      "to": "hossein_abad",
+      "to": "aghdasiyeh",
       "line": "line_3",
       "weight": 1
     }
@@ -1341,13 +1340,13 @@
   "ostad_mo_in": [
     {
       "from": "ostad_mo_in",
-      "to": "doctor_habibollah",
+      "to": "meydan_e_azadi",
       "line": "line_4",
       "weight": 1
     },
     {
       "from": "ostad_mo_in",
-      "to": "meydan_e_azadi",
+      "to": "doctor_habibollah",
       "line": "line_4",
       "weight": 1
     }
@@ -1394,20 +1393,7 @@
       "weight": 1
     }
   ],
-  "piroozi": [
-    {
-      "from": "piroozi",
-      "to": "nabard",
-      "line": "line_4",
-      "weight": 1
-    },
-    {
-      "from": "piroozi",
-      "to": "ebn_e_sina",
-      "line": "line_4",
-      "weight": 1
-    }
-  ],
+  "piroozi": [],
   "qa_em": [
     {
       "from": "qa_em",
@@ -1433,13 +1419,13 @@
   "rahahan": [
     {
       "from": "rahahan",
-      "to": "mahdiyeh",
+      "to": "javadiyeh",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "rahahan",
-      "to": "javadiyeh",
+      "to": "mahdiyeh",
       "line": "line_3",
       "weight": 1
     }
@@ -1447,13 +1433,13 @@
   "roudaki": [
     {
       "from": "roudaki",
-      "to": "komeyl",
+      "to": "shahid_navab_e_safavi",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "roudaki",
-      "to": "shahid_navab_e_safavi",
+      "to": "komeyl",
       "line": "line_7",
       "weight": 1
     }
@@ -1475,13 +1461,13 @@
   "sabalan": [
     {
       "from": "sabalan",
-      "to": "fadak",
+      "to": "shahid_madani",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "sabalan",
-      "to": "shahid_madani",
+      "to": "fadak",
       "line": "line_2",
       "weight": 1
     }
@@ -1489,13 +1475,13 @@
   "sarbaz": [
     {
       "from": "sarbaz",
-      "to": "imam_hossein",
+      "to": "bahar_shiraz_khanevadeh_hospital",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "sarbaz",
-      "to": "bahar_shiraz_khanevadeh_hospital",
+      "to": "imam_hossein",
       "line": "line_6",
       "weight": 1
     }
@@ -1503,24 +1489,18 @@
   "sarsabz": [
     {
       "from": "sarsabz",
-      "to": "daneshgah_e_elm_o_san_at",
+      "to": "janbazan",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "sarsabz",
-      "to": "janbazan",
+      "to": "daneshgah_e_elm_o_san_at",
       "line": "line_2",
       "weight": 1
     }
   ],
   "shademan": [
-    {
-      "from": "shademan",
-      "to": "shahid_navab_e_safavi",
-      "line": "line_2",
-      "weight": 1
-    },
     {
       "from": "shademan",
       "to": "daneshgah_e_sharif",
@@ -1529,13 +1509,19 @@
     },
     {
       "from": "shademan",
-      "to": "towhid",
-      "line": "line_4",
+      "to": "shahid_navab_e_safavi",
+      "line": "line_2",
       "weight": 1
     },
     {
       "from": "shademan",
       "to": "doctor_habibollah",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "shademan",
+      "to": "towhid",
       "line": "line_4",
       "weight": 1
     }
@@ -1549,13 +1535,13 @@
     },
     {
       "from": "shahed_baghershahr",
-      "to": "namayeshgah_e_shahr_e_aftab",
+      "to": "haram_e_motahar_e_emam_khomeini",
       "line": "line_1",
       "weight": 1
     },
     {
       "from": "shahed_baghershahr",
-      "to": "holy_shrine_of_imam_khomeini",
+      "to": "namayeshgah_e_shahr_e_aftab",
       "line": "line_1",
       "weight": 1
     }
@@ -1563,13 +1549,13 @@
   "shahid_ashrafi_esfahani": [
     {
       "from": "shahid_ashrafi_esfahani",
-      "to": "yadegar_e_imam",
+      "to": "shahid_sattari",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "shahid_ashrafi_esfahani",
-      "to": "shahid_sattari",
+      "to": "yadegar_e_imam",
       "line": "line_6",
       "weight": 1
     }
@@ -1577,13 +1563,13 @@
   "shahid_bagheri": [
     {
       "from": "shahid_bagheri",
-      "to": "tehranpars",
+      "to": "daneshgah_e_elm_o_san_at",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "shahid_bagheri",
-      "to": "daneshgah_e_elm_o_san_at",
+      "to": "tehranpars",
       "line": "line_2",
       "weight": 1
     }
@@ -1603,13 +1589,13 @@
     },
     {
       "from": "shahid_beheshti",
-      "to": "sohrevardi",
+      "to": "mirza_ye_shirazi",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "shahid_beheshti",
-      "to": "mirza_ye_shirazi",
+      "to": "sohrevardi",
       "line": "line_3",
       "weight": 1
     }
@@ -1631,13 +1617,13 @@
   "shahid_dadman": [
     {
       "from": "shahid_dadman",
-      "to": "meydan_e_san_at",
+      "to": "meydan_e_ketab",
       "line": "line_7",
       "weight": 1
     },
     {
       "from": "shahid_dadman",
-      "to": "meydan_e_ketab",
+      "to": "meydan_e_san_at",
       "line": "line_7",
       "weight": 1
     }
@@ -1645,13 +1631,13 @@
   "shahid_ghodousi": [
     {
       "from": "shahid_ghodousi",
-      "to": "shahid_sayyad_shirazi",
+      "to": "sohrevardi",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "shahid_ghodousi",
-      "to": "sohrevardi",
+      "to": "shahid_sayyad_shirazi",
       "line": "line_3",
       "weight": 1
     }
@@ -1695,13 +1681,13 @@
   "shahid_madani": [
     {
       "from": "shahid_madani",
-      "to": "sabalan",
+      "to": "imam_hossein",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "shahid_madani",
-      "to": "imam_hossein",
+      "to": "sabalan",
       "line": "line_2",
       "weight": 1
     }
@@ -1709,13 +1695,13 @@
   "shahid_mahallati": [
     {
       "from": "shahid_mahallati",
-      "to": "qa_em",
+      "to": "aghdasiyeh",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "shahid_mahallati",
-      "to": "aghdasiyeh",
+      "to": "qa_em",
       "line": "line_3",
       "weight": 1
     }
@@ -1737,13 +1723,13 @@
   "shahid_navab_e_safavi": [
     {
       "from": "shahid_navab_e_safavi",
-      "to": "meydan_e_horr",
+      "to": "shademan",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "shahid_navab_e_safavi",
-      "to": "shademan",
+      "to": "meydan_e_horr",
       "line": "line_2",
       "weight": 1
     },
@@ -1763,13 +1749,13 @@
   "shahid_rezaei": [
     {
       "from": "shahid_rezaei",
-      "to": "be_sat",
+      "to": "meydan_e_khorasan",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "shahid_rezaei",
-      "to": "meydan_e_khorasan",
+      "to": "be_sat",
       "line": "line_6",
       "weight": 1
     }
@@ -1783,7 +1769,7 @@
     },
     {
       "from": "shahid_sadr",
-      "to": "shahid_sadr",
+      "to": "qolhak",
       "line": "line_1",
       "weight": 1
     }
@@ -1791,13 +1777,13 @@
   "shahid_sattari": [
     {
       "from": "shahid_sattari",
-      "to": "shahid_ashrafi_esfahani",
+      "to": "ayatollah_kashani",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "shahid_sattari",
-      "to": "ayatollah_kashani",
+      "to": "shahid_ashrafi_esfahani",
       "line": "line_6",
       "weight": 1
     }
@@ -1805,13 +1791,13 @@
   "shahid_sayyad_shirazi": [
     {
       "from": "shahid_sayyad_shirazi",
-      "to": "khajeh_abdollah_e_ansari",
+      "to": "shahid_ghodousi",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "shahid_sayyad_shirazi",
-      "to": "shahid_ghodousi",
+      "to": "khajeh_abdollah_e_ansari",
       "line": "line_3",
       "weight": 1
     }
@@ -1827,13 +1813,13 @@
   "shahid_zeynoddin": [
     {
       "from": "shahid_zeynoddin",
-      "to": "meydan_e_heravi",
+      "to": "khajeh_abdollah_e_ansari",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "shahid_zeynoddin",
-      "to": "khajeh_abdollah_e_ansari",
+      "to": "meydan_e_heravi",
       "line": "line_3",
       "weight": 1
     }
@@ -1863,13 +1849,13 @@
   "shahr_e_ziba": [
     {
       "from": "shahr_e_ziba",
-      "to": "ayatollah_kashani",
+      "to": "shahran",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "shahr_e_ziba",
-      "to": "shahran",
+      "to": "ayatollah_kashani",
       "line": "line_6",
       "weight": 1
     }
@@ -1877,13 +1863,13 @@
   "shahrak_e_azmayesh": [
     {
       "from": "shahrak_e_azmayesh",
-      "to": "daneshgah_e_tarbiat_modarres",
+      "to": "marzdaran",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "shahrak_e_azmayesh",
-      "to": "marzdaran",
+      "to": "daneshgah_e_tarbiat_modarres",
       "line": "line_6",
       "weight": 1
     }
@@ -1891,13 +1877,13 @@
   "shahrak_e_ekbatan": [
     {
       "from": "shahrak_e_ekbatan",
-      "to": "bimeh",
+      "to": "eram_e_sabz",
       "line": "line_4",
       "weight": 1
     },
     {
       "from": "shahrak_e_ekbatan",
-      "to": "eram_e_sabz",
+      "to": "bimeh",
       "line": "line_4",
       "weight": 1
     }
@@ -1905,13 +1891,13 @@
   "shahrak_e_shariaty": [
     {
       "from": "shahrak_e_shariaty",
-      "to": "zamzam",
+      "to": "abdol_abad",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "shahrak_e_shariaty",
-      "to": "abdol_abad",
+      "to": "zamzam",
       "line": "line_3",
       "weight": 1
     }
@@ -1919,13 +1905,13 @@
   "shahran": [
     {
       "from": "shahran",
-      "to": "shahr_e_ziba",
+      "to": "shohada_ye_kan",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "shahran",
-      "to": "shohada_ye_kan",
+      "to": "shahr_e_ziba",
       "line": "line_6",
       "weight": 1
     }
@@ -1933,13 +1919,13 @@
   "shohada_ye_dowlat_abad": [
     {
       "from": "shohada_ye_dowlat_abad",
-      "to": "cheshmeh_ali",
+      "to": "kiyan_shahr",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "shohada_ye_dowlat_abad",
-      "to": "kiyan_shahr",
+      "to": "cheshmeh_ali",
       "line": "line_6",
       "weight": 1
     }
@@ -1959,24 +1945,18 @@
     },
     {
       "from": "shohada_ye_haftom_e_tir",
-      "to": "bahar_shiraz_khanevadeh_hospital",
+      "to": "shahid_nejatollahi",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "shohada_ye_haftom_e_tir",
-      "to": "maryam_e_moghaddas",
+      "to": "bahar_shiraz_khanevadeh_hospital",
       "line": "line_6",
       "weight": 1
     }
   ],
   "shohada_ye_hefdah_e_shahrivar": [
-    {
-      "from": "shohada_ye_hefdah_e_shahrivar",
-      "to": "meydan_e_khorasan",
-      "line": "line_6",
-      "weight": 1
-    },
     {
       "from": "shohada_ye_hefdah_e_shahrivar",
       "to": "amirkabir",
@@ -1985,8 +1965,8 @@
     },
     {
       "from": "shohada_ye_hefdah_e_shahrivar",
-      "to": "chehel_tan_e_doulab",
-      "line": "line_7",
+      "to": "meydan_e_khorasan",
+      "line": "line_6",
       "weight": 1
     },
     {
@@ -1994,18 +1974,24 @@
       "to": "meydan_e_giyam",
       "line": "line_7",
       "weight": 1
+    },
+    {
+      "from": "shohada_ye_hefdah_e_shahrivar",
+      "to": "chehel_tan_e_doulab",
+      "line": "line_7",
+      "weight": 1
     }
   ],
   "shohada_ye_kan": [
     {
       "from": "shohada_ye_kan",
-      "to": "shahran",
+      "to": "kouhsar",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "shohada_ye_kan",
-      "to": "kouhsar",
+      "to": "shahran",
       "line": "line_6",
       "weight": 1
     }
@@ -2027,13 +2013,13 @@
   "sohrevardi": [
     {
       "from": "sohrevardi",
-      "to": "shahid_ghodousi",
+      "to": "shahid_beheshti",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "sohrevardi",
-      "to": "shahid_beheshti",
+      "to": "shahid_ghodousi",
       "line": "line_3",
       "weight": 1
     }
@@ -2049,24 +2035,18 @@
   "tarasht": [
     {
       "from": "tarasht",
-      "to": "daneshgah_e_sharif",
+      "to": "tehran_sadeghiyeh",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "tarasht",
-      "to": "tehran_sadeghiyeh",
+      "to": "daneshgah_e_sharif",
       "line": "line_2",
       "weight": 1
     }
   ],
   "teatr_e_shahr": [
-    {
-      "from": "teatr_e_shahr",
-      "to": "meydan_e_hazrat_vali_asr",
-      "line": "line_3",
-      "weight": 1
-    },
     {
       "from": "teatr_e_shahr",
       "to": "moniriyeh",
@@ -2075,13 +2055,19 @@
     },
     {
       "from": "teatr_e_shahr",
-      "to": "ferdowsi",
-      "line": "line_4",
+      "to": "meydan_e_hazrat_vali_asr",
+      "line": "line_3",
       "weight": 1
     },
     {
       "from": "teatr_e_shahr",
       "to": "meydan_e_enghelab_e_eslami",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "teatr_e_shahr",
+      "to": "ferdowsi",
       "line": "line_4",
       "weight": 1
     }
@@ -2103,13 +2089,13 @@
   "tehranpars": [
     {
       "from": "tehranpars",
-      "to": "farhangsara",
+      "to": "shahid_bagheri",
       "line": "line_2",
       "weight": 1
     },
     {
       "from": "tehranpars",
-      "to": "shahid_bagheri",
+      "to": "farhangsara",
       "line": "line_2",
       "weight": 1
     }
@@ -2117,13 +2103,13 @@
   "towhid": [
     {
       "from": "towhid",
-      "to": "meydan_e_enghelab_e_eslami",
+      "to": "shademan",
       "line": "line_4",
       "weight": 1
     },
     {
       "from": "towhid",
-      "to": "shademan",
+      "to": "meydan_e_enghelab_e_eslami",
       "line": "line_4",
       "weight": 1
     },
@@ -2193,13 +2179,13 @@
   "yadegar_e_imam": [
     {
       "from": "yadegar_e_imam",
-      "to": "marzdaran",
+      "to": "shahid_ashrafi_esfahani",
       "line": "line_6",
       "weight": 1
     },
     {
       "from": "yadegar_e_imam",
-      "to": "shahid_ashrafi_esfahani",
+      "to": "marzdaran",
       "line": "line_6",
       "weight": 1
     }
@@ -2207,13 +2193,13 @@
   "zamzam": [
     {
       "from": "zamzam",
-      "to": "javadiyeh",
+      "to": "shahrak_e_shariaty",
       "line": "line_3",
       "weight": 1
     },
     {
       "from": "zamzam",
-      "to": "shahrak_e_shariaty",
+      "to": "javadiyeh",
       "line": "line_3",
       "weight": 1
     }
