@@ -484,7 +484,7 @@
     },
     {
       "from": "ebn_e_sina",
-      "to": "pirooz i",
+      "to": "piroozi",
       "line": "line_4",
       "weight": 1
     }
@@ -1270,7 +1270,7 @@
   "nabard": [
     {
       "from": "nabard",
-      "to": "pirooz i",
+      "to": "piroozi",
       "line": "line_4",
       "weight": 1
     },
