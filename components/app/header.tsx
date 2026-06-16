@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ThemeToggle } from './theme-toggle';
 import { LocaleSwitcher } from './locale-switcher';
 import { LucideRoute } from 'lucide-react';
+import { Button } from '../ui/button';
 
 interface Dict {
   theme: {
@@ -29,11 +30,17 @@ export function AppHeader({ dict }: { dict: Dict }) {
       <div className="flex justify-between items-center container gap-4 p-2">
         {/* Logo */}
         <Link href="/">
-          <LucideRoute className='size-6'/>
+          <LucideRoute className='size-6' />
         </Link>
 
-        {/* Theme, Locale Switcher */}
+        {/* Theme, Locale Switcher, Github */}
         <div className="flex items-center gap-2">
+          <Link href="https://github.com/taymakz/tehgo" target="_blank">
+            <Button variant="ghost" size="icon">
+              <i className="icon-[lucide--github] size-6" />
+              <span className="sr-only">Github</span>
+            </Button>
+          </Link>
           <ThemeToggle dict={dict} />
           <LocaleSwitcher dict={dict} />
         </div>
