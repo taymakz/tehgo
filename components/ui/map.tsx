@@ -974,9 +974,11 @@ function MapRoute({
 }
 
 type MapClusterLayerProps<
+  // @ts-ignore - allow generic properties for GeoJSON features, even though MapLibre types are incomplete for cluster properties
   P extends GeoJSON.GeoJsonProperties = GeoJSON.GeoJsonProperties
 > = {
   /** GeoJSON FeatureCollection data or URL to fetch GeoJSON from */
+  // @ts-ignore - allow string URL or GeoJSON object
   data: string | GeoJSON.FeatureCollection<GeoJSON.Point, P>;
   /** Maximum zoom level to cluster points on (default: 14) */
   clusterMaxZoom?: number;
@@ -990,6 +992,7 @@ type MapClusterLayerProps<
   pointColor?: string;
   /** Callback when an unclustered point is clicked */
   onPointClick?: (
+    // @ts-ignore - MapLibre types are incomplete for cluster properties
     feature: GeoJSON.Feature<GeoJSON.Point, P>,
     coordinates: [number, number]
   ) => void;
@@ -1002,6 +1005,7 @@ type MapClusterLayerProps<
 };
 
 function MapClusterLayer<
+  // @ts-ignore - MapLibre types are incomplete for cluster properties
   P extends GeoJSON.GeoJsonProperties = GeoJSON.GeoJsonProperties
 >({
   data,
@@ -1183,6 +1187,7 @@ function MapClusterLayer<
       const feature = features[0];
       const clusterId = feature.properties?.cluster_id as number;
       const pointCount = feature.properties?.point_count as number;
+      // @ts-ignore - MapLibre's feature type is not fully compatible with GeoJSON.Feature, but we know it will work for our use case
       const coordinates = (feature.geometry as GeoJSON.Point).coordinates as [
         number,
         number
@@ -1211,6 +1216,7 @@ function MapClusterLayer<
 
       const feature = e.features[0];
       const coordinates = (
+        // @ts-ignore - MapLibre's feature type is not fully compatible with GeoJSON.Feature, but we know it will work for our use case
         feature.geometry as GeoJSON.Point
       ).coordinates.slice() as [number, number];
 
@@ -1218,8 +1224,8 @@ function MapClusterLayer<
       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
-
       onPointClick(
+        // @ts-ignore - MapLibre's feature type is not fully compatible with GeoJSON.Feature, but we know it will work for our use case
         feature as unknown as GeoJSON.Feature<GeoJSON.Point, P>,
         coordinates
       );
