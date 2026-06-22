@@ -65,6 +65,4 @@ Tehran metro station and route data in this project is based on
 
 MIT
 
-MIT
-
 
