@@ -56,9 +56,14 @@ If you want, you can also contribute by building:
 * 📱 iOS app version
 * 🤖 Android app version
 
----
+## Data Source
+
+Tehran metro station and route data in this project is based on
+[mostafa-kheibary/tehran-metro-data](https://github.com/mostafa-kheibary/tehran-metro-data).
 
 ## License
+
+MIT
 
 MIT
 
