@@ -1,5 +1,10 @@
+import { Suspense } from "react";
 import { HomeMap } from "@/components/home/home-map";
 
 export default function HomePage() {
-  return <HomeMap />;
+  return (
+    <Suspense fallback={null}>
+      <HomeMap />
+    </Suspense>
+  );
 }

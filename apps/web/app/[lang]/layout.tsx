@@ -49,6 +49,7 @@ export async function generateMetadata({
     : "Interactive map and route planner for Tehran and Karaj metro";
 
   return {
+    metadataBase: new URL("https://tehgo.ir"),
     title,
     description,
     alternates: {
