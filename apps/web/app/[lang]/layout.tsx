@@ -19,6 +19,7 @@ import {
 } from "@/i18n/config";
 import { fontMono, fontSans, fontVazir } from "@/lib/fonts";
 import { notFound } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
 
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((lang) => ({ lang }));
@@ -114,6 +115,7 @@ export default async function LangLayout({
             </DictionaryProvider>
           </ThemeProvider>
         </NuqsAdapter>
+        <Analytics />
       </body>
     </html>
   );
