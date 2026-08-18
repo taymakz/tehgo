@@ -6,6 +6,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type FocusEvent,
   type ReactNode,
 } from "react"
 import { Slot } from "@radix-ui/react-slot"
@@ -13,6 +14,17 @@ import clsx from "clsx"
 import { AnimatePresence, motion } from "motion/react"
 import useMeasure from "react-use-measure"
 import { Drawer } from "vaul"
+
+function isTextInput(target: EventTarget): boolean {
+  if (!(target instanceof HTMLElement)) return false
+  return (
+    target.tagName === "TEXTAREA" ||
+    (target.tagName === "INPUT" &&
+      !["checkbox", "radio", "button", "submit", "range"].includes(
+        (target as HTMLInputElement).type
+      ))
+  )
+}
 
 // ============================================================================
 // Types
@@ -220,11 +232,26 @@ function FamilyDrawerContent({
   asChild = false,
 }: FamilyDrawerContentProps) {
   const { bounds } = useFamilyDrawer()
+  // While a text input inside the drawer is focused, vaul itself takes over
+  // `style.height` on this same node to keep the drawer above the on-screen
+  // keyboard (see its keyboard-avoidance logic). If we keep animating height
+  // here too, every re-render stomps vaul's adjustment right back to the
+  // full, un-shrunk height, so the drawer ends up hidden behind the
+  // keyboard. Bowing out of the height animation while an input has focus
+  // lets vaul's own inline style win uncontested.
+  const [keyboardLikelyOpen, setKeyboardLikelyOpen] = useState(false)
+
+  const handleFocusIn = (e: FocusEvent) => {
+    if (isTextInput(e.target)) setKeyboardLikelyOpen(true)
+  }
+  const handleFocusOut = () => setKeyboardLikelyOpen(false)
 
   const content = (
     <motion.div
+      onFocus={handleFocusIn}
+      onBlur={handleFocusOut}
       animate={{
-        height: bounds.height,
+        height: keyboardLikelyOpen ? undefined : bounds.height,
         transition: {
           duration: 0.27,
           ease: [0.25, 1, 0.5, 1],

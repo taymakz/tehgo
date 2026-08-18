@@ -12,15 +12,23 @@ import { Map, MapControls, MapRoute } from "@workspace/ui/components/map";
 import { SettingsMenu } from "@/components/settings-menu";
 import { Splash } from "@/components/splash";
 import { StationMarker } from "./station-marker";
+import { StationSearchModal } from "./station-search-modal";
 import { RouteGuideMarker } from "./route-guide-marker";
 import { MapReadyWatcher } from "./map-ready-watcher";
+import { MapZoomWatcher } from "./map-zoom-watcher";
 import { AppDrawer, type DrawerView, type RouteType } from "./app-drawer";
 import { FloatingRouteControls } from "./floating-controls";
 import { MapFlyTo } from "./map-fly-to";
 import { useDictionary, useLocale } from "@/i18n/dictionary-provider";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { useRecentRoutesStore } from "@/lib/stores/recent-routes";
 
 const TEHRAN_CENTER: [number, number] = [51.389, 35.6892];
+// Zoom level at which station names become readable enough to show by
+// default above every station, not just the selected/related ones. Small
+// screens are more cramped, so they need to be zoomed in further first.
+const LABEL_VISIBLE_ZOOM_DESKTOP = 12;
+const LABEL_VISIBLE_ZOOM_MOBILE = 14;
 
 function stationCoords(id: string): [number, number] | null {
   const station = stations[id];
@@ -41,6 +49,9 @@ export function HomeMap() {
   const [pickStationId, setPickStationId] = useState<string | null>(null);
   const [mapReady, setMapReady] = useState(false);
   const handleMapReady = useCallback(() => setMapReady(true), []);
+  const [zoom, setZoom] = useState(12);
+  const isSmallScreen = useMediaQuery("(max-width: 639px)");
+  const labelVisibleZoom = isSmallScreen ? LABEL_VISIBLE_ZOOM_MOBILE : LABEL_VISIBLE_ZOOM_DESKTOP;
 
   const routes = useMemo(() => {
     if (!from || !to || from === to) return [];
@@ -195,16 +206,27 @@ export function HomeMap() {
     openSearch("from");
   }
 
+  const [flyOverride, setFlyOverride] = useState<{
+    center: [number, number];
+    key: string;
+  } | null>(null);
+
+  function handleLocationFound(id: string) {
+    const coords = stationCoords(id);
+    if (coords) setFlyOverride({ center: coords, key: `nearest-${id}-${Date.now()}` });
+  }
+
   const bothSelected = !!from && !!to;
 
   return (
     <div className="relative h-dvh w-full overflow-hidden">
       <Map center={TEHRAN_CENTER} zoom={12} className="h-dvh w-full">
         <MapReadyWatcher onReady={handleMapReady} />
+        <MapZoomWatcher onZoomChange={setZoom} />
         <MapControls position="top-right" />
         <MapFlyTo
-          center={from ? stationCoords(from) : null}
-          routeKey={from && to ? `${from}-${to}` : null}
+          center={flyOverride ? flyOverride.center : from ? stationCoords(from) : null}
+          routeKey={flyOverride ? flyOverride.key : from && to ? `${from}-${to}` : null}
         />
 
         {Object.entries(paths).flatMap(([lineId, entry]) =>
@@ -240,6 +262,8 @@ export function HomeMap() {
         {stationsRenderOrder.map((station) => {
           const isRelated =
             station.id === from || station.id === to || routeStationIds.has(station.id);
+          const showLabel =
+            isRelated || (zoom >= labelVisibleZoom && !bothSelected);
           return (
           <StationMarker
             key={station.id}
@@ -251,7 +275,8 @@ export function HomeMap() {
             locale={locale}
             dimmed={bothSelected}
             related={isRelated}
-            showLabel={isRelated}
+            showLabel={showLabel}
+            showTooltip={!isSmallScreen}
             role={station.id === from ? "from" : station.id === to ? "to" : null}
             onClick={() => handleMarkerClick(station.id)}
           />
@@ -317,7 +342,7 @@ export function HomeMap() {
 
       <AppDrawer
         stations={stations}
-        view={drawerView}
+        view={isSmallScreen && drawerView === "search" ? null : drawerView}
         onViewChange={setDrawerView}
         pickStationId={pickStationId}
         searchField={searchField}
@@ -325,9 +350,19 @@ export function HomeMap() {
         to={to}
         route={selectedRoute}
         onSelectStation={(id) => assignField(searchField, id)}
+        onLocationFound={handleLocationFound}
         onSelectPick={handlePickAs}
         onSelectRecent={handleSelectRecent}
         onLostStation={handleLostStation}
+      />
+
+      <StationSearchModal
+        open={isSmallScreen && drawerView === "search"}
+        stations={stations}
+        onSelect={(id) => assignField(searchField, id)}
+        onLocationFound={handleLocationFound}
+        excludeId={searchField === "from" ? to : from}
+        onClose={() => setDrawerView(null)}
       />
 
       <Splash show={!mapReady} />

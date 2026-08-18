@@ -15,6 +15,7 @@ export function StationMarker({
   locale,
   role,
   showLabel,
+  showTooltip,
   dimmed,
   related,
   onClick,
@@ -25,6 +26,7 @@ export function StationMarker({
   locale: Locale;
   role: "from" | "to" | null;
   showLabel: boolean;
+  showTooltip: boolean;
   dimmed: boolean;
   related: boolean;
   onClick: () => void;
@@ -54,10 +56,10 @@ export function StationMarker({
         {showLabel && (
           <MarkerLabel
             className={cn(
-              "rounded px-1 py-0.5 shadow-sm backdrop-blur",
+              "rounded px-1 py-0.5 shadow-sm",
               role
                 ? "z-20 bg-blue-600 font-medium text-white"
-                : "bg-background/85 text-foreground",
+                : "border border-zinc-800 bg-zinc-900 text-zinc-50 dark:border-zinc-200 dark:bg-white dark:text-zinc-900",
               locale === "fa" && "font-vazir"
             )}
           >
@@ -65,8 +67,10 @@ export function StationMarker({
           </MarkerLabel>
         )}
       </MarkerContent>
-      {!showLabel && (
-        <MarkerTooltip className={cn(locale === "fa" && "font-vazir")}>{label}</MarkerTooltip>
+      {!showLabel && showTooltip && (
+        <MarkerTooltip className={cn("px-3 py-1.5 text-lg", locale === "fa" && "font-vazir")}>
+          {label}
+        </MarkerTooltip>
       )}
     </MapMarker>
   );

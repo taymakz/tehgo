@@ -56,6 +56,7 @@ export function AppDrawer({
   to,
   route,
   onSelectStation,
+  onLocationFound,
   onSelectPick,
   onSelectRecent,
   onLostStation,
@@ -69,6 +70,7 @@ export function AppDrawer({
   to: string | null;
   route: RouteResult | null;
   onSelectStation: (id: string) => void;
+  onLocationFound?: (id: string) => void;
   onSelectPick: (field: "from" | "to") => void;
   onSelectRecent: (from: string, to: string) => void;
   onLostStation: () => void;
@@ -155,7 +157,12 @@ export function AppDrawer({
   function SearchView() {
     const excludeId = searchField === "from" ? to : from;
     return (
-      <StationSearch stations={stations} onSelect={onSelectStation} excludeId={excludeId} />
+      <StationSearch
+        stations={stations}
+        onSelect={onSelectStation}
+        onLocationFound={onLocationFound}
+        excludeId={excludeId}
+      />
     );
   }
 
@@ -173,7 +180,7 @@ export function AppDrawer({
             {stationLabel(stations, id, locale)}
           </span>
         </div>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="flex flex-col gap-2 sm:grid sm:grid-cols-2">
           <button
             type="button"
             onClick={() => onSelectPick("from")}
