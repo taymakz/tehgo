@@ -745,13 +745,21 @@ function MarkerTooltip({
       tooltip.setLngLat(marker.getLngLat()).addTo(map);
     };
     const handleMouseLeave = () => tooltip.remove();
+    // Touch devices never fire mouseenter/mouseleave, so the tooltip would
+    // otherwise never show at all on mobile — show it on tap instead.
+    const handleTouchStart = () => {
+      tooltip.setLngLat(marker.getLngLat()).addTo(map);
+    };
 
-    marker.getElement()?.addEventListener("mouseenter", handleMouseEnter);
-    marker.getElement()?.addEventListener("mouseleave", handleMouseLeave);
+    const el = marker.getElement();
+    el?.addEventListener("mouseenter", handleMouseEnter);
+    el?.addEventListener("mouseleave", handleMouseLeave);
+    el?.addEventListener("touchstart", handleTouchStart, { passive: true });
 
     return () => {
-      marker.getElement()?.removeEventListener("mouseenter", handleMouseEnter);
-      marker.getElement()?.removeEventListener("mouseleave", handleMouseLeave);
+      el?.removeEventListener("mouseenter", handleMouseEnter);
+      el?.removeEventListener("mouseleave", handleMouseLeave);
+      el?.removeEventListener("touchstart", handleTouchStart);
       tooltip.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -768,7 +776,7 @@ function MarkerTooltip({
   return createPortal(
     <div
       className={cn(
-        "bg-foreground text-background pointer-events-none rounded-md px-2 py-1 text-xs text-balance shadow-md",
+        "pointer-events-none rounded-md border border-zinc-800 bg-zinc-900 px-2 py-1 text-xs text-balance text-zinc-50 shadow-md dark:border-zinc-200 dark:bg-white dark:text-zinc-900",
         "animate-in fade-in-0 zoom-in-95 duration-200 ease-out",
         className,
       )}
