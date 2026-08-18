@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+       android:windowBackground is set explicitly (matching TehgoTheme's light colorScheme
+       background in Color.kt) so the window's very first frame - and the Android 12+ system
+       splash screen, which falls back to this attribute when not otherwise customized - already
+       matches the app's resolved theme, instead of momentarily flashing whatever the base
+       platform theme defaults to. See values-night/themes.xml for the dark counterpart.
+    -->
+    <style name="Theme.Tehgo" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">#FFFFFFFF</item>
+    </style>
+</resources>

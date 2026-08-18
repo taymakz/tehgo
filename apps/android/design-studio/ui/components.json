@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "base-nova",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/styles/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
+  "iconLibrary": "lucide",
+  "rtl": true,
+  "aliases": {
+    "components": "@workspace/ui/components",
+    "utils": "@workspace/ui/lib/utils",
+    "ui": "@workspace/ui/components",
+    "lib": "@workspace/ui/lib",
+    "hooks": "@workspace/ui/hooks"
+  },
+  "registries": {
+    "@coss": "https://coss.com/ui/r/{name}.json",
+    "@diceui": "https://diceui.com/r/{name}.json",
+    "@soundcn": "https://soundcn.xyz/r/{name}.json",
+    "@mapcn": "https://mapcn.dev/r/{name}.json",
+    "@ncdai": "https://chanhdai.com/r/{name}.json",
+    "@bklit": "https://ui.bklit.com/r/{name}.json",
+    "@beui": "https://beui.dev/r/{name}.json"
+  }
+}
