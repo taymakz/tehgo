@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
+    "@vercel/analytics": "^2.0.1",
     "@workspace/metro-core": "workspace:*",
     "@workspace/ui": "workspace:*",
     "class-variance-authority": "^0.7.1",
