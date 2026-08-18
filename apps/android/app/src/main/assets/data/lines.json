@@ -1,0 +1,58 @@
+{
+  "line_1": {
+    "id": "line_1",
+    "name": {
+      "fa": "خط 1",
+      "en": "Line 1"
+    },
+    "color": "#E0001F"
+  },
+  "line_2": {
+    "id": "line_2",
+    "name": {
+      "fa": "خط 2",
+      "en": "Line 2"
+    },
+    "color": "#2F4389"
+  },
+  "line_3": {
+    "id": "line_3",
+    "name": {
+      "fa": "خط 3",
+      "en": "Line 3"
+    },
+    "color": "#67C5F5"
+  },
+  "line_4": {
+    "id": "line_4",
+    "name": {
+      "fa": "خط 4",
+      "en": "Line 4"
+    },
+    "color": "#F8E100"
+  },
+  "line_5": {
+    "id": "line_5",
+    "name": {
+      "fa": "خط 5",
+      "en": "Line 5"
+    },
+    "color": "#007E46"
+  },
+  "line_6": {
+    "id": "line_6",
+    "name": {
+      "fa": "خط 6",
+      "en": "Line 6"
+    },
+    "color": "#EF639F"
+  },
+  "line_7": {
+    "id": "line_7",
+    "name": {
+      "fa": "خط 7",
+      "en": "Line 7"
+    },
+    "color": "#7F0B74"
+  }
+}

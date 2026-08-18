@@ -1,0 +1,143 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@plugin "@iconify/tailwind4";
+
+/* @tailwindcss/vite only auto-scans this app's own module graph for
+   candidate class names — it does not follow the vite.config.ts alias that
+   points "@workspace/ui" at packages/ui/src, so classNames written inside
+   those component files were silently never generated (e.g. bg-popover,
+   z-50, h-(--elastic-slider-height) all compiled to nothing). Force an
+   explicit scan — scoped to just the two files that actually carry
+   classNames (Collapsible/DirectionProvider are unstyled wrappers) instead
+   of the whole packages/ui/src tree, which would pull in every other
+   component's classes (charts, maps, tables, ...) for nothing. */
+@source "../ui/src/components/select.tsx";
+@source "../ui/src/components/elastic-slider.tsx";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Minimal shadcn/@workspace/ui token set — just enough for the two real
+   @workspace/ui components used here (Select, ElasticSlider). This is a
+   local-only tool that's always dark, so values are lifted straight from
+   packages/ui's `.dark` palette instead of pulling that package's full
+   globals.css (chart/sidebar tokens, apps/** @source scan, maplibre
+   overrides) into an otherwise self-contained Vite app. */
+:root {
+  --radius: 0.625rem;
+  --background: oklch(0.191 0 89.9);
+  --foreground: oklch(0.917 0.013 82.4);
+  --popover: color-mix(in srgb, var(--background) 98%, var(--color-white));
+  --popover-foreground: var(--color-neutral-100);
+  --accent: --alpha(var(--color-white) / 4%);
+  --accent-foreground: var(--color-neutral-100);
+  --muted: --alpha(var(--color-white) / 4%);
+  --muted-foreground: color-mix(
+    in srgb,
+    var(--color-neutral-500) 90%,
+    var(--color-white)
+  );
+  --border: --alpha(var(--color-white) / 6%);
+  --input: --alpha(var(--color-white) / 8%);
+  --ring: var(--color-neutral-500);
+  --destructive: color-mix(in srgb, var(--color-red-500) 90%, var(--color-white));
+  --destructive-foreground: var(--color-red-400);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+}
+
+/* Same three font families as the marketing site (apps/website/lib/fonts.ts)
+   — copied locally into public/fonts so this stays a self-contained, no-CDN
+   local tool. Persian text falls back onto Vazirmatn automatically since
+   Geist has no Farsi glyphs. */
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist[wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist-Italic[wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono[wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-Italic[wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/fonts/Vazirmatn[wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Geist", "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Geist", "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Vazirmatn", ui-monospace, monospace;
+  --font-vazir: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  color-scheme: dark;
+}
+
+.studio-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.studio-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.studio-scroll::-webkit-scrollbar-thumb {
+  background: rgb(255 255 255 / 12%);
+  border-radius: 9999px;
+}
+.studio-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgb(255 255 255 / 20%);
+}
+
+@keyframes studio-canvas-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.studio-canvas-enter {
+  animation: studio-canvas-enter 180ms ease-out;
+}

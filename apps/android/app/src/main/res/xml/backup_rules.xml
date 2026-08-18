@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Reviewed 2026-07-19 (plan 014): same rationale as data_extraction_rules.xml (which
+   governs API 31+; this file is the API-30-and-below equivalent, per Android's own
+   documentation that this file is ignored on API 31+).
+-->
+<full-backup-content>
+    <include domain="sharedpref" path="."/>
+</full-backup-content>

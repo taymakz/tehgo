@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Reviewed 2026-07-19 (plan 014): all SharedPreferences data is non-sensitive -
+   recent/favorite routes (station IDs, timestamps, use counts), navigation-state
+   restoration (last screen/tab), onboarding status, offline-map-cache flag, theme
+   preference, and a saved-map-image gallery URI reference. No credentials, tokens,
+   or precise location history. Included explicitly rather than left to the default
+   so a future addition of sensitive data prompts revisiting this file instead of
+   silently inheriting backup inclusion.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <include domain="sharedpref" path="."/>
+    </cloud-backup>
+    <device-transfer>
+        <include domain="sharedpref" path="."/>
+    </device-transfer>
+</data-extraction-rules>

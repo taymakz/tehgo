@@ -1,0 +1,42 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{kt,kts}]
+indent_style = space
+indent_size = 4
+# max_line_length intentionally left unset: the existing codebase already has lines up to ~180
+# chars (mostly string-template interpolations in Compose subtitle/label text) that ktlint's
+# formatter cannot safely auto-wrap. Setting a max_line_length here would leave spotlessCheck
+# permanently failing on those lines even after spotlessApply. See plans/018 for the rationale.
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+# Compose composables are PascalCase by convention (e.g. `RouteMapOverlay`), which the standard
+# ktlint function-naming rule otherwise flags. This is ktlint's documented, purpose-built escape
+# hatch for Compose codebases, not a bespoke rule change.
+ktlint_function_naming_ignore_when_annotated_with = Composable
+# The codebase's existing convention is camelCase top-level "logical constant" vals (e.g.
+# `NetworkLinesSourceId` in ui/map/MapLayers.kt) rather than SCREAMING_SNAKE_CASE/`const val`.
+# Enforcing the latter would require real source edits (adding `const`), not just formatting, so
+# this rule is disabled rather than fought or silently changing semantics during an auto-reformat.
+ktlint_standard_property-naming = disabled
+# Two stock Android Studio-generated example test files (ExampleUnitTest.kt,
+# ExampleInstrumentedTest.kt) use `import org.junit.Assert.*`; ktlint flags but cannot
+# auto-fix wildcard imports (expanding them requires real source edits). Disabled rather than
+# hand-editing those two files as part of an otherwise whitespace-only auto-reformat commit.
+ktlint_standard_no-wildcard-imports = disabled
+# AppState.kt has an intentional file-level overview KDoc block that isn't attached to a
+# declaration (see plans/016). ktlint's dangling-KDoc rule flags this and can't auto-fix it
+# without a real source edit (e.g. converting to a plain comment), so it's disabled.
+ktlint_standard_kdoc = disabled
+
+[*.{xml,json,yml,yaml}]
+indent_style = space
+indent_size = 4
+
+[*.md]
+trim_trailing_whitespace = false

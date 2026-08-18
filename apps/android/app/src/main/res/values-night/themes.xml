@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+       Dark counterpart of values/themes.xml. Without this, a device in system dark mode still
+       gets the light android:windowBackground on cold start (there was no night-qualified theme
+       at all before), producing a white flash before Compose's first frame - and, on Android
+       12+, in the system splash screen itself - even though the app immediately resolves to dark
+       mode once TehgoApp() composes. #FF141414 matches DarkBackground in ui/theme/Color.kt.
+    -->
+    <style name="Theme.Tehgo" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">#FF141414</item>
+    </style>
+</resources>
