@@ -4,7 +4,9 @@
     "target": {
       "namespace": "android_app",
       "package_name": "ir.tehgo",
-      "sha256_cert_fingerprints": []
+      "sha256_cert_fingerprints": [
+        "21:19:AF:08:0A:19:C2:FA:8A:C2:FE:91:99:94:83:6C:4C:C1:EA:35:2B:96:FB:7F:05:A5:A5:1F:4A:47:4F:D1"
+      ]
     }
   }
 ]
