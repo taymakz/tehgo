@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://tehgo.ir">
-    <img src="./apps/web/public/logo.svg" alt="TehGo logo" width="88" height="88" />
+    <img src="./apps/web/public/apple-touch-icon.png" alt="TehGo logo" width="88" height="88" />
   </a>
 </p>
 
