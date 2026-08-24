@@ -49,6 +49,7 @@ import {
   type ViewsRegistry,
 } from "@workspace/ui/components/family-drawer";
 import { Spinner } from "@workspace/ui/components/spinner";
+import { ScrollArea } from "@workspace/ui/components/scroll-area";
 import { cn } from "@workspace/ui/lib/utils";
 import { Forbidden2 } from "reicon";
 import { ReiconIcon } from "@/components/icons/reicon-icon";
@@ -554,57 +555,67 @@ export function AppDrawer({
             )}
           />
         </div>
-        <div className="mt-3 flex max-h-[42vh] flex-col gap-1 overflow-y-auto pe-1">
-          {filtered.length === 0 && (
-            <p className="px-2 py-6 text-center text-sm text-muted-foreground">
-              {dict.route.outagesEmpty}
-            </p>
-          )}
-          {filtered.map((id) => {
-            const marked = markedSet.has(id);
-            return (
-              <button
-                key={id}
-                type="button"
-                onClick={() => toggleBroken(id)}
-                className={cn(
-                  "flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-start transition-colors",
-                  marked
-                    ? "bg-red-500/10 hover:bg-red-500/15"
-                    : "bg-muted hover:bg-accent"
-                )}
-              >
-                <span
-                  className="size-2.5 shrink-0 rounded-full"
-                  style={{ background: stationMarkerBackground(stations[id]?.colors ?? []) }}
-                />
-                <span
+        <ScrollArea
+          className="mt-3 h-[42vh] [mask-image:linear-gradient(to_bottom,transparent,black_14px,black_calc(100%-18px),transparent)]"
+        >
+          <div className="flex flex-col gap-1 px-0.5 pb-5">
+            {filtered.length === 0 && (
+              <p className="px-2 py-6 text-center text-sm text-muted-foreground">
+                {dict.route.outagesEmpty}
+              </p>
+            )}
+            {filtered.map((id) => {
+              const marked = markedSet.has(id);
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => toggleBroken(id)}
                   className={cn(
-                    "min-w-0 flex-1 truncate text-sm font-medium",
-                    marked && "text-red-600 line-through dark:text-red-400",
-                    locale === "fa" && "font-vazir"
+                    "flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-start transition-colors",
+                    marked
+                      ? "bg-red-500/10 hover:bg-red-500/15"
+                      : "bg-muted hover:bg-accent"
                   )}
                 >
-                  {stationName(id)}
-                </span>
-                {marked && <Ban className="size-4 shrink-0 text-red-500" />}
-              </button>
-            );
-          })}
-        </div>
+                  <span
+                    className="size-2.5 shrink-0 rounded-full"
+                    style={{ background: stationMarkerBackground(stations[id]?.colors ?? []) }}
+                  />
+                  <span
+                    className={cn(
+                      "min-w-0 flex-1 truncate text-sm font-medium",
+                      marked && "text-red-600 line-through dark:text-red-400",
+                      locale === "fa" && "font-vazir"
+                    )}
+                  >
+                    {stationName(id)}
+                  </span>
+                  {marked && <Ban className="size-4 shrink-0 text-red-500" />}
+                </button>
+              );
+            })}
+          </div>
+        </ScrollArea>
         <div className="mt-5 flex gap-3">
           {brokenIds.length > 0 && (
             <FamilyDrawerSecondaryButton
               onClick={clearBroken}
-              className="flex-1 bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400"
+              className="min-w-0 flex-1 bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400"
             >
-              <Ban className="size-4" />
-              {dict.route.clearOutages} ({brokenIds.length})
+              <Ban className="size-4 shrink-0" />
+              <span className="truncate">
+                {dict.route.clearOutages}{" "}
+                {locale === "fa" ? toFaDigits(`(${brokenIds.length})`) : `(${brokenIds.length})`}
+              </span>
             </FamilyDrawerSecondaryButton>
           )}
           <FamilyDrawerSecondaryButton
             onClick={() => setView("options")}
-            className={cn("bg-muted text-foreground", brokenIds.length === 0 && "flex-1")}
+            className={cn(
+              "shrink-0 bg-muted text-foreground",
+              brokenIds.length === 0 && "w-full flex-1"
+            )}
           >
             <ArrowLeft className="size-4 rtl:rotate-180" />
             {dict.common.back}
