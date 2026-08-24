@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowLeftRight,
+  Ban,
   ImageIcon,
   Link2,
   MapPinOff,
@@ -32,6 +33,7 @@ import { cn } from "@workspace/ui/lib/utils";
 import { useDictionary, useLocale } from "@/i18n/dictionary-provider";
 import type { Locale } from "@/i18n/config";
 import { useRecentRoutesStore } from "@/lib/stores/recent-routes";
+import { useBrokenStationsStore } from "@/lib/stores/broken-stations";
 import { exportRouteImage } from "@/lib/export-route-image";
 import { stationMarkerBackground } from "@/lib/station-visual";
 import { StationSearch, stationLabel } from "./station-search";
@@ -167,8 +169,11 @@ export function AppDrawer({
   }
 
   function PickView() {
+    const brokenIds = useBrokenStationsStore((s) => s.ids);
+    const toggleBroken = useBrokenStationsStore((s) => s.toggle);
     const id = lastPickStationId;
     if (!id) return null;
+    const isMarked = brokenIds.includes(id);
     return (
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
@@ -196,6 +201,19 @@ export function AppDrawer({
             {dict.route.selectAsTo}
           </button>
         </div>
+        <button
+          type="button"
+          onClick={() => toggleBroken(id)}
+          className={cn(
+            "flex items-center justify-center gap-2 rounded-xl border px-3 py-3 text-sm font-medium transition-colors",
+            isMarked
+              ? "border-red-500/30 bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400"
+              : "border-input bg-background hover:bg-accent dark:bg-input/20 dark:hover:bg-accent/40"
+          )}
+        >
+          <Ban className="size-4" />
+          {isMarked ? dict.route.outagesUnmark : dict.route.outagesMark}
+        </button>
       </div>
     );
   }

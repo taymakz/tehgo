@@ -61,13 +61,23 @@ export function getTransferGuide(
   lang: "en" | "fa",
   getStationDisplay: (id: string) => string
 ): string {
-  if (transferIndex >= route.steps.length - 1) return "";
+  if (transferIndex >= route.steps.length - 1) {
+    const only = route.steps[transferIndex];
+    if (only?.walk) {
+      const fromName = getStationDisplay(only.walkFrom ?? "");
+      return lang === "fa"
+        ? `از ایستگاه ${fromName} تا ایستگاه ${getStationDisplay(only.stationId)} پیاده بروید`
+        : `Walk from ${fromName} to ${getStationDisplay(only.stationId)} station`;
+    }
+    return "";
+  }
 
   const currentStep = route.steps[transferIndex];
   const nextStep = route.steps[transferIndex + 1];
   if (!currentStep?.transferTo || !nextStep) return "";
 
-  const toLine = lines[currentStep.transferTo]?.name[lang] || currentStep.transferTo;
+  const toLine =
+    lines[currentStep.transferTo]?.name[lang] || currentStep.transferTo;
   const stationName = getStationDisplay(currentStep.stationId);
 
   const terminal = getLineTerminal(
@@ -78,10 +88,26 @@ export function getTransferGuide(
   );
   const terminalName = getStationDisplay(terminal);
 
-  const base =
-    lang === "fa"
-      ? `در ایستگاه ${stationName} پیاده شوید و به سمت ${toLine} ${terminalName} بروید`
-      : `At ${stationName} station, transfer to ${toLine} towards ${terminalName}`;
+  let base: string;
+  if (currentStep.walk) {
+    const walkFromName = getStationDisplay(currentStep.walkFrom ?? "");
+    const walkText =
+      lang === "fa"
+        ? `از ایستگاه ${walkFromName} تا ایستگاه ${stationName} پیاده بروید`
+        : `Walk from ${walkFromName} to ${stationName} station`;
+
+    if (!nextStep) return walkText;
+
+    base =
+      lang === "fa"
+        ? `${walkText}، سپس سوار ${toLine} به سمت ${terminalName} شوید`
+        : `${walkText}, then board ${toLine} towards ${terminalName}`;
+  } else {
+    base =
+      lang === "fa"
+        ? `در ایستگاه ${stationName} پیاده شوید و به سمت ${toLine} ${terminalName} بروید`
+        : `At ${stationName} station, transfer to ${toLine} towards ${terminalName}`;
+  }
 
   const isLastTransfer = route.steps
     .slice(transferIndex + 1)
@@ -89,6 +115,8 @@ export function getTransferGuide(
   if (!isLastTransfer) return base;
 
   const noMoreTransfers =
-    lang === "fa" ? "این آخرین تعویض است، تا مقصد بمانید." : "Last transfer — ride to your destination.";
+    lang === "fa"
+      ? "این آخرین تعویض است، تا مقصد بمانید."
+      : "Last transfer — ride to your destination.";
   return `${base} ${noMoreTransfers}`;
 }

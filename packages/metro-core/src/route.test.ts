@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { graph, lines, paths, stations } from "./data";
-import { findRoutes } from "./route-finder";
+import { findRoutes, findRoutesWithWalkBridge } from "./route-finder";
 import {
   getFirstStepGuide,
   getLineTerminal,
@@ -84,6 +84,154 @@ describe("route finding", () => {
     );
     expect(outgoing.length).toBeGreaterThan(0);
     expect(incoming.length).toBeGreaterThan(0);
+  });
+});
+
+describe("blocked stations", () => {
+  it("never routes through a blocked station", () => {
+    const blocked = new Set(["ayatollah_kashani"]);
+    const routes = findRoutes(graph, stations, "shahid_kolahdooz", "amirkabir", {
+      blocked,
+    });
+
+    expect(routes.length).toBeGreaterThan(0);
+    for (const route of routes) {
+      for (const step of route.steps) {
+        expect(blocked.has(step.stationId)).toBe(false);
+      }
+    }
+  });
+
+  it("returns nothing when origin or destination is blocked", () => {
+    const blocked = new Set(["shahid_kolahdooz"]);
+    expect(
+      findRoutes(graph, stations, "shahid_kolahdooz", "amirkabir", { blocked })
+    ).toEqual([]);
+  });
+
+  it("still finds routes when an unrelated station is blocked", () => {
+    const blocked = new Set(["kouhsar"]);
+    const routes = findRoutes(graph, stations, "shahid_kolahdooz", "amirkabir", {
+      blocked,
+    });
+    expect(routes.length).toBeGreaterThan(0);
+  });
+});
+
+describe("walk bridge", () => {
+  const blocked = new Set(["meydan_e_shohada", "ayatollah_kashani"]);
+
+  it("finds no direct route when every interchange is blocked", () => {
+    expect(
+      findRoutes(graph, stations, "shahid_kolahdooz", "amirkabir", { blocked })
+    ).toEqual([]);
+  });
+
+  it("bridges the gap with a single walk transfer", () => {
+    const routes = findRoutesWithWalkBridge(
+      graph,
+      stations,
+      "shahid_kolahdooz",
+      "amirkabir",
+      { blocked, walkMaxMeters: 1500 }
+    );
+
+    expect(routes.length).toBeGreaterThan(0);
+    for (const route of routes) {
+      const walks = route.steps.filter((s) => s.walk);
+      expect(walks.length).toBe(1);
+      for (const step of route.steps) {
+        expect(blocked.has(step.stationId)).toBe(false);
+      }
+
+      const first = route.steps[0]!;
+      const last = route.steps[route.steps.length - 1]!;
+      expect(first.stationId).toBe("shahid_kolahdooz");
+      expect(last.stationId).toBe("amirkabir");
+
+      const walk = walks[0]!;
+      expect(walk.walkFrom).toBeDefined();
+      expect(stations[walk.walkFrom!]).toBeDefined();
+    }
+
+    // Best route walks the shortest gap straight into the destination:
+    // ebn_e_sina -> amirkabir (~1 km apart)
+    const best = routes[0]!;
+    const walkStep = best.steps.find((s) => s.walk)!;
+    expect(walkStep.stationId).toBe("amirkabir");
+    expect(walkStep.walkFrom).toBe("ebn_e_sina");
+
+    // Alternative bridges keep riding after the walk (walk is mid-route)
+    if (routes.length > 1) {
+      const alt = routes[1]!;
+      const altWalkIndex = alt.steps.findIndex((s) => s.walk)!;
+      expect(altWalkIndex).toBeLessThan(alt.steps.length - 1);
+    }
+  });
+
+  it("returns nothing when no station pair is within walking distance", () => {
+    expect(
+      findRoutesWithWalkBridge(
+        graph,
+        stations,
+        "shahid_kolahdooz",
+        "amirkabir",
+        { blocked, walkMaxMeters: 500 }
+      )
+    ).toEqual([]);
+  });
+
+  it("describes the walk in localized transfer guides", () => {
+    const routes = findRoutesWithWalkBridge(
+      graph,
+      stations,
+      "shahid_kolahdooz",
+      "amirkabir",
+      { blocked, walkMaxMeters: 1500 }
+    );
+
+    // Mid-route walk: walk text plus boarding instructions for the next line
+    const midRoute = routes.find((r) => {
+      const idx = r.steps.findIndex((s) => s.walk);
+      return idx > 0 && idx < r.steps.length - 1;
+    });
+    expect(midRoute).toBeDefined();
+    const midIndex = midRoute!.steps.findIndex((s) => s.walk);
+    const enMid = getTransferGuide(midRoute!, midIndex, lines, paths, "en", display);
+    const faMid = getTransferGuide(midRoute!, midIndex, lines, paths, "fa", (id) =>
+      display(id, "fa")
+    );
+    expect(enMid).toContain("Walk from");
+    expect(enMid).toContain("board");
+    expect(faMid).toContain("پیاده بروید");
+    expect(faMid).toContain("سوار");
+
+    // Final walk into the destination: pure walking instruction, no boarding
+    const finalRoute = routes.find((r) => {
+      const last = r.steps[r.steps.length - 1]!;
+      return !!last.walk;
+    });
+    expect(finalRoute).toBeDefined();
+    const enFinal = getTransferGuide(
+      finalRoute!,
+      finalRoute!.steps.length - 1,
+      lines,
+      paths,
+      "en",
+      display
+    );
+    const faFinal = getTransferGuide(
+      finalRoute!,
+      finalRoute!.steps.length - 1,
+      lines,
+      paths,
+      "fa",
+      (id) => display(id, "fa")
+    );
+    expect(enFinal).toContain("Walk from Ebn-e Sina to Amirkabir");
+    expect(enFinal).not.toContain("board");
+    expect(faFinal).toContain("پیاده بروید");
+    expect(faFinal).not.toContain("سوار");
   });
 });
 

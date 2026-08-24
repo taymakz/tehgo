@@ -46,8 +46,13 @@
     "recentRoutesEmpty": "هنوز مسیری ثبت نشده است",
     "recent": "اخیر",
     "options": "گزینه‌ها",
-    "lostStation": "ایستگاهمو گم کردم",
+    "lostStation": "ایستگاهمو رد کردم",
     "lostStationDescription": "نزدیک‌ترین ایستگاه به موقعیت فعلی شما به عنوان مبدا انتخاب می‌شود",
+    "outages": "ایستگاه‌های خراب",
+    "outagesDescription": "ایستگاه‌هایی که علامت می‌زنید در مسیریابی استفاده نمی‌شوند",
+    "outagesEmpty": "هنوز ایستگاهی علامت نخورده",
+    "outagesMark": "علامت‌گذاری",
+    "outagesUnmark": "برداشتن علامت",
     "share": "اشتراک‌گذاری",
     "copyLink": "کپی لینک",
     "shareVia": "اشتراک‌گذاری با...",
@@ -58,7 +63,8 @@
     "detailDetailed": "کامل",
     "download": "ذخیره",
     "guide": "راهنما",
-    "address": "آدرس"
+    "address": "آدرس",
+    "clearOutages": "پاک کردن همه"
   },
   "pwa": {
     "installTitle": "نصب تهگو",

@@ -94,6 +94,10 @@ export interface RouteStep {
   line: string;
   isTransfer: boolean;
   transferTo?: string;
+  /** True when this step is reached on foot from the previous station */
+  walk?: boolean;
+  /** Station id the walk started from (only set when walk is true) */
+  walkFrom?: string;
 }
 
 export interface RouteResult {
