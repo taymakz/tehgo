@@ -90,6 +90,7 @@ export function HomeMap() {
       coordinates: [number, number][];
       color: string;
       dash?: boolean;
+      walk?: boolean;
     }[] = [];
     let current: [number, number][] = [];
     let currentLine = "";
@@ -106,7 +107,12 @@ export function HomeMap() {
             color: lines[currentLine]?.color ?? "#888",
           });
         }
-        segments.push({ coordinates: [prev, coords], color: "#64748b", dash: true });
+        segments.push({
+          coordinates: [prev, coords],
+          color: "#111827",
+          dash: true,
+          walk: true,
+        });
         current = [];
       } else if (step.line !== currentLine && current.length > 0) {
         segments.push({
@@ -172,7 +178,20 @@ export function HomeMap() {
       points.push({ stationId: lastStep.stationId, lineId: lastStep.line, text: null });
     }
 
-    return points;
+    // One tooltip per station: merge duplicate points (e.g. a walk guide
+    // plus the destination flag landing on the same stop)
+    const merged: GuidePoint[] = [];
+    for (const point of points) {
+      const existing = merged.find((m) => m.stationId === point.stationId);
+      if (existing) {
+        const texts = [existing.text, point.text].filter(Boolean);
+        existing.text = texts.length > 0 ? texts.join(" ") : null;
+      } else {
+        merged.push({ ...point });
+      }
+    }
+
+    return merged;
   }, [selectedRoute, locale, getStationDisplay]);
 
   const routeStationIds = useMemo(
@@ -291,17 +310,40 @@ export function HomeMap() {
           })
         )}
 
-        {routeSegments.map((segment, i) => (
-          <MapRoute
-            key={`route-${i}`}
-            coordinates={segment.coordinates}
-            color={segment.color}
-            width={8}
-            opacity={1}
-            dashArray={segment.dash ? [2, 2] : undefined}
-            interactive={false}
-          />
-        ))}
+        {routeSegments.flatMap((segment, i) => {
+          if (!segment.walk) {
+            return [
+              <MapRoute
+                key={`route-${i}`}
+                coordinates={segment.coordinates}
+                color={segment.color}
+                width={8}
+                opacity={1}
+                interactive={false}
+              />,
+            ];
+          }
+          // Walk leg: light casing under a dark dash so it reads on any map
+          return [
+            <MapRoute
+              key={`route-${i}-casing`}
+              coordinates={segment.coordinates}
+              color="#f8fafc"
+              width={9}
+              opacity={0.95}
+              interactive={false}
+            />,
+            <MapRoute
+              key={`route-${i}`}
+              coordinates={segment.coordinates}
+              color="#111827"
+              width={4.5}
+              opacity={1}
+              dashArray={[1.3, 1.5]}
+              interactive={false}
+            />,
+          ];
+        })}
 
         {stationsRenderOrder.map((station) => {
           const isRelated =
