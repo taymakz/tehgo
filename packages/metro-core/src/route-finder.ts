@@ -1,10 +1,12 @@
-import type { Graph, RouteResult, RouteStep, StationsMap } from "./types";
+import type { Graph, PathsMap, RouteResult, RouteStep, StationsMap } from "./types";
 
 export interface FindRoutesOptions {
   /** Maximum number of routes to return (default: 5) */
   maxRoutes?: number;
   /** Stations to avoid entirely — they are never traversed, boarded at or exited at */
   blocked?: ReadonlySet<string>;
+  /** Line paths — used to name the blocked stations skipped by a walk */
+  paths?: PathsMap;
 }
 
 /**
@@ -260,6 +262,7 @@ export function findRoutesWithWalkBridge(
     const best1 = leg1[0];
 
     let steps: RouteStep[];
+    const skipped = blockedBetweenIds(options.paths, aId, bId, blocked);
     if (bId === to) {
       // Walk straight into the destination
       const head =
@@ -272,7 +275,7 @@ export function findRoutesWithWalkBridge(
             isTransfer: false,
           },
         ] as RouteStep[]);
-      steps = [...head, walkStepTo(stations, bId, aId, distance)];
+      steps = [...head, walkStepTo(stations, bId, aId, distance, skipped)];
     } else {
       const leg2 = findRoutes(graph, stations, bId, to, { blocked });
       if (leg2.length === 0) continue;
@@ -280,7 +283,7 @@ export function findRoutesWithWalkBridge(
       const head = best1?.steps ?? [];
       steps = [
         ...head,
-        walkStepTo(stations, bId, aId, distance),
+        walkStepTo(stations, bId, aId, distance, skipped),
         ...best2.steps.slice(1),
       ];
     }
@@ -305,7 +308,8 @@ function walkStepTo(
   stations: StationsMap,
   stationId: string,
   walkFrom: string,
-  walkMeters: number
+  walkMeters: number,
+  walkBlocked: string[]
 ): RouteStep {
   return {
     stationId,
@@ -316,7 +320,32 @@ function walkStepTo(
     walk: true,
     walkFrom,
     walkMeters: Math.round(walkMeters),
+    walkBlocked,
   };
+}
+
+/**
+ * Blocked stations lying strictly between aId and bId on the line path
+ * that contains both — these are what the walk is bypassing.
+ */
+function blockedBetweenIds(
+  paths: PathsMap | undefined,
+  aId: string,
+  bId: string,
+  blocked?: ReadonlySet<string>
+): string[] {
+  if (!paths || !blocked) return [];
+  for (const entry of Object.values(paths)) {
+    for (const path of entry.paths) {
+      const ia = path.stations.indexOf(aId);
+      const ib = path.stations.indexOf(bId);
+      if (ia === -1 || ib === -1) continue;
+      const lo = Math.min(ia, ib);
+      const hi = Math.max(ia, ib);
+      return path.stations.slice(lo + 1, hi).filter((id) => blocked.has(id));
+    }
+  }
+  return [];
 }
 
 function reverseGraph(graph: Graph): Graph {

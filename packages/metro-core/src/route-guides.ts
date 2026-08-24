@@ -76,6 +76,49 @@ function walkSegmentText(
     : `Walk to ${toName} station`;
 }
 
+/**
+ * Guide shown at the last usable station before a walk gap: names the
+ * broken station(s) being bypassed and tells the rider to exit and
+ * cover the gap on foot or by taxi/Snapp.
+ */
+export function getWalkDepartureGuide(
+  route: RouteResult,
+  walkIndex: number,
+  lang: "en" | "fa",
+  getStationDisplay: (id: string) => string
+): string {
+  const step = route.steps[walkIndex];
+  if (!step?.walk || !step.walkFrom) return "";
+  const fromName = getStationDisplay(step.walkFrom);
+  const toName = getStationDisplay(step.stationId);
+  const brokenNames = (step.walkBlocked ?? [])
+    .map((id) => getStationDisplay(id))
+    .filter(Boolean);
+
+  const long = (step.walkMeters ?? 0) > WALK_ONLY_MAX_METERS;
+  const km = `(${formatKm(step.walkMeters ?? 0)} ${lang === "fa" ? "کیلومتر" : "km"})`;
+
+  const reason =
+    brokenNames.length > 0
+      ? lang === "fa"
+        ? `ایستگاه ${brokenNames.join(" و ")} خراب است`
+        : `${brokenNames.join(" and ")} station is closed`
+      : lang === "fa"
+        ? "مسیر از ایستگاه بعدی قطع است"
+        : "the line is interrupted after this stop";
+
+  const action =
+    lang === "fa"
+      ? long
+        ? `از ایستگاه ${fromName} خارج شوید و تا ایستگاه ${toName} ${km} با اسنپ/تاکسی بروید یا پیاده روی کنید`
+        : `از اینجا خارج شوید و تا ایستگاه ${toName} پیاده بروید`
+      : long
+        ? `Exit at ${fromName} station and take a taxi/Snapp or walk ${km} to ${toName} station`
+        : `Exit here and walk to ${toName} station`;
+
+  return `${reason}${lang === "fa" ? "؛ " : ". "}${action}`;
+}
+
 export function getTransferGuide(
   route: RouteResult,
   transferIndex: number,
@@ -115,17 +158,12 @@ export function getTransferGuide(
 
   let base: string;
   if (currentStep.walk) {
-    const walkFromName = getStationDisplay(currentStep.walkFrom ?? "");
-    const segment = walkSegmentText(
-      lang,
-      walkFromName,
-      stationName,
-      currentStep.walkMeters
-    );
+    // Arrival side of a walk gap only needs the boarding instruction —
+    // the walk/broken-station explanation lives at the departure marker.
     base =
       lang === "fa"
-        ? `در ایستگاه ${walkFromName} پیاده شوید، ${segment}، سپس سوار ${toLine} به سمت ${terminalName} شوید`
-        : `Get off at ${walkFromName} station, ${segment.charAt(0).toLowerCase()}${segment.slice(1)}, then board ${toLine} towards ${terminalName}`;
+        ? `سوار ${toLine} به سمت ${terminalName} شوید`
+        : `Board ${toLine} towards ${terminalName}`;
   } else {
     base =
       lang === "fa"

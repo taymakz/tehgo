@@ -10,7 +10,11 @@ import {
   fewestTransfersRoute,
   findRoutesWithWalkBridge,
 } from "@workspace/metro-core/route-finder";
-import { getFirstStepGuide, getTransferGuide } from "@workspace/metro-core/route-guides";
+import {
+  getFirstStepGuide,
+  getTransferGuide,
+  getWalkDepartureGuide,
+} from "@workspace/metro-core/route-guides";
 
 import { Map, MapControls, MapRoute } from "@workspace/ui/components/map";
 import { SettingsMenu } from "@/components/settings-menu";
@@ -65,6 +69,7 @@ export function HomeMap() {
     if (!from || !to || from === to) return [];
     return findRoutesWithWalkBridge(graph, stations, from, to, {
       blocked: blockedSet,
+      paths,
     });
   }, [from, to, blockedSet]);
 
@@ -157,6 +162,13 @@ export function HomeMap() {
           stationId: step.stationId,
           lineId: step.transferTo,
           text: getTransferGuide(selectedRoute, i, lines, paths, locale, getStationDisplay),
+        });
+      }
+      if (step.walk && step.walkFrom) {
+        points.push({
+          stationId: step.walkFrom,
+          lineId: step.line,
+          text: getWalkDepartureGuide(selectedRoute, i, locale, getStationDisplay),
         });
       }
     });

@@ -100,6 +100,8 @@ export interface RouteStep {
   walkFrom?: string;
   /** Straight-line meters covered by the walk (only set when walk is true) */
   walkMeters?: number;
+  /** Blocked station ids skipped by this walk (only set when walk is true) */
+  walkBlocked?: string[];
 }
 
 export interface RouteResult {

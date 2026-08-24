@@ -6,6 +6,7 @@ import {
   getFirstStepGuide,
   getLineTerminal,
   getTransferGuide,
+  getWalkDepartureGuide,
 } from "./route-guides";
 import type { RouteResult } from "./types";
 
@@ -190,23 +191,40 @@ describe("walk bridge", () => {
       { blocked, walkMaxMeters: 1500 }
     );
 
-    // Mid-route walk: walk text plus boarding instructions for the next line
+    // Mid-route walk: arrival marker is boarding-only
     const midRoute = routes.find((r) => {
       const idx = r.steps.findIndex((s) => s.walk);
       return idx > 0 && idx < r.steps.length - 1;
     });
     expect(midRoute).toBeDefined();
     const midIndex = midRoute!.steps.findIndex((s) => s.walk);
-    const enMid = getTransferGuide(midRoute!, midIndex, lines, paths, "en", display);
-    const faMid = getTransferGuide(midRoute!, midIndex, lines, paths, "fa", (id) =>
+    const enArrival = getTransferGuide(midRoute!, midIndex, lines, paths, "en", display);
+    const faArrival = getTransferGuide(midRoute!, midIndex, lines, paths, "fa", (id) =>
       display(id, "fa")
     );
-    expect(enMid).toContain("taxi/Snapp");
-    expect(enMid).toContain("board");
-    expect(faMid).toContain("پیاده بروید");
-    expect(faMid).toContain("سوار");
+    expect(enArrival).toContain("Board");
+    expect(enArrival).not.toContain("taxi");
+    expect(faArrival).toContain("سوار");
+    expect(faArrival).not.toContain("پیاده");
 
-    // Final walk into the destination: pure walking instruction, no boarding
+    // Departure marker explains the break and how to cross it
+    const enDeparture = getWalkDepartureGuide(
+      midRoute!,
+      midIndex,
+      "en",
+      display
+    );
+    const faDeparture = getWalkDepartureGuide(
+      midRoute!,
+      midIndex,
+      "fa",
+      (id) => display(id, "fa")
+    );
+    expect(enDeparture).toContain("Exit at");
+    expect(enDeparture).toContain("taxi/Snapp");
+    expect(faDeparture).toContain("خارج شوید");
+
+    // Final walk into the destination keeps the full instruction
     const finalRoute = routes.find((r) => {
       const last = r.steps[r.steps.length - 1]!;
       return !!last.walk;
@@ -228,13 +246,14 @@ describe("walk bridge", () => {
       "fa",
       (id) => display(id, "fa")
     );
+    expect(enFinal).toContain("Get off at");
     expect(enFinal).toContain("Amirkabir");
     expect(enFinal).not.toContain("board");
-    expect(faFinal).toContain("پیاده بروید");
+    expect(faFinal).toContain("پیاده شوید");
     expect(faFinal).not.toContain("سوار");
   });
 
-  it("long broken-line gaps suggest taxi/Snapp in the guide", () => {
+  it("long broken-line gaps name the broken station and suggest Snapp", () => {
     // ahang blocked splits line 7; basij -> chehel_tan_e_doulab is ~2.3 km
     const blocked7 = new Set(["ahang"]);
     const [route] = findRoutesWithWalkBridge(
@@ -242,7 +261,7 @@ describe("walk bridge", () => {
       stations,
       "varzeshgah_e_takhti",
       "chehel_tan_e_doulab",
-      { blocked: blocked7 }
+      { blocked: blocked7, paths }
     );
 
     expect(route).toBeDefined();
@@ -251,13 +270,50 @@ describe("walk bridge", () => {
     expect(walk.walkFrom).toBe("basij");
     expect(walk.stationId).toBe("chehel_tan_e_doulab");
     expect(walk.walkMeters ?? 0).toBeGreaterThan(1500);
+    expect(walk.walkBlocked).toEqual(["ahang"]);
 
-    const fa = getTransferGuide(route!, walkIndex, lines, paths, "fa", (id) =>
+    // Destination IS the walk end: single full-instruction tooltip
+    const faFull = getTransferGuide(route!, walkIndex, lines, paths, "fa", (id) =>
       display(id, "fa")
     );
-    expect(fa).toContain("اسنپ");
-    expect(fa).toContain("پیاده شوید");
-    expect(fa).toContain("بسیج");
+    expect(faFull).toContain("پیاده شوید");
+    expect(faFull).toContain("اسنپ");
+    expect(faFull).toContain("بسیج");
+
+    // Destination beyond the gap: departure explains the break,
+    // arrival tooltip is boarding-only
+    const routes = findRoutesWithWalkBridge(
+      graph,
+      stations,
+      "varzeshgah_e_takhti",
+      "shoush",
+      { blocked: blocked7, paths }
+    );
+    const midRoute = routes.find((r) => {
+      const i = r.steps.findIndex((s) => s.walk);
+      return i > 0 && i < r.steps.length - 1;
+    });
+    expect(midRoute).toBeDefined();
+    const midIndex = midRoute!.steps.findIndex((s) => s.walk);
+
+    const faArrival = getTransferGuide(midRoute!, midIndex, lines, paths, "fa", (id) =>
+      display(id, "fa")
+    );
+    expect(faArrival).toContain("سوار خط 7");
+    expect(faArrival).not.toContain("اسنپ");
+    expect(faArrival).not.toContain("پیاده");
+
+    // Departure tooltip names ahang as broken and suggests Snapp
+    const faDeparture = getWalkDepartureGuide(
+      midRoute!,
+      midIndex,
+      "fa",
+      (id) => display(id, "fa")
+    );
+    expect(faDeparture).toContain("آهنگ");
+    expect(faDeparture).toContain("خراب است");
+    expect(faDeparture).toContain("اسنپ");
+    expect(faDeparture).toContain("بسیج");
   });
 });
 
