@@ -14,7 +14,7 @@ import type { RouteResult, StationsMap } from "@workspace/metro-core/types";
 import { cn } from "@workspace/ui/lib/utils";
 import { useDictionary, useLocale } from "@/i18n/dictionary-provider";
 import { FLOATING_SURFACE, FLOATING_SURFACE_HOVER } from "@/lib/floating-control";
-import { stationMarkerBackground } from "@/lib/station-visual";
+import { stationMarkerBackground, toFaDigits } from "@/lib/station-visual";
 import { SettingsMenu } from "@/components/settings-menu";
 import { stationLabel } from "./station-search";
 import type { RouteType } from "./app-drawer";
@@ -101,7 +101,11 @@ export function FloatingRouteControls({
             <div className="flex items-center justify-between gap-2">
               <p className="min-w-0 truncate text-xs opacity-70">
                 {route
-                  ? `${route.totalStations} ${dict.route.stations} · ${route.totalTransfers} ${dict.route.transfers}`
+                  ? locale === "fa"
+                    ? toFaDigits(
+                        `${route.totalStations} ${dict.route.stations} · ${route.totalTransfers} ${dict.route.transfers}`
+                      )
+                    : `${route.totalStations} ${dict.route.stations} · ${route.totalTransfers} ${dict.route.transfers}`
                   : dict.route.noRoute}
               </p>
               <div className="ms-auto flex shrink-0 items-center gap-1.5">

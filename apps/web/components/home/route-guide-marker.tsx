@@ -4,6 +4,7 @@ import { MapMarker, MarkerContent } from "@workspace/ui/components/map";
 import { cn } from "@workspace/ui/lib/utils";
 import { useDictionary } from "@/i18n/dictionary-provider";
 import type { Locale } from "@/i18n/config";
+import { isLightColor, toFaDigits } from "@/lib/station-visual";
 
 export function RouteGuideMarker({
   longitude,
@@ -12,7 +13,6 @@ export function RouteGuideMarker({
   lineNumber,
   lineName,
   stationName,
-  address,
   text,
   locale,
 }: {
@@ -22,11 +22,14 @@ export function RouteGuideMarker({
   lineNumber: string;
   lineName: string;
   stationName: string;
-  address?: string;
   text: string | null;
   locale: Locale;
 }) {
   const dict = useDictionary();
+  const light = isLightColor(lineColor);
+  const displayLineNumber =
+    locale === "fa" ? toFaDigits(lineNumber) : lineNumber;
+  const displayText = text && locale === "fa" ? toFaDigits(text) : text;
 
   return (
     <MapMarker longitude={longitude} latitude={latitude}>
@@ -44,22 +47,32 @@ export function RouteGuideMarker({
           >
             <div className="mb-1.5 flex items-center gap-1.5">
               <span
-                className="flex size-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white"
+                className={cn(
+                  "flex size-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold",
+                  light ? "text-black" : "text-white"
+                )}
                 style={{ background: lineColor }}
               >
-                {lineNumber}
+                {displayLineNumber}
               </span>
-              <span className="font-medium">{lineName}</span>
+              <span
+                className={cn(
+                  "whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-medium",
+                  light ? "text-black" : "text-white"
+                )}
+                style={{ background: lineColor }}
+              >
+                {lineName}
+              </span>
+              <span className="min-w-0 flex-1 truncate text-sm font-semibold">
+                {stationName}
+              </span>
             </div>
 
-            <p className="mb-1 text-sm font-semibold">{stationName}</p>
-
-            {text && <p className="mb-1 leading-5">{text}</p>}
-
-            {address && (
+            {displayText && <p className="leading-5">{displayText}</p>}
+            {!displayText && (
               <p className="text-muted-foreground">
-                <span className="font-medium">{dict.route.address}:</span>{" "}
-                <span className="font-vazir">{address}</span>
+                {locale === "fa" ? "مقصد" : dict.route.to}
               </p>
             )}
           </div>

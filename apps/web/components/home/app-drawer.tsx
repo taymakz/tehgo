@@ -2,17 +2,36 @@
 
 import { useRef, useState } from "react";
 import {
+  Accessibility,
+  Armchair,
   ArrowLeft,
   ArrowLeftRight,
   Ban,
+  Bath,
+  Bike,
+  Camera,
+  ChevronsUpDown,
+  Cigarette,
+  Coffee,
+  CreditCard,
+  CupSoda,
+  FireExtinguisher,
   ImageIcon,
+  Info,
+  Leaf,
   Link2,
   MapPinOff,
+  PawPrint,
   Search,
   Share2,
+  ShieldCheck,
+  ShoppingBasket,
+  Trash2,
+  UtensilsCrossed,
+  Wifi,
   X,
 } from "lucide-react";
-import type { RouteResult, StationsMap } from "@workspace/metro-core/types";
+import type { FacilityKey, RouteResult, StationsMap } from "@workspace/metro-core/types";
 import { lines, paths } from "@workspace/metro-core/data";
 
 import {
@@ -38,12 +57,13 @@ import type { Locale } from "@/i18n/config";
 import { useRecentRoutesStore } from "@/lib/stores/recent-routes";
 import { useBrokenStationsStore } from "@/lib/stores/broken-stations";
 import { exportRouteImage } from "@/lib/export-route-image";
-import { stationMarkerBackground } from "@/lib/station-visual";
+import { isLightColor, stationMarkerBackground, toFaDigits } from "@/lib/station-visual";
 import { StationSearch, stationLabel } from "./station-search";
 
 export type DrawerView =
   | "search"
   | "pick"
+  | "station-details"
   | "recents"
   | "options"
   | "outages"
@@ -51,6 +71,34 @@ export type DrawerView =
   | "share"
   | "share-copy";
 export type RouteType = "fastest" | "fewest";
+
+const FACILITIES: {
+  key: FacilityKey;
+  icon: typeof Coffee;
+  label: { fa: string; en: string };
+}[] = [
+  { key: "wc", icon: Bath, label: { fa: "سرویس بهداشتی", en: "Restroom" } },
+  { key: "elevator", icon: ChevronsUpDown, label: { fa: "آسانسور", en: "Elevator" } },
+  { key: "coffeeShop", icon: Coffee, label: { fa: "کافی‌شاپ", en: "Coffee shop" } },
+  { key: "groceryStore", icon: ShoppingBasket, label: { fa: "سوپرمارکت", en: "Grocery store" } },
+  { key: "fastFood", icon: UtensilsCrossed, label: { fa: "فست‌فود", en: "Fast food" } },
+  { key: "atm", icon: CreditCard, label: { fa: "عابربانک", en: "ATM" } },
+  { key: "bicycleParking", icon: Bike, label: { fa: "پارک دوچرخه", en: "Bicycle parking" } },
+  { key: "waterCooler", icon: CupSoda, label: { fa: "آب‌سردکن", en: "Water cooler" } },
+  { key: "cleanFood", icon: Leaf, label: { fa: "غذای سالم", en: "Healthy food" } },
+  { key: "blindPath", icon: Accessibility, label: { fa: "مسیر نابینایان", en: "Blind path" } },
+  { key: "fireSuppressionSystem", icon: FireExtinguisher, label: { fa: "سیستم اطفاء حریق", en: "Fire suppression" } },
+  { key: "fireExtinguisher", icon: FireExtinguisher, label: { fa: "کپسول آتش‌نشانی", en: "Fire extinguisher" } },
+  { key: "metroPolice", icon: ShieldCheck, label: { fa: "پلیس مترو", en: "Metro police" } },
+  { key: "creditTicketSales", icon: CreditCard, label: { fa: "فروش بلیت اعتباری", en: "Ticket sales" } },
+  { key: "waitingChair", icon: Armchair, label: { fa: "صندلی انتظار", en: "Waiting chairs" } },
+  { key: "camera", icon: Camera, label: { fa: "دوربین مداربسته", en: "CCTV" } },
+  { key: "trashCan", icon: Trash2, label: { fa: "سطل زباله", en: "Trash can" } },
+  { key: "smoking", icon: Cigarette, label: { fa: "محل سیگار", en: "Smoking area" } },
+  { key: "petsAllowed", icon: PawPrint, label: { fa: "حیوانات خانگی", en: "Pets allowed" } },
+  { key: "freeWifi", icon: Wifi, label: { fa: "وای‌فای رایگان", en: "Free Wi-Fi" } },
+  { key: "prayerRoom", icon: Info, label: { fa: "نمازخانه", en: "Prayer room" } },
+];
 
 export function AppDrawer({
   stations,
@@ -173,20 +221,40 @@ export function AppDrawer({
   }
 
   function PickView() {
+    const { setView } = useFamilyDrawer();
     const brokenIds = useBrokenStationsStore((s) => s.ids);
     const toggleBroken = useBrokenStationsStore((s) => s.toggle);
     const id = lastPickStationId;
     if (!id) return null;
     const isMarked = brokenIds.includes(id);
+    const station = stations[id]!;
     return (
       <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 items-center gap-2">
           <span
             className="size-2.5 shrink-0 rounded-full"
-            style={{ background: stationMarkerBackground(stations[id]?.colors ?? []) }}
+            style={{ background: stationMarkerBackground(station.colors ?? []) }}
           />
-          <span className="truncate text-sm font-medium">
+          <span className="min-w-0 flex-1 truncate text-sm font-medium">
             {stationLabel(stations, id, locale)}
+          </span>
+          <span className="flex shrink-0 items-center gap-1">
+            {(station.lines ?? []).map((lineId) => {
+              const line = lines[lineId];
+              if (!line) return null;
+              return (
+                <span
+                  key={lineId}
+                  className={cn(
+                    "whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-medium",
+                    isLightColor(line.color) ? "text-black" : "text-white"
+                  )}
+                  style={{ background: line.color }}
+                >
+                  {line.name[locale]}
+                </span>
+              );
+            })}
           </span>
         </div>
         <div className="flex flex-col gap-2 sm:grid sm:grid-cols-2">
@@ -205,6 +273,10 @@ export function AppDrawer({
             {dict.route.selectAsTo}
           </button>
         </div>
+        <FamilyDrawerButton onClick={() => setView("station-details")}>
+          <Info className="size-4" />
+          {dict.route.stationDetails}
+        </FamilyDrawerButton>
         <button
           type="button"
           onClick={() => toggleBroken(id)}
@@ -246,8 +318,11 @@ export function AppDrawer({
                 <span className="truncate">{stationLabel(stations, entry.to, locale)}</span>
               </span>
               <span className="text-xs text-muted-foreground">
-                {entry.route.totalStations} {dict.route.stations} · {entry.route.totalTransfers}{" "}
-                {dict.route.transfers}
+                {locale === "fa"
+                  ? toFaDigits(
+                      `${entry.route.totalStations} ${dict.route.stations} · ${entry.route.totalTransfers} ${dict.route.transfers}`
+                    )
+                  : `${entry.route.totalStations} ${dict.route.stations} · ${entry.route.totalTransfers} ${dict.route.transfers}`}
               </span>
             </button>
             <button
@@ -539,9 +614,96 @@ export function AppDrawer({
     );
   }
 
+  function StationDetailsView() {
+    const { setView } = useFamilyDrawer();
+    const id = lastPickStationId;
+    if (!id) return null;
+    const station = stations[id]!;
+    const primaryName = locale === "fa" ? station.translations.fa : station.name;
+    const secondaryName = locale === "fa" ? station.name : station.translations.fa;
+
+    const available = FACILITIES.filter(
+      (f) => (station as unknown as Record<string, unknown>)[f.key] === true
+    );
+
+    return (
+      <div>
+        <FamilyDrawerHeader
+          icon={<Info className="size-9" />}
+          title={primaryName}
+          description={secondaryName !== primaryName ? secondaryName : undefined}
+          className={cn(locale === "fa" && "font-vazir")}
+        />
+        <div className="mt-4 flex flex-wrap items-center gap-1">
+          {(station.lines ?? []).map((lineId) => {
+            const line = lines[lineId];
+            if (!line) return null;
+            return (
+              <span
+                key={lineId}
+                className={cn(
+                  "whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium",
+                  isLightColor(line.color) ? "text-black" : "text-white"
+                )}
+                style={{ background: line.color }}
+              >
+                {line.name[locale]}
+              </span>
+            );
+          })}
+        </div>
+        <div className="mt-5 max-h-[52vh] overflow-y-auto pe-1">
+          {station.address && (
+            <section className="rounded-xl bg-muted p-3">
+              <p className="mb-1 text-xs font-medium text-muted-foreground">
+                {dict.route.address}
+              </p>
+              <p className={cn("text-sm leading-6", locale === "fa" && "font-vazir")}>
+                {station.address}
+              </p>
+            </section>
+          )}
+          <section className="mt-4">
+            <p className={cn("mb-2 text-xs font-medium text-muted-foreground", locale === "fa" && "font-vazir")}>
+              {dict.route.facilities}
+            </p>
+            {available.length === 0 ? (
+              <p className="px-2 py-4 text-center text-sm text-muted-foreground">—</p>
+            ) : (
+              <ul className="grid grid-cols-2 gap-1.5">
+                {available.map(({ key, icon: Icon, label }) => (
+                  <li
+                    key={key}
+                    className={cn(
+                      "flex items-center gap-2 rounded-lg bg-muted px-2.5 py-2 text-xs font-medium",
+                      locale === "fa" && "font-vazir"
+                    )}
+                  >
+                    <Icon className="size-3.5 shrink-0 text-blue-600 dark:text-blue-400" />
+                    <span className="truncate">{label[locale]}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        </div>
+        <div className="mt-5">
+          <FamilyDrawerSecondaryButton
+            onClick={() => setView("pick")}
+            className="w-full bg-muted text-foreground"
+          >
+            <ArrowLeft className="size-4 rtl:rotate-180" />
+            {dict.common.back}
+          </FamilyDrawerSecondaryButton>
+        </div>
+      </div>
+    );
+  }
+
   const views: ViewsRegistry = {
     search: SearchView,
     pick: PickView,
+    "station-details": StationDetailsView,
     recents: RecentsView,
     options: OptionsView,
     outages: OutagesView,
