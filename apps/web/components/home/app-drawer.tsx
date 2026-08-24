@@ -4,9 +4,11 @@ import { useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowLeftRight,
+  Ban,
   ImageIcon,
   Link2,
   MapPinOff,
+  Search,
   Share2,
   X,
 } from "lucide-react";
@@ -29,9 +31,12 @@ import {
 } from "@workspace/ui/components/family-drawer";
 import { Spinner } from "@workspace/ui/components/spinner";
 import { cn } from "@workspace/ui/lib/utils";
+import { Forbidden2 } from "reicon";
+import { ReiconIcon } from "@/components/icons/reicon-icon";
 import { useDictionary, useLocale } from "@/i18n/dictionary-provider";
 import type { Locale } from "@/i18n/config";
 import { useRecentRoutesStore } from "@/lib/stores/recent-routes";
+import { useBrokenStationsStore } from "@/lib/stores/broken-stations";
 import { exportRouteImage } from "@/lib/export-route-image";
 import { stationMarkerBackground } from "@/lib/station-visual";
 import { StationSearch, stationLabel } from "./station-search";
@@ -41,6 +46,7 @@ export type DrawerView =
   | "pick"
   | "recents"
   | "options"
+  | "outages"
   | "export"
   | "share"
   | "share-copy";
@@ -167,8 +173,11 @@ export function AppDrawer({
   }
 
   function PickView() {
+    const brokenIds = useBrokenStationsStore((s) => s.ids);
+    const toggleBroken = useBrokenStationsStore((s) => s.toggle);
     const id = lastPickStationId;
     if (!id) return null;
+    const isMarked = brokenIds.includes(id);
     return (
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
@@ -196,6 +205,19 @@ export function AppDrawer({
             {dict.route.selectAsTo}
           </button>
         </div>
+        <button
+          type="button"
+          onClick={() => toggleBroken(id)}
+          className={cn(
+            "flex items-center justify-center gap-2 rounded-xl border px-3 py-3 text-sm font-medium transition-colors",
+            isMarked
+              ? "border-red-500/30 bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400"
+              : "border-input bg-background hover:bg-accent dark:bg-input/20 dark:hover:bg-accent/40"
+          )}
+        >
+          <Ban className="size-4" />
+          {isMarked ? dict.route.outagesUnmark : dict.route.outagesMark}
+        </button>
       </div>
     );
   }
@@ -244,6 +266,7 @@ export function AppDrawer({
 
   function OptionsView() {
     const { setView } = useFamilyDrawer();
+    const brokenCount = useBrokenStationsStore((s) => s.ids.length);
     return (
       <>
         <header className="mb-4 flex h-[52px] items-center">
@@ -252,6 +275,23 @@ export function AppDrawer({
           </h2>
         </header>
         <div className="space-y-2">
+          <FamilyDrawerButton
+            onClick={() => setView("outages")}
+            className={cn(
+              "bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400",
+              locale === "fa" && "font-vazir"
+            )}
+          >
+            <ReiconIcon icon={Forbidden2} size={16} />
+            <span className="flex min-w-0 flex-1 items-center gap-2">
+              <span className="truncate">{dict.route.outages}</span>
+              {brokenCount > 0 && (
+                <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-bold text-white">
+                  {brokenCount}
+                </span>
+              )}
+            </span>
+          </FamilyDrawerButton>
           <FamilyDrawerButton
             onClick={onLostStation}
             className="bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400"
@@ -395,11 +435,116 @@ export function AppDrawer({
     );
   }
 
+  function OutagesView() {
+    const { setView } = useFamilyDrawer();
+    const brokenIds = useBrokenStationsStore((s) => s.ids);
+    const toggleBroken = useBrokenStationsStore((s) => s.toggle);
+    const clearBroken = useBrokenStationsStore((s) => s.clear);
+    const [query, setQuery] = useState("");
+
+    const markedSet = new Set(brokenIds);
+    const stationName = (id: string) => stationLabel(stations, id, locale);
+    const sorted = [...Object.keys(stations)].sort((a, b) => {
+      const aMarked = markedSet.has(a) ? 0 : 1;
+      const bMarked = markedSet.has(b) ? 0 : 1;
+      if (aMarked !== bMarked) return aMarked - bMarked;
+      return stationName(a).localeCompare(stationName(b));
+    });
+    const q = query.trim().toLowerCase();
+    const filtered = q
+      ? sorted.filter((id) =>
+          stations[id]!.name.toLowerCase().includes(q) ||
+          stations[id]!.translations.fa.includes(query.trim())
+        )
+      : sorted;
+
+    return (
+      <div>
+        <FamilyDrawerHeader
+          icon={<ReiconIcon icon={Forbidden2} size={34} />}
+          title={dict.route.outages}
+          description={dict.route.outagesDescription}
+          className={cn(locale === "fa" && "font-vazir")}
+        />
+        <div className="mt-4 flex items-center gap-2 rounded-xl border border-input bg-background px-3 dark:bg-input/20">
+          <Search className="size-4 shrink-0 text-muted-foreground" />
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={dict.route.searchPlaceholder}
+            className={cn(
+              "w-full bg-transparent py-2.5 text-sm outline-none placeholder:text-muted-foreground",
+              locale === "fa" && "font-vazir"
+            )}
+          />
+        </div>
+        <div className="mt-3 flex max-h-[42vh] flex-col gap-1 overflow-y-auto pe-1">
+          {filtered.length === 0 && (
+            <p className="px-2 py-6 text-center text-sm text-muted-foreground">
+              {dict.route.outagesEmpty}
+            </p>
+          )}
+          {filtered.map((id) => {
+            const marked = markedSet.has(id);
+            return (
+              <button
+                key={id}
+                type="button"
+                onClick={() => toggleBroken(id)}
+                className={cn(
+                  "flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-start transition-colors",
+                  marked
+                    ? "bg-red-500/10 hover:bg-red-500/15"
+                    : "bg-muted hover:bg-accent"
+                )}
+              >
+                <span
+                  className="size-2.5 shrink-0 rounded-full"
+                  style={{ background: stationMarkerBackground(stations[id]?.colors ?? []) }}
+                />
+                <span
+                  className={cn(
+                    "min-w-0 flex-1 truncate text-sm font-medium",
+                    marked && "text-red-600 line-through dark:text-red-400",
+                    locale === "fa" && "font-vazir"
+                  )}
+                >
+                  {stationName(id)}
+                </span>
+                {marked && <Ban className="size-4 shrink-0 text-red-500" />}
+              </button>
+            );
+          })}
+        </div>
+        <div className="mt-5 flex gap-3">
+          {brokenIds.length > 0 && (
+            <FamilyDrawerSecondaryButton
+              onClick={clearBroken}
+              className="flex-1 bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400"
+            >
+              <Ban className="size-4" />
+              {dict.route.clearOutages} ({brokenIds.length})
+            </FamilyDrawerSecondaryButton>
+          )}
+          <FamilyDrawerSecondaryButton
+            onClick={() => setView("options")}
+            className={cn("bg-muted text-foreground", brokenIds.length === 0 && "flex-1")}
+          >
+            <ArrowLeft className="size-4 rtl:rotate-180" />
+            {dict.common.back}
+          </FamilyDrawerSecondaryButton>
+        </div>
+      </div>
+    );
+  }
+
   const views: ViewsRegistry = {
     search: SearchView,
     pick: PickView,
     recents: RecentsView,
     options: OptionsView,
+    outages: OutagesView,
     export: ExportView,
     share: ShareView,
     "share-copy": ShareCopyView,

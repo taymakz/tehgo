@@ -5,8 +5,16 @@ import { useQueryState } from "nuqs";
 import { AnimatePresence, motion } from "motion/react";
 
 import { graph, lines, paths, stations } from "@workspace/metro-core/data";
-import { fastestRoute, fewestTransfersRoute, findRoutes } from "@workspace/metro-core/route-finder";
-import { getFirstStepGuide, getTransferGuide } from "@workspace/metro-core/route-guides";
+import {
+  fastestRoute,
+  fewestTransfersRoute,
+  findRoutesWithWalkBridge,
+} from "@workspace/metro-core/route-finder";
+import {
+  getFirstStepGuide,
+  getTransferGuide,
+  getWalkDepartureGuide,
+} from "@workspace/metro-core/route-guides";
 
 import { Map, MapControls, MapRoute } from "@workspace/ui/components/map";
 import { SettingsMenu } from "@/components/settings-menu";
@@ -22,6 +30,7 @@ import { MapFlyTo } from "./map-fly-to";
 import { useDictionary, useLocale } from "@/i18n/dictionary-provider";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { useRecentRoutesStore } from "@/lib/stores/recent-routes";
+import { useBrokenStationsStore } from "@/lib/stores/broken-stations";
 
 const TEHRAN_CENTER: [number, number] = [51.389, 35.6892];
 // Zoom level at which station names become readable enough to show by
@@ -40,6 +49,7 @@ export function HomeMap() {
   const locale = useLocale();
   const dict = useDictionary();
   const addRecentRoute = useRecentRoutesStore((s) => s.addRoute);
+  const brokenIds = useBrokenStationsStore((s) => s.ids);
 
   const [from, setFrom] = useQueryState("from");
   const [to, setTo] = useQueryState("to");
@@ -53,10 +63,15 @@ export function HomeMap() {
   const isSmallScreen = useMediaQuery("(max-width: 639px)");
   const labelVisibleZoom = isSmallScreen ? LABEL_VISIBLE_ZOOM_MOBILE : LABEL_VISIBLE_ZOOM_DESKTOP;
 
+  const blockedSet = useMemo(() => new Set(brokenIds), [brokenIds]);
+
   const routes = useMemo(() => {
     if (!from || !to || from === to) return [];
-    return findRoutes(graph, stations, from, to);
-  }, [from, to]);
+    return findRoutesWithWalkBridge(graph, stations, from, to, {
+      blocked: blockedSet,
+      paths,
+    });
+  }, [from, to, blockedSet]);
 
   const fastestRouteResult = useMemo(() => fastestRoute(routes) ?? routes[0] ?? null, [routes]);
   const fewestRouteResult = useMemo(
@@ -72,25 +87,52 @@ export function HomeMap() {
 
   const routeSegments = useMemo(() => {
     if (!selectedRoute) return [];
-    const segments: { coordinates: [number, number][]; color: string }[] = [];
+    const segments: {
+      coordinates: [number, number][];
+      color: string;
+      dash?: boolean;
+      walk?: boolean;
+    }[] = [];
     let current: [number, number][] = [];
     let currentLine = "";
+    let prev: [number, number] | null = null;
 
     for (const step of selectedRoute.steps) {
       const coords = stationCoords(step.stationId);
       if (!coords) continue;
 
-      if (step.line !== currentLine && current.length > 0) {
-        segments.push({ coordinates: current, color: lines[currentLine]?.color ?? "#888" });
+      if (prev && step.walk) {
+        if (current.length > 1) {
+          segments.push({
+            coordinates: current,
+            color: lines[currentLine]?.color ?? "#888",
+          });
+        }
+        segments.push({
+          coordinates: [prev, coords],
+          color: "#111827",
+          dash: true,
+          walk: true,
+        });
+        current = [];
+      } else if (step.line !== currentLine && current.length > 0) {
+        segments.push({
+          coordinates: current,
+          color: lines[currentLine]?.color ?? "#888",
+        });
         const transferPoint = current[current.length - 1]!;
-        current = [transferPoint, coords];
-      } else {
-        current.push(coords);
+        current = [transferPoint];
       }
+
+      current.push(coords);
       currentLine = step.line;
+      prev = coords;
     }
     if (current.length > 1) {
-      segments.push({ coordinates: current, color: lines[currentLine]?.color ?? "#888" });
+      segments.push({
+        coordinates: current,
+        color: lines[currentLine]?.color ?? "#888",
+      });
     }
     return segments;
   }, [selectedRoute]);
@@ -122,6 +164,13 @@ export function HomeMap() {
           text: getTransferGuide(selectedRoute, i, lines, paths, locale, getStationDisplay),
         });
       }
+      if (step.walk && step.walkFrom) {
+        points.push({
+          stationId: step.walkFrom,
+          lineId: step.line,
+          text: getWalkDepartureGuide(selectedRoute, i, locale, getStationDisplay),
+        });
+      }
     });
 
     const lastStep = selectedRoute.steps[selectedRoute.steps.length - 1]!;
@@ -129,7 +178,20 @@ export function HomeMap() {
       points.push({ stationId: lastStep.stationId, lineId: lastStep.line, text: null });
     }
 
-    return points;
+    // One tooltip per station: merge duplicate points (e.g. a walk guide
+    // plus the destination flag landing on the same stop)
+    const merged: GuidePoint[] = [];
+    for (const point of points) {
+      const existing = merged.find((m) => m.stationId === point.stationId);
+      if (existing) {
+        const texts = [existing.text, point.text].filter(Boolean);
+        existing.text = texts.length > 0 ? texts.join(" ") : null;
+      } else {
+        merged.push({ ...point });
+      }
+    }
+
+    return merged;
   }, [selectedRoute, locale, getStationDisplay]);
 
   const routeStationIds = useMemo(
@@ -248,16 +310,40 @@ export function HomeMap() {
           })
         )}
 
-        {routeSegments.map((segment, i) => (
-          <MapRoute
-            key={`route-${i}`}
-            coordinates={segment.coordinates}
-            color={segment.color}
-            width={8}
-            opacity={1}
-            interactive={false}
-          />
-        ))}
+        {routeSegments.flatMap((segment, i) => {
+          if (!segment.walk) {
+            return [
+              <MapRoute
+                key={`route-${i}`}
+                coordinates={segment.coordinates}
+                color={segment.color}
+                width={8}
+                opacity={1}
+                interactive={false}
+              />,
+            ];
+          }
+          // Walk leg: light casing under a dark dash so it reads on any map
+          return [
+            <MapRoute
+              key={`route-${i}-casing`}
+              coordinates={segment.coordinates}
+              color="#f8fafc"
+              width={9}
+              opacity={0.95}
+              interactive={false}
+            />,
+            <MapRoute
+              key={`route-${i}`}
+              coordinates={segment.coordinates}
+              color="#111827"
+              width={4.5}
+              opacity={1}
+              dashArray={[1.3, 1.5]}
+              interactive={false}
+            />,
+          ];
+        })}
 
         {stationsRenderOrder.map((station) => {
           const isRelated =
@@ -278,19 +364,20 @@ export function HomeMap() {
             showLabel={showLabel}
             showTooltip={!isSmallScreen}
             role={station.id === from ? "from" : station.id === to ? "to" : null}
+            outaged={blockedSet.has(station.id)}
             onClick={() => handleMarkerClick(station.id)}
           />
           );
         })}
 
-        {guidePoints.map((point) => {
+        {guidePoints.map((point, gi) => {
           const coords = stationCoords(point.stationId);
           const station = stations[point.stationId];
           const line = lines[point.lineId];
           if (!coords || !station || !line) return null;
           return (
             <RouteGuideMarker
-              key={`guide-${point.stationId}-${point.lineId}`}
+              key={`guide-${gi}-${point.stationId}-${point.lineId}`}
               longitude={coords[0]}
               latitude={coords[1]}
               lineColor={line.color}
