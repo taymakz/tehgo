@@ -555,10 +555,8 @@ export function AppDrawer({
             )}
           />
         </div>
-        <ScrollArea
-          className="mt-3 h-[42vh] [mask-image:linear-gradient(to_bottom,transparent,black_14px,black_calc(100%-18px),transparent)]"
-        >
-          <div className="flex flex-col gap-1 px-0.5 pb-5">
+        <ScrollArea className="h-[55vh] min-h-[160px]">
+          <div className="flex flex-col gap-0.5 px-1 py-2">
             {filtered.length === 0 && (
               <p className="px-2 py-6 text-center text-sm text-muted-foreground">
                 {dict.route.outagesEmpty}
@@ -572,10 +570,10 @@ export function AppDrawer({
                   type="button"
                   onClick={() => toggleBroken(id)}
                   className={cn(
-                    "flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-start transition-colors",
+                    "flex w-full items-center gap-2 rounded-lg px-2 py-2 text-start text-sm",
                     marked
                       ? "bg-red-500/10 hover:bg-red-500/15"
-                      : "bg-muted hover:bg-accent"
+                      : "hover:bg-accent"
                   )}
                 >
                   <span
@@ -584,24 +582,42 @@ export function AppDrawer({
                   />
                   <span
                     className={cn(
-                      "min-w-0 flex-1 truncate text-sm font-medium",
+                      "min-w-0 flex-1 truncate font-medium",
                       marked && "text-red-600 line-through dark:text-red-400",
                       locale === "fa" && "font-vazir"
                     )}
                   >
                     {stationName(id)}
                   </span>
-                  {marked && <Ban className="size-4 shrink-0 text-red-500" />}
+                  <span className="flex shrink-0 items-center gap-1">
+                    {(stations[id]!.lines ?? []).map((lineId) => {
+                      const line = lines[lineId];
+                      if (!line) return null;
+                      return (
+                        <span
+                          key={lineId}
+                          className={cn(
+                            "whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-medium",
+                            isLightColor(line.color) ? "text-black" : "text-white"
+                          )}
+                          style={{ background: line.color }}
+                        >
+                          {line.name[locale]}
+                        </span>
+                      );
+                    })}
+                    {marked && <Ban className="size-4 shrink-0 text-red-500" />}
+                  </span>
                 </button>
               );
             })}
           </div>
         </ScrollArea>
-        <div className="mt-5 flex gap-3">
+        <div className="mt-5 flex flex-col gap-2">
           {brokenIds.length > 0 && (
             <FamilyDrawerSecondaryButton
               onClick={clearBroken}
-              className="min-w-0 flex-1 bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400"
+              className="bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400"
             >
               <Ban className="size-4 shrink-0" />
               <span className="truncate">
@@ -612,10 +628,7 @@ export function AppDrawer({
           )}
           <FamilyDrawerSecondaryButton
             onClick={() => setView("options")}
-            className={cn(
-              "shrink-0 bg-muted text-foreground",
-              brokenIds.length === 0 && "w-full flex-1"
-            )}
+            className="bg-muted text-foreground"
           >
             <ArrowLeft className="size-4 rtl:rotate-180" />
             {dict.common.back}

@@ -21,6 +21,7 @@ import { SettingsMenu } from "@/components/settings-menu";
 import { Splash } from "@/components/splash";
 import { StationMarker } from "./station-marker";
 import { StationSearchModal } from "./station-search-modal";
+import { BrokenStationsModal } from "./broken-stations-modal";
 import { RouteGuideMarker } from "./route-guide-marker";
 import { MapReadyWatcher } from "./map-ready-watcher";
 import { MapZoomWatcher } from "./map-zoom-watcher";
@@ -438,7 +439,11 @@ export function HomeMap() {
 
       <AppDrawer
         stations={stations}
-        view={isSmallScreen && drawerView === "search" ? null : drawerView}
+        view={
+          isSmallScreen && (drawerView === "search" || drawerView === "outages")
+            ? null
+            : drawerView
+        }
         onViewChange={setDrawerView}
         pickStationId={pickStationId}
         searchField={searchField}
@@ -459,6 +464,12 @@ export function HomeMap() {
         onLocationFound={handleLocationFound}
         excludeId={searchField === "from" ? to : from}
         onClose={() => setDrawerView(null)}
+      />
+
+      <BrokenStationsModal
+        open={isSmallScreen && drawerView === "outages"}
+        stations={stations}
+        onClose={() => setDrawerView("options")}
       />
 
       <Splash show={!mapReady} />
