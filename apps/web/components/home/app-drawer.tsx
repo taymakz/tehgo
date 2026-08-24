@@ -51,7 +51,7 @@ import {
 import { Spinner } from "@workspace/ui/components/spinner";
 import { ScrollArea } from "@workspace/ui/components/scroll-area";
 import { cn } from "@workspace/ui/lib/utils";
-import { Forbidden2 } from "reicon";
+import { Forbidden2, Flag, Pin } from "reicon";
 import { ReiconIcon } from "@/components/icons/reicon-icon";
 import { useDictionary, useLocale } from "@/i18n/dictionary-provider";
 import type { Locale } from "@/i18n/config";
@@ -262,22 +262,28 @@ export function AppDrawer({
           <button
             type="button"
             onClick={() => onSelectPick("from")}
-            className="rounded-xl border border-input bg-background px-3 py-3 text-sm font-medium hover:bg-accent dark:bg-input/20 dark:hover:bg-accent/40"
+            className="flex items-center justify-center gap-2 rounded-xl border border-input bg-background px-3 py-3 text-sm font-medium hover:bg-accent dark:bg-input/20 dark:hover:bg-accent/40"
           >
+            <ReiconIcon icon={Pin} size={16} />
             {dict.route.selectAsFrom}
           </button>
           <button
             type="button"
             onClick={() => onSelectPick("to")}
-            className="rounded-xl border border-input bg-background px-3 py-3 text-sm font-medium hover:bg-accent dark:bg-input/20 dark:hover:bg-accent/40"
+            className="flex items-center justify-center gap-2 rounded-xl border border-input bg-background px-3 py-3 text-sm font-medium hover:bg-accent dark:bg-input/20 dark:hover:bg-accent/40"
           >
+            <ReiconIcon icon={Flag} size={16} />
             {dict.route.selectAsTo}
           </button>
         </div>
-        <FamilyDrawerButton onClick={() => setView("station-details")}>
+        <button
+          type="button"
+          onClick={() => setView("station-details")}
+          className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-3 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-500 dark:bg-blue-500 dark:hover:bg-blue-400"
+        >
           <Info className="size-4" />
           {dict.route.stationDetails}
-        </FamilyDrawerButton>
+        </button>
         <button
           type="button"
           onClick={() => toggleBroken(id)}
