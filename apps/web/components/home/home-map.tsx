@@ -392,7 +392,6 @@ export function HomeMap() {
               longitude={coords[0]}
               latitude={coords[1]}
               lineColor={line.color}
-              lineNumber={point.lineId.replace("line_", "")}
               lineName={line.name[locale]}
               stationName={getStationDisplay(point.stationId)}
               text={point.text}

@@ -10,7 +10,6 @@ export function RouteGuideMarker({
   longitude,
   latitude,
   lineColor,
-  lineNumber,
   lineName,
   stationName,
   text,
@@ -19,7 +18,6 @@ export function RouteGuideMarker({
   longitude: number;
   latitude: number;
   lineColor: string;
-  lineNumber: string;
   lineName: string;
   stationName: string;
   text: string | null;
@@ -27,8 +25,6 @@ export function RouteGuideMarker({
 }) {
   const dict = useDictionary();
   const light = isLightColor(lineColor);
-  const displayLineNumber =
-    locale === "fa" ? toFaDigits(lineNumber) : lineNumber;
   const displayText = text && locale === "fa" ? toFaDigits(text) : text;
 
   return (
@@ -46,15 +42,6 @@ export function RouteGuideMarker({
             )}
           >
             <div className="mb-1.5 flex items-center gap-1.5">
-              <span
-                className={cn(
-                  "flex size-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold",
-                  light ? "text-black" : "text-white"
-                )}
-                style={{ background: lineColor }}
-              >
-                {displayLineNumber}
-              </span>
               <span
                 className={cn(
                   "whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-medium",
