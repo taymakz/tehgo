@@ -10,7 +10,11 @@ import {
   fewestTransfersRoute,
   findRoutesWithWalkBridge,
 } from "@workspace/metro-core/route-finder";
-import { getFirstStepGuide, getTransferGuide } from "@workspace/metro-core/route-guides";
+import {
+  getFirstStepGuide,
+  getTransferGuide,
+  getWalkDepartureGuide,
+} from "@workspace/metro-core/route-guides";
 
 import { Map, MapControls, MapRoute } from "@workspace/ui/components/map";
 import { SettingsMenu } from "@/components/settings-menu";
@@ -151,6 +155,14 @@ export function HomeMap() {
           stationId: step.stationId,
           lineId: step.transferTo,
           text: getTransferGuide(selectedRoute, i, lines, paths, locale, getStationDisplay),
+        });
+      }
+      if (step.walk && step.walkFrom) {
+        // Guidance at the departure side too ("last usable station")
+        points.push({
+          stationId: step.walkFrom,
+          lineId: step.line,
+          text: getWalkDepartureGuide(selectedRoute, i, locale, getStationDisplay),
         });
       }
     });
@@ -316,14 +328,14 @@ export function HomeMap() {
           );
         })}
 
-        {guidePoints.map((point) => {
+        {guidePoints.map((point, gi) => {
           const coords = stationCoords(point.stationId);
           const station = stations[point.stationId];
           const line = lines[point.lineId];
           if (!coords || !station || !line) return null;
           return (
             <RouteGuideMarker
-              key={`guide-${point.stationId}-${point.lineId}`}
+              key={`guide-${gi}-${point.stationId}-${point.lineId}`}
               longitude={coords[0]}
               latitude={coords[1]}
               lineColor={line.color}

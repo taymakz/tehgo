@@ -98,6 +98,8 @@ export interface RouteStep {
   walk?: boolean;
   /** Station id the walk started from (only set when walk is true) */
   walkFrom?: string;
+  /** Straight-line meters covered by the walk (only set when walk is true) */
+  walkMeters?: number;
 }
 
 export interface RouteResult {

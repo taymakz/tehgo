@@ -7,8 +7,13 @@ export interface FindRoutesOptions {
   blocked?: ReadonlySet<string>;
 }
 
-/** Maximum walking distance in meters for a walk-transfer suggestion */
-const DEFAULT_WALK_MAX_METERS = 800;
+/**
+ * Maximum straight-line distance in meters a walk-transfer may span.
+ * Deliberately generous: when a broken station cuts a line the only way
+ * forward can be a several-kilometer gap that riders cover on foot or
+ * by taxi/Snapp, so we still suggest it and let the guide explain how.
+ */
+const DEFAULT_WALK_MAX_METERS = 5000;
 /** Upper bound on candidate walk pairs evaluated so lookups stay fast */
 const MAX_WALK_PAIRS = 60;
 
@@ -236,9 +241,19 @@ export function findRoutesWithWalkBridge(
 
   candidates.sort((x, y) => x.distance - y.distance);
 
+  // Walking away from the origin only makes sense when the origin cannot
+  // reach any other usable station by train; otherwise riders expect a
+  // metro leg towards the gap first (e.g. ride to the last open stop).
+  const eligibleOrigins = [...forwardReach].filter(
+    (id) => id !== to && !blocked?.has(id)
+  );
+  const originWalkAllowed =
+    eligibleOrigins.length === 1 && eligibleOrigins[0] === from;
+
   const composed: RouteResult[] = [];
 
-  for (const { aId, bId } of candidates.slice(0, MAX_WALK_PAIRS)) {
+  for (const { aId, bId, distance } of candidates.slice(0, MAX_WALK_PAIRS)) {
+    if (aId === from && !originWalkAllowed) continue;
     const leg1 =
       aId === from ? [] : findRoutes(graph, stations, from, aId, { blocked });
     if (leg1.length === 0 && aId !== from) continue;
@@ -257,13 +272,17 @@ export function findRoutesWithWalkBridge(
             isTransfer: false,
           },
         ] as RouteStep[]);
-      steps = [...head, walkStepTo(stations, bId, aId)];
+      steps = [...head, walkStepTo(stations, bId, aId, distance)];
     } else {
       const leg2 = findRoutes(graph, stations, bId, to, { blocked });
       if (leg2.length === 0) continue;
       const best2 = leg2[0]!;
       const head = best1?.steps ?? [];
-      steps = [...head, walkStepTo(stations, bId, aId), ...best2.steps.slice(1)];
+      steps = [
+        ...head,
+        walkStepTo(stations, bId, aId, distance),
+        ...best2.steps.slice(1),
+      ];
     }
 
     const uniqueLines = Array.from(
@@ -285,7 +304,8 @@ export function findRoutesWithWalkBridge(
 function walkStepTo(
   stations: StationsMap,
   stationId: string,
-  walkFrom: string
+  walkFrom: string,
+  walkMeters: number
 ): RouteStep {
   return {
     stationId,
@@ -295,6 +315,7 @@ function walkStepTo(
     transferTo: stations[stationId]?.lines?.[0] || "",
     walk: true,
     walkFrom,
+    walkMeters: Math.round(walkMeters),
   };
 }
 

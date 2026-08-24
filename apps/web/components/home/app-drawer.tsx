@@ -30,6 +30,8 @@ import {
 } from "@workspace/ui/components/family-drawer";
 import { Spinner } from "@workspace/ui/components/spinner";
 import { cn } from "@workspace/ui/lib/utils";
+import { Forbidden2 } from "reicon";
+import { ReiconIcon } from "@/components/icons/reicon-icon";
 import { useDictionary, useLocale } from "@/i18n/dictionary-provider";
 import type { Locale } from "@/i18n/config";
 import { useRecentRoutesStore } from "@/lib/stores/recent-routes";
@@ -43,6 +45,7 @@ export type DrawerView =
   | "pick"
   | "recents"
   | "options"
+  | "outages"
   | "export"
   | "share"
   | "share-copy";
@@ -262,6 +265,7 @@ export function AppDrawer({
 
   function OptionsView() {
     const { setView } = useFamilyDrawer();
+    const brokenCount = useBrokenStationsStore((s) => s.ids.length);
     return (
       <>
         <header className="mb-4 flex h-[52px] items-center">
@@ -270,6 +274,23 @@ export function AppDrawer({
           </h2>
         </header>
         <div className="space-y-2">
+          <FamilyDrawerButton
+            onClick={() => setView("outages")}
+            className={cn(
+              "bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400",
+              locale === "fa" && "font-vazir"
+            )}
+          >
+            <ReiconIcon icon={Forbidden2} size={16} />
+            <span className="flex min-w-0 flex-1 items-center gap-2">
+              <span className="truncate">{dict.route.outages}</span>
+              {brokenCount > 0 && (
+                <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-bold text-white">
+                  {brokenCount}
+                </span>
+              )}
+            </span>
+          </FamilyDrawerButton>
           <FamilyDrawerButton
             onClick={onLostStation}
             className="bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400"

@@ -1,10 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { useTheme } from "next-themes";
 import {
   ArrowLeft,
-  Ban,
   Check,
   ChevronRight,
   Download,
@@ -15,10 +13,8 @@ import {
   Monitor,
   Moon,
   Palette,
-  Search,
   Settings,
   Sun,
-  TriangleAlert,
 } from "lucide-react";
 import { GithubIcon } from "@/components/icons/github-icon";
 
@@ -39,14 +35,10 @@ import {
 } from "@workspace/ui/components/family-drawer";
 import { Button } from "@workspace/ui/components/button";
 import { cn } from "@workspace/ui/lib/utils";
-import { stations } from "@workspace/metro-core/data";
-import type { Station } from "@workspace/metro-core/types";
 import { useDictionary, useLocale, useSetLocale } from "@/i18n/dictionary-provider";
 import { SUPPORTED_LOCALES, type Locale } from "@/i18n/config";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { GITHUB_URL, MYKET_URL, WEBSITE_URL } from "@/lib/links";
-import { useBrokenStationsStore } from "@/lib/stores/broken-stations";
-import { stationMarkerBackground } from "@/lib/station-visual";
 import { MyketIcon } from "@/components/icons/myket-icon";
 import { TehGoIcon } from "@/components/icons/tehgo-icon";
 
@@ -73,7 +65,6 @@ export function SettingsMenu({
   const setLocale = useSetLocale();
   const { theme, setTheme } = useTheme();
   const { isInstallable, isInstalled, promptInstall } = usePwaInstall();
-  const brokenIds = useBrokenStationsStore((s) => s.ids);
 
   function switchLocale(next: Locale) {
     setLocale(next);
@@ -103,18 +94,6 @@ export function SettingsMenu({
             <span className="flex items-center gap-[15px]">
               <Languages className="size-4" />
               {dict.settings.language}
-            </span>
-            <ChevronRight className="size-4 text-muted-foreground rtl:rotate-180" />
-          </FamilyDrawerButton>
-          <FamilyDrawerButton onClick={() => setView("outages")} className="justify-between">
-            <span className="flex items-center gap-[15px]">
-              <TriangleAlert className="size-4" />
-              {dict.route.outages}
-              {brokenIds.length > 0 && (
-                <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-bold text-white">
-                  {brokenIds.length}
-                </span>
-              )}
             </span>
             <ChevronRight className="size-4 text-muted-foreground rtl:rotate-180" />
           </FamilyDrawerButton>
@@ -340,120 +319,10 @@ export function SettingsMenu({
     );
   }
 
-  function OutagesView() {
-    const { setView } = useFamilyDrawer();
-    const brokenIds = useBrokenStationsStore((s) => s.ids);
-    const toggle = useBrokenStationsStore((s) => s.toggle);
-    const clear = useBrokenStationsStore((s) => s.clear);
-    const [query, setQuery] = useState("");
-
-    const allStations = Object.values(stations);
-    const markedSet = new Set(brokenIds);
-    const sorted = [...allStations].sort((a, b) => {
-      const aMarked = markedSet.has(a.id) ? 0 : 1;
-      const bMarked = markedSet.has(b.id) ? 0 : 1;
-      if (aMarked !== bMarked) return aMarked - bMarked;
-      return stationName(a).localeCompare(stationName(b));
-    });
-    const q = query.trim().toLowerCase();
-    const filtered = q
-      ? sorted.filter(
-          (s) =>
-            s.name.toLowerCase().includes(q) ||
-            s.translations.fa.includes(query.trim())
-        )
-      : sorted;
-
-    function stationName(s: Station) {
-      return locale === "fa" ? s.translations.fa : s.name;
-    }
-
-    return (
-      <div>
-        <FamilyDrawerHeader
-          icon={<TriangleAlert className="size-9" />}
-          title={dict.route.outages}
-          description={dict.route.outagesDescription}
-          className={cn(locale === "fa" && "font-vazir")}
-        />
-        <div className="mt-4 flex items-center gap-2 rounded-xl border border-input bg-background px-3 dark:bg-input/20">
-          <Search className="size-4 shrink-0 text-muted-foreground" />
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={dict.route.searchPlaceholder}
-            className={cn(
-              "w-full bg-transparent py-2.5 text-sm outline-none placeholder:text-muted-foreground",
-              locale === "fa" && "font-vazir"
-            )}
-          />
-        </div>
-        <div className="mt-3 flex max-h-[46vh] flex-col gap-1 overflow-y-auto pe-1">
-          {filtered.length === 0 && (
-            <p className="px-2 py-6 text-center text-sm text-muted-foreground">
-              {dict.route.outagesEmpty}
-            </p>
-          )}
-          {filtered.map((station) => {
-            const marked = markedSet.has(station.id);
-            return (
-              <button
-                key={station.id}
-                type="button"
-                onClick={() => toggle(station.id)}
-                className={cn(
-                  "flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-start transition-colors",
-                  marked
-                    ? "bg-red-500/10 hover:bg-red-500/15"
-                    : "bg-muted hover:bg-accent"
-                )}
-              >
-                <span
-                  className="size-2.5 shrink-0 rounded-full"
-                  style={{ background: stationMarkerBackground(station.colors) }}
-                />
-                <span
-                  className={cn(
-                    "min-w-0 flex-1 truncate text-sm font-medium",
-                    marked && "text-red-600 line-through dark:text-red-400",
-                    locale === "fa" && "font-vazir"
-                  )}
-                >
-                  {stationName(station)}
-                </span>
-                {marked && <Ban className="size-4 shrink-0 text-red-500" />}
-              </button>
-            );
-          })}
-        </div>
-        <div className="mt-5 flex gap-3">
-          {brokenIds.length > 0 && (
-            <FamilyDrawerSecondaryButton
-              onClick={clear}
-              className="flex-1 bg-red-500/10 text-red-600 hover:bg-red-500/15 dark:text-red-400"
-            >
-              <Ban className="size-4" />
-              {dict.route.clearOutages} ({brokenIds.length})
-            </FamilyDrawerSecondaryButton>
-          )}
-          <FamilyDrawerSecondaryButton
-            onClick={() => setView("default")}
-            className={cn("bg-muted text-foreground", brokenIds.length === 0 && "flex-1")}
-          >
-            <ArrowLeft className="size-4 rtl:rotate-180" />
-            {dict.common.back}
-          </FamilyDrawerSecondaryButton>
-        </div>
-      </div>
-    );
-  }
-
   const views: ViewsRegistry = {
     default: MenuView,
     theme: ThemeView,
     language: LanguageView,
-    outages: OutagesView,
     install: InstallView,
     about: AboutView,
   };

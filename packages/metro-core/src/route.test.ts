@@ -6,6 +6,7 @@ import {
   getFirstStepGuide,
   getLineTerminal,
   getTransferGuide,
+  getWalkDepartureGuide,
 } from "./route-guides";
 import type { RouteResult } from "./types";
 
@@ -201,7 +202,7 @@ describe("walk bridge", () => {
     const faMid = getTransferGuide(midRoute!, midIndex, lines, paths, "fa", (id) =>
       display(id, "fa")
     );
-    expect(enMid).toContain("Walk from");
+    expect(enMid).toContain("taxi/Snapp");
     expect(enMid).toContain("board");
     expect(faMid).toContain("پیاده بروید");
     expect(faMid).toContain("سوار");
@@ -228,10 +229,45 @@ describe("walk bridge", () => {
       "fa",
       (id) => display(id, "fa")
     );
-    expect(enFinal).toContain("Walk from Ebn-e Sina to Amirkabir");
+    expect(enFinal).toContain("Amirkabir");
     expect(enFinal).not.toContain("board");
     expect(faFinal).toContain("پیاده بروید");
     expect(faFinal).not.toContain("سوار");
+  });
+
+  it("long broken-line gaps suggest taxi/Snapp in the guide", () => {
+    // ahang blocked splits line 7; basij -> chehel_tan_e_doulab is ~2.3 km
+    const blocked7 = new Set(["ahang"]);
+    const [route] = findRoutesWithWalkBridge(
+      graph,
+      stations,
+      "varzeshgah_e_takhti",
+      "chehel_tan_e_doulab",
+      { blocked: blocked7 }
+    );
+
+    expect(route).toBeDefined();
+    const walkIndex = route!.steps.findIndex((s) => s.walk);
+    const walk = route!.steps[walkIndex]!;
+    expect(walk.walkFrom).toBe("basij");
+    expect(walk.stationId).toBe("chehel_tan_e_doulab");
+    expect(walk.walkMeters ?? 0).toBeGreaterThan(1500);
+
+    const fa = getTransferGuide(route!, walkIndex, lines, paths, "fa", (id) =>
+      display(id, "fa")
+    );
+    expect(fa).toContain("اسنپ");
+    expect(fa).toContain("پیاده");
+
+    // Departure-side guide marks basij as the last usable station
+    const departure = getWalkDepartureGuide(
+      route!,
+      walkIndex,
+      "fa",
+      (id) => display(id, "fa")
+    );
+    expect(departure).toContain("بسیج");
+    expect(departure).toContain("آخرین ایستگاه قابل استفاده");
   });
 });
 

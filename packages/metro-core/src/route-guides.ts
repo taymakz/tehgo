@@ -53,6 +53,45 @@ export function getFirstStepGuide(
     : `Board ${lineName} at ${stationName} station towards ${terminalName}`;
 }
 
+const WALK_ONLY_MAX_METERS = 1000;
+
+function formatKm(meters: number): string {
+  return (meters / 1000).toFixed(1);
+}
+
+function walkSegmentText(
+  lang: "en" | "fa",
+  fromName: string,
+  toName: string,
+  meters?: number
+): string {
+  const long = (meters ?? 0) > WALK_ONLY_MAX_METERS;
+  if (lang === "fa") {
+    return long
+      ? `برای رسیدن به ایستگاه ${toName} (${formatKm(meters!)} کیلومتر) می‌توانید پیاده بروید یا با اسنپ/تاکسی بروید`
+      : `تا ایستگاه ${toName} پیاده بروید`;
+  }
+  return long
+    ? `To reach ${toName} station (${formatKm(meters!)} km), take a taxi/Snapp or walk`
+    : `Walk to ${toName} station`;
+}
+
+export function getWalkDepartureGuide(
+  route: RouteResult,
+  walkIndex: number,
+  lang: "en" | "fa",
+  getStationDisplay: (id: string) => string
+): string {
+  const step = route.steps[walkIndex];
+  if (!step?.walk || !step.walkFrom) return "";
+  const fromName = getStationDisplay(step.walkFrom);
+  const toName = getStationDisplay(step.stationId);
+  const segment = walkSegmentText(lang, fromName, toName, step.walkMeters);
+  return lang === "fa"
+    ? `ایستگاه ${fromName} آخرین ایستگاه قابل استفاده در این مسیر است. ${segment}`
+    : `${fromName} is the last usable station on this route. ${segment}`;
+}
+
 export function getTransferGuide(
   route: RouteResult,
   transferIndex: number,
@@ -65,9 +104,12 @@ export function getTransferGuide(
     const only = route.steps[transferIndex];
     if (only?.walk) {
       const fromName = getStationDisplay(only.walkFrom ?? "");
-      return lang === "fa"
-        ? `از ایستگاه ${fromName} تا ایستگاه ${getStationDisplay(only.stationId)} پیاده بروید`
-        : `Walk from ${fromName} to ${getStationDisplay(only.stationId)} station`;
+      return walkSegmentText(
+        lang,
+        fromName,
+        getStationDisplay(only.stationId),
+        only.walkMeters
+      );
     }
     return "";
   }
@@ -91,17 +133,16 @@ export function getTransferGuide(
   let base: string;
   if (currentStep.walk) {
     const walkFromName = getStationDisplay(currentStep.walkFrom ?? "");
-    const walkText =
-      lang === "fa"
-        ? `از ایستگاه ${walkFromName} تا ایستگاه ${stationName} پیاده بروید`
-        : `Walk from ${walkFromName} to ${stationName} station`;
-
-    if (!nextStep) return walkText;
-
+    const segment = walkSegmentText(
+      lang,
+      walkFromName,
+      stationName,
+      currentStep.walkMeters
+    );
     base =
       lang === "fa"
-        ? `${walkText}، سپس سوار ${toLine} به سمت ${terminalName} شوید`
-        : `${walkText}, then board ${toLine} towards ${terminalName}`;
+        ? `${segment}، سپس سوار ${toLine} به سمت ${terminalName} شوید`
+        : `${segment}, then board ${toLine} towards ${terminalName}`;
   } else {
     base =
       lang === "fa"
