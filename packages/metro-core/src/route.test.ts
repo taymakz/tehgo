@@ -66,6 +66,25 @@ describe("route finding", () => {
   it("returns no routes when origin equals destination", () => {
     expect(findRoutes(graph, stations, "amirkabir", "amirkabir")).toEqual([]);
   });
+
+  it("Maryam-e Moghaddas is open and routable from both directions", () => {
+    expect(stations["maryam_e_moghaddas"]?.disabled).toBe(false);
+
+    const outgoing = findRoutes(
+      graph,
+      stations,
+      "maryam_e_moghaddas",
+      "amirkabir"
+    );
+    const incoming = findRoutes(
+      graph,
+      stations,
+      "shahid_kolahdooz",
+      "maryam_e_moghaddas"
+    );
+    expect(outgoing.length).toBeGreaterThan(0);
+    expect(incoming.length).toBeGreaterThan(0);
+  });
 });
 
 describe("route guides", () => {

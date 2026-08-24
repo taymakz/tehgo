@@ -841,7 +841,7 @@
     "colors": [
       "#EF639F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -1273,7 +1273,7 @@
     "colors": [
       "#EF639F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -1696,7 +1696,7 @@
     "colors": [
       "#EF639F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": true,
     "coffeeShop": false,
     "groceryStore": false,
@@ -2880,7 +2880,7 @@
     "colors": [
       "#EF639F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -6193,7 +6193,7 @@
     "colors": [
       "#7F0B74"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -6234,7 +6234,7 @@
     "colors": [
       "#E0001F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
