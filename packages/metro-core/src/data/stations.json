@@ -303,7 +303,8 @@
     "latitude": "35.741428",
     "colors": [
       "#EF639F"
-    ],
+    ,
+"#F8E100"],
     "disabled": true,
     "elevator": false,
     "bicycleParking": false,

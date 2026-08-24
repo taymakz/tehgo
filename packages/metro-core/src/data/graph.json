@@ -643,7 +643,20 @@
       "weight": 1
     }
   ],
-  "holy_shrine_of_imam_khomeini": [],
+  "holy_shrine_of_imam_khomeini": [
+    {
+      "from": "holy_shrine_of_imam_khomeini",
+      "to": "shahed_baghershahr",
+      "line": "line_1",
+      "weight": 1
+    },
+    {
+      "from": "holy_shrine_of_imam_khomeini",
+      "to": "kahrizak",
+      "line": "line_1",
+      "weight": 1
+    }
+  ],
   "hossein_abad": [
     {
       "from": "hossein_abad",
@@ -769,7 +782,7 @@
   "kahrizak": [
     {
       "from": "kahrizak",
-      "to": "haram_e_motahar_e_emam_khomeini",
+      "to": "holy_shrine_of_imam_khomeini",
       "line": "line_1",
       "weight": 1
     }
@@ -892,7 +905,20 @@
       "weight": 1
     }
   ],
-  "maryam_e_moghaddas": [],
+  "maryam_e_moghaddas": [
+    {
+      "from": "maryam_e_moghaddas",
+      "to": "meydan_e_hazrat_vali_asr",
+      "line": "line_6",
+      "weight": 1
+    },
+    {
+      "from": "maryam_e_moghaddas",
+      "to": "shohada_ye_haftom_e_tir",
+      "line": "line_6",
+      "weight": 1
+    }
+  ],
   "marzdaran": [
     {
       "from": "marzdaran",
@@ -1020,7 +1046,7 @@
     },
     {
       "from": "meydan_e_hazrat_vali_asr",
-      "to": "shahid_nejatollahi",
+      "to": "maryam_e_moghaddas",
       "line": "line_6",
       "weight": 1
     }
@@ -1393,7 +1419,20 @@
       "weight": 1
     }
   ],
-  "piroozi": [],
+  "piroozi": [
+    {
+      "from": "piroozi",
+      "to": "ebn_e_sina",
+      "line": "line_4",
+      "weight": 1
+    },
+    {
+      "from": "piroozi",
+      "to": "nabard",
+      "line": "line_4",
+      "weight": 1
+    }
+  ],
   "qa_em": [
     {
       "from": "qa_em",
@@ -1535,7 +1574,7 @@
     },
     {
       "from": "shahed_baghershahr",
-      "to": "haram_e_motahar_e_emam_khomeini",
+      "to": "holy_shrine_of_imam_khomeini",
       "line": "line_1",
       "weight": 1
     },
@@ -1945,7 +1984,7 @@
     },
     {
       "from": "shohada_ye_haftom_e_tir",
-      "to": "shahid_nejatollahi",
+      "to": "maryam_e_moghaddas",
       "line": "line_6",
       "weight": 1
     },
