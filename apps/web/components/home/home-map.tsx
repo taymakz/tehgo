@@ -21,6 +21,7 @@ import { SettingsMenu } from "@/components/settings-menu";
 import { Splash } from "@/components/splash";
 import { StationMarker } from "./station-marker";
 import { StationSearchModal } from "./station-search-modal";
+import { BrokenStationsModal } from "./broken-stations-modal";
 import { RouteGuideMarker } from "./route-guide-marker";
 import { MapReadyWatcher } from "./map-ready-watcher";
 import { MapZoomWatcher } from "./map-zoom-watcher";
@@ -199,6 +200,11 @@ export function HomeMap() {
     [selectedRoute]
   );
 
+  const guideStationIds = useMemo(
+    () => new Set(guidePoints.map((p) => p.stationId)),
+    [guidePoints]
+  );
+
   // MapLibre stacks marker DOM nodes by insertion order, so render the
   // from/to markers last to guarantee their "مبدا"/"مقصد" label always
   // paints above any neighboring station marker instead of being clipped.
@@ -348,8 +354,13 @@ export function HomeMap() {
         {stationsRenderOrder.map((station) => {
           const isRelated =
             station.id === from || station.id === to || routeStationIds.has(station.id);
-          const showLabel =
-            isRelated || (zoom >= labelVisibleZoom && !bothSelected);
+          // While routing, declutter: only origin/destination and the
+          // stations carrying a guide card keep their name labels.
+          const showLabel = bothSelected
+            ? station.id === from ||
+              station.id === to ||
+              guideStationIds.has(station.id)
+            : isRelated || zoom >= labelVisibleZoom;
           return (
           <StationMarker
             key={station.id}
@@ -381,10 +392,8 @@ export function HomeMap() {
               longitude={coords[0]}
               latitude={coords[1]}
               lineColor={line.color}
-              lineNumber={point.lineId.replace("line_", "")}
               lineName={line.name[locale]}
               stationName={getStationDisplay(point.stationId)}
-              address={station.address}
               text={point.text}
               locale={locale}
             />
@@ -429,7 +438,11 @@ export function HomeMap() {
 
       <AppDrawer
         stations={stations}
-        view={isSmallScreen && drawerView === "search" ? null : drawerView}
+        view={
+          isSmallScreen && (drawerView === "search" || drawerView === "outages")
+            ? null
+            : drawerView
+        }
         onViewChange={setDrawerView}
         pickStationId={pickStationId}
         searchField={searchField}
@@ -450,6 +463,12 @@ export function HomeMap() {
         onLocationFound={handleLocationFound}
         excludeId={searchField === "from" ? to : from}
         onClose={() => setDrawerView(null)}
+      />
+
+      <BrokenStationsModal
+        open={isSmallScreen && drawerView === "outages"}
+        stations={stations}
+        onClose={() => setDrawerView("options")}
       />
 
       <Splash show={!mapReady} />
