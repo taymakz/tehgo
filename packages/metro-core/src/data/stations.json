@@ -305,7 +305,7 @@
       "#EF639F"
     ,
 "#F8E100"],
-    "disabled": true,
+    "disabled": false,
     "elevator": false,
     "bicycleParking": false,
     "waterCooler": null,
@@ -348,7 +348,7 @@
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
-    "fastFoodn": false,
+    "fastFood": false,
     "atm": false,
     "elevator": false,
     "bicycleParking": false,
@@ -2458,7 +2458,7 @@
     "colors": [
       "#EF639F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -2545,7 +2545,7 @@
     "colors": [
       "#EF639F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -3135,7 +3135,7 @@
     "colors": [
       "#EF639F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -4318,7 +4318,7 @@
     "colors": [
       "#EF639F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -5212,7 +5212,7 @@
     "colors": [
       "#007E46"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -5295,7 +5295,7 @@
     "colors": [
       "#E0001F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -5378,7 +5378,7 @@
     "colors": [
       "#EF639F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -5546,7 +5546,7 @@
     "colors": [
       "#EF639F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -5678,7 +5678,7 @@
       "#EF639F",
       "#7F0B74"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,
@@ -5722,7 +5722,7 @@
     "colors": [
       "#EF639F"
     ],
-    "disabled": true,
+    "disabled": false,
     "wc": false,
     "coffeeShop": false,
     "groceryStore": false,

@@ -136,4 +136,19 @@ describe("dataset integrity", () => {
       }
     }
   });
+
+  it("disabled stations are exactly the confirmed under-construction ones", () => {
+    const disabled = Object.entries(stations)
+      .filter(([, s]) => s.disabled)
+      .map(([id]) => id)
+      .sort();
+    expect(disabled).toEqual([
+      "cheshmeh_ali",
+      "ebn_e_babviyeh",
+      "haram_e_hazrat_e_abdol_azim",
+      "meydan_e_hazrat_e_abdol_azim",
+      "varzeshgah_e_takhti",
+      "vavan",
+    ]);
+  });
 });
