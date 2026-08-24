@@ -6,7 +6,6 @@ import {
   getFirstStepGuide,
   getLineTerminal,
   getTransferGuide,
-  getWalkDepartureGuide,
 } from "./route-guides";
 import type { RouteResult } from "./types";
 
@@ -257,17 +256,8 @@ describe("walk bridge", () => {
       display(id, "fa")
     );
     expect(fa).toContain("اسنپ");
-    expect(fa).toContain("پیاده");
-
-    // Departure-side guide marks basij as the last usable station
-    const departure = getWalkDepartureGuide(
-      route!,
-      walkIndex,
-      "fa",
-      (id) => display(id, "fa")
-    );
-    expect(departure).toContain("بسیج");
-    expect(departure).toContain("آخرین ایستگاه قابل استفاده");
+    expect(fa).toContain("پیاده شوید");
+    expect(fa).toContain("بسیج");
   });
 });
 

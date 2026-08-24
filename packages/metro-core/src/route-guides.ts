@@ -76,22 +76,6 @@ function walkSegmentText(
     : `Walk to ${toName} station`;
 }
 
-export function getWalkDepartureGuide(
-  route: RouteResult,
-  walkIndex: number,
-  lang: "en" | "fa",
-  getStationDisplay: (id: string) => string
-): string {
-  const step = route.steps[walkIndex];
-  if (!step?.walk || !step.walkFrom) return "";
-  const fromName = getStationDisplay(step.walkFrom);
-  const toName = getStationDisplay(step.stationId);
-  const segment = walkSegmentText(lang, fromName, toName, step.walkMeters);
-  return lang === "fa"
-    ? `ایستگاه ${fromName} آخرین ایستگاه قابل استفاده در این مسیر است. ${segment}`
-    : `${fromName} is the last usable station on this route. ${segment}`;
-}
-
 export function getTransferGuide(
   route: RouteResult,
   transferIndex: number,
@@ -104,12 +88,11 @@ export function getTransferGuide(
     const only = route.steps[transferIndex];
     if (only?.walk) {
       const fromName = getStationDisplay(only.walkFrom ?? "");
-      return walkSegmentText(
-        lang,
-        fromName,
-        getStationDisplay(only.stationId),
-        only.walkMeters
-      );
+      const toName = getStationDisplay(only.stationId);
+      const segment = walkSegmentText(lang, fromName, toName, only.walkMeters);
+      return lang === "fa"
+        ? `در ایستگاه ${fromName} پیاده شوید و ${segment}`
+        : `Get off at ${fromName} station and ${segment.charAt(0).toLowerCase()}${segment.slice(1)}`;
     }
     return "";
   }
@@ -141,8 +124,8 @@ export function getTransferGuide(
     );
     base =
       lang === "fa"
-        ? `${segment}، سپس سوار ${toLine} به سمت ${terminalName} شوید`
-        : `${segment}, then board ${toLine} towards ${terminalName}`;
+        ? `در ایستگاه ${walkFromName} پیاده شوید، ${segment}، سپس سوار ${toLine} به سمت ${terminalName} شوید`
+        : `Get off at ${walkFromName} station, ${segment.charAt(0).toLowerCase()}${segment.slice(1)}, then board ${toLine} towards ${terminalName}`;
   } else {
     base =
       lang === "fa"
