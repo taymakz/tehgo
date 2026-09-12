@@ -10,10 +10,13 @@ import { Input } from "@workspace/ui/components/input";
 import { Spinner } from "@workspace/ui/components/spinner";
 import { cn } from "@workspace/ui/lib/utils";
 import { useDictionary, useLocale } from "@/i18n/dictionary-provider";
-import { haversineDistance } from "@/lib/geo";
+import { usePlaceSearch } from "@/hooks/use-place-search";
+import { findNearestStation } from "@/lib/nearest-station";
 import { isLightColor } from "@/lib/station-visual";
 import { searchStations } from "@/lib/station-search";
+import { useBrokenStationsStore } from "@/lib/stores/broken-stations";
 import { stationLabel } from "./station-search";
+import { PlaceResults } from "./place-results";
 
 // Mobile-only replacement for the family-drawer search view. That drawer's
 // height-animated wrapper fights vaul's own on-screen-keyboard avoidance
@@ -40,6 +43,7 @@ export function StationSearchModal({
   const locale = useLocale();
   const [query, setQuery] = useState("");
   const [locating, setLocating] = useState(false);
+  const brokenIds = useBrokenStationsStore((s) => s.ids);
 
   useEffect(() => {
     if (!open) return;
@@ -56,34 +60,32 @@ export function StationSearchModal({
     return searchStations(stations, query, excludeId).slice(0, 60);
   }, [stations, query, excludeId]);
 
+  const { places, loading: placesLoading } = usePlaceSearch(query, locale);
+
   function useMyLocation() {
     if (!navigator.geolocation) return;
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         setLocating(false);
-        const here: [number, number] = [pos.coords.longitude, pos.coords.latitude];
-        let nearestId: string | null = null;
-        let nearestDist = Infinity;
-        for (const station of Object.values(stations)) {
-          if (station.id === excludeId) continue;
-          const dist = haversineDistance(here, [
-            parseFloat(station.longitude),
-            parseFloat(station.latitude),
-          ]);
-          if (dist < nearestDist) {
-            nearestDist = dist;
-            nearestId = station.id;
-          }
-        }
-        if (nearestId) {
-          onSelect(nearestId);
-          onLocationFound?.(nearestId);
+        const nearest = findNearestStation(
+          stations,
+          [pos.coords.longitude, pos.coords.latitude],
+          { excludeId, excludeIds: brokenIds }
+        );
+        if (nearest) {
+          onSelect(nearest.id);
+          onLocationFound?.(nearest.id);
         }
       },
       () => setLocating(false),
       { enableHighAccuracy: true, timeout: 10000 }
     );
+  }
+
+  function handleSelectPlace(stationId: string) {
+    onSelect(stationId);
+    onLocationFound?.(stationId);
   }
 
   if (!open) return null;
@@ -122,7 +124,7 @@ export function StationSearchModal({
       </button>
 
       <div className="mt-3 min-h-0 flex-1 overflow-y-auto px-2 pb-4">
-        {results.length === 0 ? (
+        {results.length === 0 && places.length === 0 && !placesLoading ? (
           <p className="px-2 py-6 text-center text-sm text-muted-foreground">
             {dict.route.noResults}
           </p>
@@ -160,6 +162,13 @@ export function StationSearchModal({
             ))}
           </div>
         )}
+        <PlaceResults
+          places={places}
+          loading={placesLoading}
+          stations={stations}
+          excludeId={excludeId}
+          onSelectPlace={(_place, stationId) => handleSelectPlace(stationId)}
+        />
       </div>
     </div>,
     document.body

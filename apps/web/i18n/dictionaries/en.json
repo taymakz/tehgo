@@ -27,6 +27,8 @@
     "toPlaceholder": "Select destination",
     "swap": "Swap origin and destination",
     "searchPlaceholder": "Search for a station",
+    "places": "Places",
+    "nearestStation": "Nearest station",
     "useMyLocation": "Nearest station to me",
     "chooseOnMap": "Choose on map",
     "findRoute": "Find route",

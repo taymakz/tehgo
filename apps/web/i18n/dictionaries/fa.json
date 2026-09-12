@@ -27,6 +27,8 @@
     "toPlaceholder": "انتخاب مقصد",
     "swap": "جابجایی مبدا و مقصد",
     "searchPlaceholder": "جستجوی ایستگاه",
+    "places": "مکان‌ها",
+    "nearestStation": "نزدیک‌ترین ایستگاه",
     "useMyLocation": "نزدیک‌ترین ایستگاه به من",
     "chooseOnMap": "انتخاب روی نقشه",
     "findRoute": "یافتن مسیر",
