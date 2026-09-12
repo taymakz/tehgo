@@ -17,6 +17,7 @@ import { cn } from "@workspace/ui/lib/utils";
 import { useDictionary, useLocale } from "@/i18n/dictionary-provider";
 import { useTehranNow } from "@/hooks/use-tehran-now";
 import { toFaDigits } from "@/lib/station-visual";
+import { NEXT_BADGE_BASE_CLASS } from "./next-arrival-label";
 
 const DAY_TYPES: TimetableDayType[] = ["weekday", "thursday", "friday"];
 
@@ -187,10 +188,7 @@ export function StationTimetable({ stationId }: { stationId: string }) {
               {label && (
                 <span
                   className={cn(
-                    "rounded-full px-2 py-0.5 text-[11px] font-medium",
-                    a.dayOffset === 1
-                      ? "bg-muted-foreground/15 text-muted-foreground"
-                      : "bg-green-600/15 text-green-700 dark:text-green-400",
+                    NEXT_BADGE_BASE_CLASS,
                     locale === "fa" && "font-vazir"
                   )}
                 >

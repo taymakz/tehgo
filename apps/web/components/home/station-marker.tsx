@@ -1,16 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useMemo, useState } from "react";
 import type { Station } from "@workspace/metro-core/types";
 import type { Locale } from "@/i18n/config";
 
+import {
+  dayTypeForDate,
+  formatMinutes,
+  getNextStationDeparture,
+  tehranNowMinutes,
+} from "@workspace/metro-core/timetable";
 import { MapMarker, MarkerContent, MarkerLabel, MarkerTooltip } from "@workspace/ui/components/map";
 import { Hitbox } from "@workspace/ui/components/hitbox";
 import { cn } from "@workspace/ui/lib/utils";
-import { stationMarkerBackground } from "@/lib/station-visual";
-import { NextArrivalLabel } from "./next-arrival-label";
+import { useDictionary } from "@/i18n/dictionary-provider";
+import { stationMarkerBackground, toFaDigits } from "@/lib/station-visual";
+import { NEXT_BADGE_BASE_CLASS, NextArrivalLabel } from "./next-arrival-label";
 
-export function StationMarker({
+// Memoized: HomeMap renders 150+ of these, so stable props (plus a single
+// shared 30s clock from the parent) keep unrelated state changes — drawer
+// toggles, zoom watcher — from re-rendering every marker.
+export const StationMarker = memo(function StationMarker({
   station,
   label,
   roleLabel,
@@ -19,10 +29,12 @@ export function StationMarker({
   showLabel,
   showTooltip,
   showNextTime = true,
+  showTimeBadge = false,
   dimmed,
   related,
   outaged,
-  onClick,
+  now,
+  onSelect,
 }: {
   station: Station;
   label: string;
@@ -33,19 +45,43 @@ export function StationMarker({
   showTooltip: boolean;
   /** Show the live next-train line in the tooltip (gated by parent). */
   showNextTime?: boolean;
+  /** Show the time badge under the always-visible name label (zoom-gated). */
+  showTimeBadge?: boolean;
   dimmed: boolean;
   related: boolean;
   outaged?: boolean;
-  onClick: () => void;
+  /** Shared clock tick — the only prop that changes on a timer. */
+  now: Date;
+  onSelect: (id: string) => void;
 }) {
-  // Hover-gated countdown: 150+ markers stay timer-free; the timetable lookup
-  // mounts only while this marker's tooltip is open (one instance at a time).
+  const dict = useDictionary();
+  // Hover-gated tooltip countdown: the timetable lookup mounts only while
+  // this marker's tooltip is open (one instance at a time).
   const [hovered, setHovered] = useState(false);
+
+  // Static per-render snapshot for the always-visible name label: a pure
+  // memoized scan (microseconds), refreshed by the parent's shared clock.
+  const labelBadge = useMemo(() => {
+    if (!showLabel || !showTimeBadge) return null;
+    const dayType = dayTypeForDate(now);
+    const minutes = tehranNowMinutes(now);
+    const dep = getNextStationDeparture(station.id, dayType, minutes);
+    if (!dep) return null;
+    if (dep.dayOffset === 1) {
+      const time =
+        locale === "fa" ? toFaDigits(formatMinutes(dep.minutes)) : formatMinutes(dep.minutes);
+      return `${dict.route.timetableTomorrow} ${time}`;
+    }
+    const diff = dep.minutes - minutes;
+    if (diff <= 0) return dict.route.timetableNow;
+    return locale === "fa" ? `${toFaDigits(diff)} دقیقه دیگر` : `in ${diff} min`;
+  }, [station.id, now, showLabel, showTimeBadge, locale, dict]);
+
   return (
     <MapMarker
       longitude={parseFloat(station.longitude)}
       latitude={parseFloat(station.latitude)}
-      onClick={onClick}
+      onClick={() => onSelect(station.id)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -74,17 +110,31 @@ export function StationMarker({
         </Hitbox>
         {showLabel && (
           <MarkerLabel
-            className={cn(
-              "rounded px-1 py-0.5 shadow-sm",
-              outaged
-                ? "bg-red-600 font-medium text-white"
-                : role
-                  ? "z-20 bg-blue-600 font-medium text-white"
-                  : "border border-zinc-800 bg-zinc-900 text-zinc-50 dark:border-zinc-200 dark:bg-white dark:text-zinc-900",
-              locale === "fa" && "font-vazir"
-            )}
+            className={cn("flex flex-col items-center gap-0.5", locale === "fa" && "font-vazir")}
           >
-            {role ? roleLabel : label}
+            <span
+              className={cn(
+                "rounded px-1 py-0.5 text-[10px] font-medium whitespace-nowrap shadow-sm",
+                outaged
+                  ? "bg-red-600 text-white"
+                  : role
+                    ? "z-20 bg-blue-600 text-white"
+                    : "border border-zinc-800 bg-zinc-900 text-zinc-50 dark:border-zinc-200 dark:bg-white dark:text-zinc-900"
+              )}
+            >
+              {role ? roleLabel : label}
+            </span>
+            {labelBadge && (
+              <span
+                className={cn(
+                  NEXT_BADGE_BASE_CLASS,
+                  "text-[9px]",
+                  locale === "fa" && "font-vazir"
+                )}
+              >
+                {labelBadge}
+              </span>
+            )}
           </MarkerLabel>
         )}
       </MarkerContent>
@@ -98,4 +148,4 @@ export function StationMarker({
       )}
     </MapMarker>
   );
-}
+});

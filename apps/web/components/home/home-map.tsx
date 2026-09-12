@@ -31,6 +31,7 @@ import { FloatingRouteControls } from "./floating-controls";
 import { MapFlyTo } from "./map-fly-to";
 import { useDictionary, useLocale } from "@/i18n/dictionary-provider";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useTehranNow } from "@/hooks/use-tehran-now";
 import { useRecentRoutesStore } from "@/lib/stores/recent-routes";
 import { useBrokenStationsStore } from "@/lib/stores/broken-stations";
 
@@ -40,6 +41,8 @@ const TEHRAN_CENTER: [number, number] = [51.389, 35.6892];
 // screens are more cramped, so they need to be zoomed in further first.
 const LABEL_VISIBLE_ZOOM_DESKTOP = 12;
 const LABEL_VISIBLE_ZOOM_MOBILE = 14;
+// Time badges appear deeper than names: names first, countdowns on closer zoom.
+const TIME_BADGE_EXTRA_ZOOM = 1.5;
 
 function stationCoords(id: string): [number, number] | null {
   const station = stations[id];
@@ -64,6 +67,9 @@ export function HomeMap() {
   const [zoom, setZoom] = useState(12);
   const isSmallScreen = useMediaQuery("(max-width: 639px)");
   const labelVisibleZoom = isSmallScreen ? LABEL_VISIBLE_ZOOM_MOBILE : LABEL_VISIBLE_ZOOM_DESKTOP;
+  // Single shared 30s clock for all 150+ station labels (memoized markers
+  // re-render only on this tick, not on every drawer/route state change).
+  const now = useTehranNow();
 
   const blockedSet = useMemo(() => new Set(brokenIds), [brokenIds]);
 
@@ -231,6 +237,13 @@ export function HomeMap() {
     [guidePoints]
   );
 
+  // Guide cards with a resolved direction already show the arrival countdown,
+  // so their map labels skip the badge to avoid duplication (e.g. مبدا).
+  const timedGuideStationIds = useMemo(
+    () => new Set(guidePoints.filter((p) => p.directionId).map((p) => p.stationId)),
+    [guidePoints]
+  );
+
   // MapLibre stacks marker DOM nodes by insertion order, so render the
   // from/to markers last to guarantee their "مبدا"/"مقصد" label always
   // paints above any neighboring station marker instead of being clipped.
@@ -264,14 +277,21 @@ export function HomeMap() {
     setDrawerView("search");
   }
 
-  function handleMarkerClick(id: string) {
-    if (drawerView === "search") {
-      assignField(searchField, id);
-    } else {
-      setPickStationId(id);
-      setDrawerView("pick");
-    }
-  }
+  // Stable identity so memoized StationMarkers skip re-renders from
+  // unrelated parent state (inlines assignField to keep deps minimal).
+  const handleMarkerClick = useCallback(
+    (id: string) => {
+      if (drawerView === "search") {
+        if (searchField === "from") setFrom(id);
+        else setTo(id);
+        setDrawerView(null);
+      } else {
+        setPickStationId(id);
+        setDrawerView("pick");
+      }
+    },
+    [drawerView, searchField, setFrom, setTo]
+  );
 
   function handlePickAs(field: "from" | "to") {
     if (pickStationId) assignField(field, pickStationId);
@@ -401,9 +421,14 @@ export function HomeMap() {
             showLabel={showLabel}
             showTooltip={!isSmallScreen}
             showNextTime={!bothSelected || guideStationIds.has(station.id)}
+            showTimeBadge={
+              zoom >= labelVisibleZoom + TIME_BADGE_EXTRA_ZOOM &&
+              !timedGuideStationIds.has(station.id)
+            }
+            now={now}
             role={station.id === from ? "from" : station.id === to ? "to" : null}
             outaged={blockedSet.has(station.id)}
-            onClick={() => handleMarkerClick(station.id)}
+            onSelect={handleMarkerClick}
           />
           );
         })}

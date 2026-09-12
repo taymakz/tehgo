@@ -14,6 +14,10 @@ import { useDictionary, useLocale } from "@/i18n/dictionary-provider";
 import { useTehranNow } from "@/hooks/use-tehran-now";
 import { toFaDigits } from "@/lib/station-visual";
 
+/** Shared green time-badge pill (append font-vazir for fa at call sites). */
+export const NEXT_BADGE_BASE_CLASS =
+  "rounded-full bg-emerald-600 px-2 py-0.5 text-[11px] font-bold whitespace-nowrap text-white tabular-nums";
+
 /**
  * One-line "next train" summary. Scoped to a single line+direction when both
  * are given, otherwise the earliest departure across the whole station.
@@ -67,7 +71,7 @@ export function NextArrivalLabel({
 
   if (!badge) return null;
   const badgeClassName = cn(
-    "rounded-full bg-green-600/15 px-2 py-0.5 text-[11px] font-bold text-green-700 tabular-nums dark:text-green-400",
+    NEXT_BADGE_BASE_CLASS,
     locale === "fa" && "font-vazir"
   );
   if (badgeOnly) {
