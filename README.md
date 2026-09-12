@@ -71,6 +71,10 @@ This is a Turborepo monorepo (pnpm workspaces):
 | `packages/ui` | Shared component library used by `apps/web` (shadcn-style, Base UI primitives, Tailwind v4). |
 | `packages/eslint-config`, `packages/typescript-config` | Shared lint/TS config across the workspace. |
 
+## Data credits
+
+Station, line, and coordinate data comes from [mostafa-kheibary/tehran-metro-data](https://github.com/mostafa-kheibary/tehran-metro-data) — including the coordinate-accuracy refresh we regularly sync into `packages/metro-core/src/data/stations.json`.
+
 ## Contributing
 
 PRs and issues are welcome — open one at [github.com/taymakz/tehgo](https://github.com/taymakz/tehgo). For Android-specific changes (versioning, release signing, git workflow), read [apps/android/CLAUDE.md](./apps/android/CLAUDE.md) first.

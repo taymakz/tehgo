@@ -17,6 +17,7 @@
     "language": "زبان",
     "about": "درباره",
     "creatorWebsite": "وبسایت سازنده",
+    "metroData": "داده‌های مترو",
     "downloadMap": "دانلود نقشه مترو"
   },
   "route": {
@@ -66,7 +67,18 @@
     "download": "ذخیره",
     "guide": "راهنما",
     "address": "آدرس",
-    "clearOutages": "پاک کردن همه"
+    "clearOutages": "پاک کردن همه",
+    "timetable": "زمان رسیدن قطار",
+    "timetableWeekday": "شنبه تا چهارشنبه",
+    "timetableThursday": "پنجشنبه",
+    "timetableFriday": "جمعه و تعطیلات",
+    "timetableToday": "امروز",
+    "timetableTomorrow": "فردا",
+    "timetableFirst": "اولین",
+    "timetableLast": "آخرین",
+    "timetableNow": "الان",
+    "timetableNext": "زمان رسیدن مترو",
+    "timetableApprox": "زمان‌ها تقریبی‌اند"
   },
   "pwa": {
     "installTitle": "نصب تهگو",

@@ -60,6 +60,8 @@ import { useBrokenStationsStore } from "@/lib/stores/broken-stations";
 import { exportRouteImage } from "@/lib/export-route-image";
 import { isLightColor, stationMarkerBackground, toFaDigits } from "@/lib/station-visual";
 import { StationSearch, stationLabel } from "./station-search";
+import { StationTimetable } from "./station-timetable";
+import { NextArrivalLabel } from "./next-arrival-label";
 
 export type DrawerView =
   | "search"
@@ -239,6 +241,7 @@ export function AppDrawer({
           <span className="min-w-0 flex-1 truncate text-sm font-medium">
             {stationLabel(stations, id, locale)}
           </span>
+          <NextArrivalLabel stationId={id} badgeOnly />
           <span className="flex shrink-0 items-center gap-1">
             {(station.lines ?? []).map((lineId) => {
               const line = lines[lineId];
@@ -307,41 +310,45 @@ export function AppDrawer({
         <h2 className={cn("mb-1 text-[19px] font-semibold text-foreground", locale === "fa" && "font-vazir")}>
           {dict.route.recentRoutes}
         </h2>
-        {recentRoutes.length === 0 && (
-          <p className="px-2 py-6 text-center text-sm text-muted-foreground">
-            {dict.route.recentRoutesEmpty}
-          </p>
-        )}
-        {recentRoutes.map((entry) => (
-          <div key={entry.id} className="flex items-center gap-2 rounded-lg hover:bg-accent">
-            <button
-              type="button"
-              onClick={() => onSelectRecent(entry.from, entry.to)}
-              className="flex min-w-0 flex-1 flex-col gap-0.5 px-2 py-2 text-start"
-            >
-              <span className="flex min-w-0 items-center gap-1.5 truncate text-sm font-medium">
-                <span className="truncate">{stationLabel(stations, entry.from, locale)}</span>
-                <ArrowLeftRight className="size-3 shrink-0 opacity-60 rtl:-scale-x-100" />
-                <span className="truncate">{stationLabel(stations, entry.to, locale)}</span>
-              </span>
-              <span className="text-xs text-muted-foreground">
-                {locale === "fa"
-                  ? toFaDigits(
-                      `${entry.route.totalStations} ${dict.route.stations} · ${entry.route.totalTransfers} ${dict.route.transfers}`
-                    )
-                  : `${entry.route.totalStations} ${dict.route.stations} · ${entry.route.totalTransfers} ${dict.route.transfers}`}
-              </span>
-            </button>
-            <button
-              type="button"
-              onClick={() => removeRecent(entry.id)}
-              aria-label={dict.common.remove}
-              className="me-1 shrink-0 rounded-full p-1.5 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
-            >
-              <X className="size-4" />
-            </button>
+        <ScrollArea className="max-h-[55vh]">
+          <div className="flex flex-col gap-1">
+            {recentRoutes.length === 0 && (
+              <p className="px-2 py-6 text-center text-sm text-muted-foreground">
+                {dict.route.recentRoutesEmpty}
+              </p>
+            )}
+            {recentRoutes.map((entry) => (
+              <div key={entry.id} className="flex items-center gap-2 rounded-lg hover:bg-accent">
+                <button
+                  type="button"
+                  onClick={() => onSelectRecent(entry.from, entry.to)}
+                  className="flex min-w-0 flex-1 flex-col gap-0.5 px-2 py-2 text-start"
+                >
+                  <span className="flex min-w-0 items-center gap-1.5 truncate text-sm font-medium">
+                    <span className="truncate">{stationLabel(stations, entry.from, locale)}</span>
+                    <ArrowLeftRight className="size-3 shrink-0 opacity-60 rtl:-scale-x-100" />
+                    <span className="truncate">{stationLabel(stations, entry.to, locale)}</span>
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {locale === "fa"
+                      ? toFaDigits(
+                          `${entry.route.totalStations} ${dict.route.stations} · ${entry.route.totalTransfers} ${dict.route.transfers}`
+                        )
+                      : `${entry.route.totalStations} ${dict.route.stations} · ${entry.route.totalTransfers} ${dict.route.transfers}`}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => removeRecent(entry.id)}
+                  aria-label={dict.common.remove}
+                  className="me-1 shrink-0 rounded-full p-1.5 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <X className="size-4" />
+                </button>
+              </div>
+            ))}
           </div>
-        ))}
+        </ScrollArea>
       </div>
     );
   }
@@ -682,9 +689,10 @@ export function AppDrawer({
             );
           })}
         </div>
-        <div className="mt-5 max-h-[52vh] overflow-y-auto pe-1">
+        <ScrollArea className="mt-5 max-h-[52vh] pe-1">
+          <StationTimetable key={id} stationId={id} />
           {station.address && (
-            <section className="rounded-xl bg-muted p-3">
+            <section className="mt-4 rounded-xl bg-muted p-3">
               <p className="mb-1 text-xs font-medium text-muted-foreground">
                 {dict.route.address}
               </p>
@@ -716,7 +724,7 @@ export function AppDrawer({
               </ul>
             )}
           </section>
-        </div>
+        </ScrollArea>
         <div className="mt-5">
           <FamilyDrawerSecondaryButton
             onClick={() => setView("pick")}

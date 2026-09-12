@@ -188,7 +188,9 @@ describe("walk bridge", () => {
       stations,
       "shahid_kolahdooz",
       "amirkabir",
-      { blocked, walkMaxMeters: 1500 }
+      // 2000m: the upstream coordinate refresh pushed the Ebn-e Sina
+      // mid-route walk pair apart, so the mid-route case needs the wider net
+      { blocked, walkMaxMeters: 2000 }
     );
 
     // Mid-route walk: arrival marker is boarding-only
