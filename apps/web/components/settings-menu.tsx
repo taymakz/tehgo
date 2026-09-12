@@ -38,7 +38,7 @@ import { cn } from "@workspace/ui/lib/utils";
 import { useDictionary, useLocale, useSetLocale } from "@/i18n/dictionary-provider";
 import { SUPPORTED_LOCALES, type Locale } from "@/i18n/config";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
-import { GITHUB_URL, MYKET_URL, WEBSITE_URL } from "@/lib/links";
+import { GITHUB_URL, METRO_DATA_URL, MYKET_URL, WEBSITE_URL } from "@/lib/links";
 import { MyketIcon } from "@/components/icons/myket-icon";
 import { TehGoIcon } from "@/components/icons/tehgo-icon";
 
@@ -303,6 +303,24 @@ export function SettingsMenu({
                 {dict.settings.creatorWebsite}
               </span>
               <span className="truncate text-xs text-muted-foreground">taymakz.ir</span>
+            </span>
+          </a>
+          <a
+            href={METRO_DATA_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-3 rounded-2xl bg-muted px-4 py-3 text-start transition-colors hover:bg-accent"
+          >
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white">
+              <Map className="size-4" />
+            </span>
+            <span className="flex min-w-0 flex-1 flex-col">
+              <span className={cn("truncate text-sm font-semibold", locale === "fa" && "font-vazir")}>
+                {dict.settings.metroData}
+              </span>
+              <span className="truncate text-xs text-muted-foreground" dir="ltr">
+                github.com/mostafa-kheibary/tehran-metro-data
+              </span>
             </span>
           </a>
         </div>
