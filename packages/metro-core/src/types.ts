@@ -113,6 +113,19 @@ export interface RouteResult {
 
 export type Language = "en" | "fa";
 
+/** Timetable day bucket: weekday = Sat-Wed, thursday = Thu, friday = Fri & holidays */
+export type TimetableDayType = "weekday" | "thursday" | "friday";
+
+/** Departure times (minutes since midnight, sorted) per day bucket */
+export type TimetableDirectionTimes = Partial<Record<TimetableDayType, number[]>>;
+
+export interface TimetableIndex {
+  version: number;
+  source: string;
+  dayTypes: TimetableDayType[];
+  stations: Record<string, Record<string, Record<string, TimetableDirectionTimes>>>;
+}
+
 export interface FacilityInfo {
   key: FacilityKey;
   icon: string;

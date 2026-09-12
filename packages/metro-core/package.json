@@ -7,9 +7,11 @@
     "./types": "./src/types.ts",
     "./data": "./src/data/index.ts",
     "./route-finder": "./src/route-finder.ts",
-    "./route-guides": "./src/route-guides.ts"
+    "./route-guides": "./src/route-guides.ts",
+    "./timetable": "./src/timetable.ts"
   },
   "scripts": {
+    "build:timetables": "python scripts/build-timetables.py",
     "lint": "eslint",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
