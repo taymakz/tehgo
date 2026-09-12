@@ -74,6 +74,53 @@ FILES = [
 # NOTE: "5_" + هشتگرد (Hashtgerd extension) is intentionally skipped:
 # Hashtgerd/Mamout stations are not on the map (no station ids).
 
+# Stations missing from the official tables that sit BETWEEN two timetabled
+# stops of the same trains: per-train midpoint of the neighbors (bounded,
+# ~1-2 min error).
+INTERPOLATE = [
+    {"line": "line_1", "station": "vavan",
+     "prev": "namayeshgah_e_shahr_e_aftab", "next": "emam_khomeini_airport"},
+    {"line": "line_6", "station": "shohada_ye_hefdah_e_shahrivar",
+     "prev": "amirkabir", "next": "meydan_e_khorasan"},
+]
+
+# Endpoint extensions beyond the official tables' edges. Unlike INTERPOLATE
+# above, these assume through-service past the last tabulated station, so the
+# segment time is MEASURED per sheet from a real neighboring segment
+# (seg_pair) and applied with an explicit sign per direction. Grounded, but
+# still estimates — every target lands in the output "estimated" list.
+#   (line, dir) -> { seg_pair, anchor, add: {station: signed_steps} }
+EXTRAPOLATE = {
+    ("line_6", "shohada_ye_dowlat_abad"): {
+        "seg_pair": ("kiyan_shahr", "shohada_ye_dowlat_abad"),
+        "anchor": "shohada_ye_dowlat_abad",
+        "add": {"cheshmeh_ali": 1, "ebn_e_babviyeh": 2,
+                "meydan_e_hazrat_e_abdol_azim": 3,
+                "haram_e_hazrat_e_abdol_azim": 4}},
+    ("line_6", "kouhsar"): {
+        "seg_pair": ("kiyan_shahr", "shohada_ye_dowlat_abad"),
+        "anchor": "shohada_ye_dowlat_abad",
+        "add": {"cheshmeh_ali": -1, "ebn_e_babviyeh": -2,
+                "meydan_e_hazrat_e_abdol_azim": -3,
+                "haram_e_hazrat_e_abdol_azim": -4}},
+    ("line_5", "golshahr"): {
+        "seg_pair": ("mohammadshahr", "golshahr"),
+        "anchor": "golshahr",
+        "add": {"shahid_sepahbod_qasem_soleimani": 1}},
+    ("line_5", "tehran_sadeghiyeh"): {
+        "seg_pair": ("mohammadshahr", "golshahr"),
+        "anchor": "golshahr",
+        "add": {"shahid_sepahbod_qasem_soleimani": -1}},
+    ("line_4", "shahid_kolahdooz"): {
+        "seg_pair": ("allameh_jafari", "eram_e_sabz"),
+        "anchor": "allameh_jafari",
+        "add": {"ayatollah_kashani": -1, "chaharbagh": -2}},
+    ("line_4", "allameh_jafari"): {
+        "seg_pair": ("allameh_jafari", "eram_e_sabz"),
+        "anchor": "allameh_jafari",
+        "add": {"ayatollah_kashani": 1, "chaharbagh": 2}},
+}
+
 
 def norm(s):
     """Normalize a Persian station label for matching."""
@@ -252,6 +299,41 @@ def main():
                         continue
                     cols.append((c, sid))
             trains = 0
+            col_by_sid = {}
+            for c, sid in cols:
+                col_by_sid.setdefault(sid, c)
+            interp_targets = []
+            for spec in INTERPOLATE:
+                if spec["line"] != cfg["line"]:
+                    continue
+                if spec["station"] not in stations:
+                    print(f"WARN interp target missing: {safe(spec['station'])}")
+                    continue
+                if spec["prev"] in col_by_sid and spec["next"] in col_by_sid:
+                    interp_targets.append(
+                        (spec["station"], col_by_sid[spec["prev"]],
+                         col_by_sid[spec["next"]]))
+            # endpoint extrapolation: measure the reference segment per sheet
+            extrap = None
+            espec = EXTRAPOLATE.get((cfg["line"], direction))
+            if espec:
+                sa, sb = espec["seg_pair"]
+                anchor = espec["anchor"]
+                if anchor in col_by_sid and sa in col_by_sid and sb in col_by_sid:
+                    diffs = []
+                    for r in range(hr + 1, sh.nrows):
+                        a = frac_to_minutes(sh.cell_value(r, col_by_sid[sa]))
+                        b = frac_to_minutes(sh.cell_value(r, col_by_sid[sb]))
+                        if a is not None and b is not None and abs(b - a) < 30:
+                            diffs.append(abs(b - a))
+                    diffs.sort()
+                    seg = diffs[len(diffs) // 2] if diffs else 2
+                    targets = [(t, k) for t, k in espec["add"].items()
+                               if t in stations]
+                    if targets:
+                        extrap = (col_by_sid[anchor], seg, targets)
+            interp_rows = 0
+            extrap_rows = 0
             for r in range(hr + 1, sh.nrows):
                 hit = False
                 for c, sid in cols:
@@ -262,11 +344,37 @@ def main():
                     for dt in day_types:
                         index.setdefault(sid, {}).setdefault(cfg["line"], {}) \
                             .setdefault(direction, {}).setdefault(dt, set()).add(m)
+                for target, cp, cn in interp_targets:
+                    a = frac_to_minutes(sh.cell_value(r, cp))
+                    b = frac_to_minutes(sh.cell_value(r, cn))
+                    if a is None or b is None:
+                        continue
+                    m = (a + b + 1) // 2
+                    hit = True
+                    interp_rows += 1
+                    for dt in day_types:
+                        index.setdefault(target, {}).setdefault(cfg["line"], {}) \
+                            .setdefault(direction, {}).setdefault(dt, set()).add(m)
+                if extrap is not None:
+                    ca, seg, targets = extrap
+                    anchor_t = frac_to_minutes(sh.cell_value(r, ca))
+                    if anchor_t is not None:
+                        for target, k in targets:
+                            m = (anchor_t + k * seg) % 1440
+                            hit = True
+                            extrap_rows += 1
+                            for dt in day_types:
+                                index.setdefault(target, {}) \
+                                    .setdefault(cfg["line"], {}) \
+                                    .setdefault(direction, {}) \
+                                    .setdefault(dt, set()).add(m)
                 if hit:
                     trains += 1
             stats.append({"file": base, "sheet": sh.name, "line": cfg["line"],
                           "direction": direction, "days": day_types,
-                          "stations": len(cols), "trains": trains})
+                          "stations": len(cols), "trains": trains,
+                          "interp_rows": interp_rows, "extrap_rows": extrap_rows,
+                          "seg": extrap[1] if extrap is not None else None})
 
     # finalize: sorted lists
     out_stations = {}
@@ -286,6 +394,9 @@ def main():
         "version": 1,
         "source": "Tehran metro station timetables: Mehr 1404 (line 7: Khordad 1405, Parand branch: Mehr 1403)",
         "dayTypes": [WEEKDAY, THURSDAY, FRIDAY],
+        "estimated": sorted(
+            {s["station"] for s in INTERPOLATE} |
+            {t for spec in EXTRAPOLATE.values() for t in spec["add"]}),
         "stations": out_stations,
     }
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
@@ -298,8 +409,13 @@ def main():
     print(f"wrote {OUT_PATH} ({size_kb:.0f} KB)")
     print("per-sheet stats:")
     for s in stats:
+        extra = ""
+        if s.get("interp_rows"):
+            extra += f" interp={s['interp_rows']}"
+        if s.get("extrap_rows"):
+            extra += f" extrap={s['extrap_rows']} seg={s.get('seg')}"
         print(f"  {s['line']} -> {s['direction']} [{','.join(s['days'])}]"
-              f" stations={s['stations']} trains={s['trains']} :: {safe(s['sheet'])}")
+              f" stations={s['stations']} trains={s['trains']}{extra} :: {safe(s['sheet'])}")
     print(f"skipped files (no config): {len(skipped_files)}")
     for s in skipped_files:
         print(f"  SKIP {safe(s)}")

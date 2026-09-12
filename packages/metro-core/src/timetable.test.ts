@@ -118,9 +118,69 @@ describe("generated timetable index", () => {
     }
   });
 
-  it("stations without source data return null (e.g. Vavan)", () => {
-    expect(getStationTimetable("vavan")).toBeNull();
-    expect(getTimetableDirections("vavan", "line_1")).toEqual([]);
+  it("unknown stations return null", () => {
+    expect(getStationTimetable("no_such_station")).toBeNull();
+    expect(getTimetableDirections("no_such_station", "line_4")).toEqual([]);
+  });
+
+  it("interpolates mid-line gaps between timetabled neighbors", () => {
+    expect(timetables.estimated).toContain("vavan");
+    // Parand shuttle: Vavan falls between Aftab and Airport departures
+    const times = getDirectionTimes(
+      "vavan", "line_1", "shahed_baghershahr", "weekday"
+    );
+    expect(times.length).toBeGreaterThan(0);
+    const aftab = getDirectionTimes(
+      "namayeshgah_e_shahr_e_aftab", "line_1", "shahed_baghershahr", "weekday"
+    );
+    const airport = getDirectionTimes(
+      "emam_khomeini_airport", "line_1", "shahed_baghershahr", "weekday"
+    );
+    expect(times.length).toBeLessThanOrEqual(Math.min(aftab.length, airport.length));
+    for (const m of times) {
+      expect(aftab.some((a) => Math.abs(a - m) <= 30)).toBe(true);
+      expect(airport.some((a) => Math.abs(a - m) <= 30)).toBe(true);
+    }
+    const h17 = getDirectionTimes(
+      "shohada_ye_hefdah_e_shahrivar", "line_6", "shohada_ye_dowlat_abad", "weekday"
+    );
+    expect(h17.length).toBeGreaterThan(0);
+  });
+
+  it("extrapolates endpoint extensions with measured segment steps", () => {
+    for (const sid of [
+      "cheshmeh_ali",
+      "ebn_e_babviyeh",
+      "meydan_e_hazrat_e_abdol_azim",
+      "haram_e_hazrat_e_abdol_azim",
+      "shahid_sepahbod_qasem_soleimani",
+      "ayatollah_kashani",
+      "chaharbagh",
+    ]) {
+      expect(timetables.estimated).toContain(sid);
+    }
+    // southbound: each stop further south departs later (4-min measured segs)
+    const chain = [
+      "shohada_ye_dowlat_abad",
+      "cheshmeh_ali",
+      "ebn_e_babviyeh",
+      "meydan_e_hazrat_e_abdol_azim",
+      "haram_e_hazrat_e_abdol_azim",
+    ].map(
+      (sid) => getDirectionTimes(sid, "line_6", "shohada_ye_dowlat_abad", "weekday")[0]!
+    );
+    for (let i = 1; i < chain.length; i++) {
+      expect(chain[i]).toBeGreaterThan(chain[i - 1]!);
+      expect(chain[i]! - chain[i - 1]!).toBeLessThanOrEqual(10);
+    }
+    // line 4 west side and line 5 Soleimani resolve through the guide lookup
+    expect(
+      getDirectionTimes("chaharbagh", "line_4", "shahid_kolahdooz", "weekday").length
+    ).toBeGreaterThan(0);
+    expect(
+      getDirectionTimes("shahid_sepahbod_qasem_soleimani", "line_5", "tehran_sadeghiyeh", "weekday")
+        .length
+    ).toBeGreaterThan(0);
   });
 
   it("direction ids are real stations", () => {
@@ -154,7 +214,7 @@ describe("getNextStationDeparture", () => {
     });
   });
   it("returns null without data", () => {
-    expect(getNextStationDeparture("vavan", "weekday", 300)).toBeNull();
+    expect(getNextStationDeparture("no_such_station", "weekday", 300)).toBeNull();
   });
 });
 

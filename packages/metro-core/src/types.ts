@@ -123,6 +123,8 @@ export interface TimetableIndex {
   version: number;
   source: string;
   dayTypes: TimetableDayType[];
+  /** Station ids whose times are interpolated between neighbors (estimates) */
+  estimated: string[];
   stations: Record<string, Record<string, Record<string, TimetableDirectionTimes>>>;
 }
 
