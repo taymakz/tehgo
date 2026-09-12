@@ -5,6 +5,7 @@ import { cn } from "@workspace/ui/lib/utils";
 import { useDictionary } from "@/i18n/dictionary-provider";
 import type { Locale } from "@/i18n/config";
 import { isLightColor, toFaDigits } from "@/lib/station-visual";
+import { NextArrivalLabel } from "./next-arrival-label";
 
 export function RouteGuideMarker({
   longitude,
@@ -12,6 +13,9 @@ export function RouteGuideMarker({
   lineColor,
   lineName,
   stationName,
+  stationId,
+  lineId,
+  directionId,
   text,
   locale,
 }: {
@@ -20,6 +24,9 @@ export function RouteGuideMarker({
   lineColor: string;
   lineName: string;
   stationName: string;
+  stationId: string;
+  lineId: string;
+  directionId: string | null;
   text: string | null;
   locale: Locale;
 }) {
@@ -61,6 +68,14 @@ export function RouteGuideMarker({
               <p className="text-muted-foreground">
                 {locale === "fa" ? "مقصد" : dict.route.to}
               </p>
+            )}
+            {directionId && (
+              <NextArrivalLabel
+                stationId={stationId}
+                lineId={lineId}
+                directionId={directionId}
+                className="mt-1.5 border-t border-border pt-1.5"
+              />
             )}
           </div>
         </div>

@@ -66,7 +66,18 @@
     "detailDetailed": "Detailed",
     "download": "Save",
     "guide": "Guide",
-    "address": "Address"
+    "address": "Address",
+    "timetable": "Train arrival times",
+    "timetableWeekday": "Sat–Wed",
+    "timetableThursday": "Thursday",
+    "timetableFriday": "Fri & holidays",
+    "timetableToday": "Today",
+    "timetableTomorrow": "Tomorrow",
+    "timetableFirst": "First",
+    "timetableLast": "Last",
+    "timetableNow": "Now",
+    "timetableNext": "Metro arrival",
+    "timetableApprox": "Times are approximate"
   },
   "pwa": {
     "installTitle": "Install TehGo",

@@ -15,6 +15,7 @@ import {
   getTransferGuide,
   getWalkDepartureGuide,
 } from "@workspace/metro-core/route-guides";
+import { getRouteBoardingDirection } from "@workspace/metro-core/timetable";
 
 import { Map, MapControls, MapRoute } from "@workspace/ui/components/map";
 import { SettingsMenu } from "@/components/settings-menu";
@@ -147,13 +148,23 @@ export function HomeMap() {
   const guidePoints = useMemo(() => {
     if (!selectedRoute || selectedRoute.steps.length === 0) return [];
 
-    type GuidePoint = { stationId: string; lineId: string; text: string | null };
+    type GuidePoint = {
+      stationId: string;
+      lineId: string;
+      directionId: string | null;
+      text: string | null;
+    };
     const points: GuidePoint[] = [];
 
     const firstStep = selectedRoute.steps[0]!;
     points.push({
       stationId: firstStep.stationId,
       lineId: firstStep.line,
+      directionId: getRouteBoardingDirection(
+        selectedRoute,
+        firstStep.stationId,
+        firstStep.line
+      ),
       text: getFirstStepGuide(selectedRoute, lines, paths, locale, getStationDisplay),
     });
 
@@ -162,6 +173,11 @@ export function HomeMap() {
         points.push({
           stationId: step.stationId,
           lineId: step.transferTo,
+          directionId: getRouteBoardingDirection(
+            selectedRoute,
+            step.stationId,
+            step.transferTo
+          ),
           text: getTransferGuide(selectedRoute, i, lines, paths, locale, getStationDisplay),
         });
       }
@@ -169,6 +185,11 @@ export function HomeMap() {
         points.push({
           stationId: step.walkFrom,
           lineId: step.line,
+          directionId: getRouteBoardingDirection(
+            selectedRoute,
+            step.walkFrom,
+            step.line
+          ),
           text: getWalkDepartureGuide(selectedRoute, i, locale, getStationDisplay),
         });
       }
@@ -176,7 +197,12 @@ export function HomeMap() {
 
     const lastStep = selectedRoute.steps[selectedRoute.steps.length - 1]!;
     if (lastStep.stationId !== firstStep.stationId) {
-      points.push({ stationId: lastStep.stationId, lineId: lastStep.line, text: null });
+      points.push({
+        stationId: lastStep.stationId,
+        lineId: lastStep.line,
+        directionId: null,
+        text: null,
+      });
     }
 
     // One tooltip per station: merge duplicate points (e.g. a walk guide
@@ -374,6 +400,7 @@ export function HomeMap() {
             related={isRelated}
             showLabel={showLabel}
             showTooltip={!isSmallScreen}
+            showNextTime={!bothSelected || guideStationIds.has(station.id)}
             role={station.id === from ? "from" : station.id === to ? "to" : null}
             outaged={blockedSet.has(station.id)}
             onClick={() => handleMarkerClick(station.id)}
@@ -394,6 +421,9 @@ export function HomeMap() {
               lineColor={line.color}
               lineName={line.name[locale]}
               stationName={getStationDisplay(point.stationId)}
+              stationId={point.stationId}
+              lineId={point.lineId}
+              directionId={point.directionId}
               text={point.text}
               locale={locale}
             />

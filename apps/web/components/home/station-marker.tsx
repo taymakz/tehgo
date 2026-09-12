@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { Station } from "@workspace/metro-core/types";
 import type { Locale } from "@/i18n/config";
 
@@ -7,6 +8,7 @@ import { MapMarker, MarkerContent, MarkerLabel, MarkerTooltip } from "@workspace
 import { Hitbox } from "@workspace/ui/components/hitbox";
 import { cn } from "@workspace/ui/lib/utils";
 import { stationMarkerBackground } from "@/lib/station-visual";
+import { NextArrivalLabel } from "./next-arrival-label";
 
 export function StationMarker({
   station,
@@ -16,6 +18,7 @@ export function StationMarker({
   role,
   showLabel,
   showTooltip,
+  showNextTime = true,
   dimmed,
   related,
   outaged,
@@ -28,16 +31,23 @@ export function StationMarker({
   role: "from" | "to" | null;
   showLabel: boolean;
   showTooltip: boolean;
+  /** Show the live next-train line in the tooltip (gated by parent). */
+  showNextTime?: boolean;
   dimmed: boolean;
   related: boolean;
   outaged?: boolean;
   onClick: () => void;
 }) {
+  // Hover-gated countdown: 150+ markers stay timer-free; the timetable lookup
+  // mounts only while this marker's tooltip is open (one instance at a time).
+  const [hovered, setHovered] = useState(false);
   return (
     <MapMarker
       longitude={parseFloat(station.longitude)}
       latitude={parseFloat(station.latitude)}
       onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <MarkerContent>
         <Hitbox size="lg" radius="full" className="max-sm:after:!inset-[-24px]">
@@ -80,7 +90,10 @@ export function StationMarker({
       </MarkerContent>
       {!showLabel && showTooltip && (
         <MarkerTooltip className={cn("px-3 py-1.5 text-lg", locale === "fa" && "font-vazir")}>
-          {label}
+          <div>{label}</div>
+          {hovered && showNextTime && (
+            <NextArrivalLabel stationId={station.id} className="mt-1 min-w-44" />
+          )}
         </MarkerTooltip>
       )}
     </MapMarker>
